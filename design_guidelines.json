@@ -1,0 +1,141 @@
+{
+  "project_context": {
+    "name": "Cyber-Chill",
+    "framework": "Expo (React Native)",
+    "domain": "Gamified Productivity & Self-Development",
+    "theme": "Dark Mode (TRUE BLACK OLED Enforced)",
+    "archetype": "7 (Electric & Neon)",
+    "target_audience": "Gen Z"
+  },
+  "color_palette": {
+    "background": {
+      "primary": "#000000",
+      "surface": "#0A0A0A",
+      "surface_elevated": "#121212",
+      "modal_backdrop": "rgba(0, 0, 0, 0.8)"
+    },
+    "accents": {
+      "primary": "#00E5FF",
+      "success": "#39FF14",
+      "premium": "#B026FF",
+      "warning": "#FF3366"
+    },
+    "text": {
+      "primary": "#FFFFFF",
+      "secondary": "#A1A1AA",
+      "tertiary": "#52525B",
+      "inverse": "#000000"
+    },
+    "borders": {
+      "subtle": "rgba(255, 255, 255, 0.08)",
+      "active": "rgba(0, 229, 255, 0.5)"
+    }
+  },
+  "typography": {
+    "instructions": "Use expo-font to load custom fonts. Apply via StyleSheet.",
+    "primary_font": "Outfit",
+    "secondary_font": "JetBrains Mono",
+    "fallback": "System",
+    "scales": {
+      "h1": { "fontSize": 48, "fontWeight": "800", "letterSpacing": -1 },
+      "h2": { "fontSize": 32, "fontWeight": "700", "letterSpacing": -0.5 },
+      "h3": { "fontSize": 24, "fontWeight": "600" },
+      "body": { "fontSize": 16, "fontWeight": "400" },
+      "stats": { "fontSize": 20, "fontWeight": "700", "fontFamily": "JetBrains Mono" },
+      "label": { "fontSize": 12, "fontWeight": "600", "textTransform": "uppercase", "letterSpacing": 1.5 }
+    }
+  },
+  "spacing_and_layout": {
+    "padding": {
+      "screen": 24,
+      "card": 20,
+      "element": 12,
+      "small": 8
+    },
+    "radius": {
+      "card": 24,
+      "button": 16,
+      "pill": 9999,
+      "input": 16
+    },
+    "guidelines": [
+      "Use StyleSheet API. NO Tailwind CSS.",
+      "Use bottom-sheet patterns heavily instead of full screen navigation pushes for adding tasks and journaling.",
+      "Cards should not have hard solid bright backgrounds. Use #0A0A0A with a 1px border of rgba(255,255,255,0.08).",
+      "Avoid traditional top navigation bars. Keep it clean with contextual icons floating at the top or bottom.",
+      "Ensure SafeAreaView is used to prevent content from clipping into device notches."
+    ]
+  },
+  "interactions_and_motion": {
+    "haptics": "HEAVY. Use expo-haptics. Fire haptics on task swipe (impactLight on drag, notificationSuccess on complete), leveling up, journaling submit, and tab changes.",
+    "animations": {
+      "type": "react-native-reanimated",
+      "config": "Spring based. Mass: 1, Damping: 15, Stiffness: 120",
+      "patterns": [
+        "Swipe-to-complete must use PanGestureHandler and shared values. As you drag, the background reveals Acid Green.",
+        "XP bar must fill dynamically using shared values.",
+        "Use expo-blur for all overlapping elements, bottom sheets, and sticky headers."
+      ]
+    }
+  },
+  "component_guidelines": {
+    "buttons": {
+      "primary": "Solid primary color (#00E5FF) background, TRUE BLACK text, fully rounded (pill).",
+      "premium": "Solid neon purple (#B026FF) background, TRUE BLACK text.",
+      "glass": "Translucent background (rgba(255,255,255,0.05)), expo-blur underneath, 1px white subtle border."
+    },
+    "cards": {
+      "base": "Background #0A0A0A, border rgba(255,255,255,0.08), borderRadius 24.",
+      "quest_card": "Interactive. Includes a pan gesture handler for swipe to complete. Height around 80px."
+    },
+    "modals": {
+      "type": "Bottom Sheet Modals",
+      "backdrop": "BlurView from expo-blur with intensity 80 and dark tint.",
+      "handle": "Small pill #52525B at the top."
+    },
+    "icons": {
+      "library": "lucide-react-native",
+      "size": 24,
+      "color": "#FFFFFF"
+    }
+  },
+  "feature_specific_guidelines": {
+    "auth": "Minimalist OLED black. Big Typography. 'Enter the Grid' CTA. No clutter.",
+    "hub_dashboard": "Avatar centered at top. Circular XP progress or thick glowing bar underneath. Streak counter uses fire emoji with pulsing scale animation.",
+    "daily_quests": "List of swipeable cards. Heavy haptics on completion. Swiping right turns card Acid Green. Screen-wide particle effect on completion (mocked via simple floating SVG/Emojis).",
+    "micro_journaling": "TikTok style fast input. Pop-up bottom sheet. Row of oversized emojis for mood selection. Auto-focus text input, character counter max 140 using JetBrains Mono text.",
+    "leaderboard": "Rankings (Guilds). User's rank sticky at bottom. Global list with pull-to-refresh.",
+    "monetization": {
+      "pro_paywall": "Premium feel. Neon purple accents, dark geometry background. 'Unlock Neon Cosmetics'.",
+      "qris_screen": "Mocked screen showing a fake QR code for Saweria payment.",
+      "rewarded_ad": "Modal simulating a video ad for 2x XP boost with a countdown timer."
+    }
+  },
+  "media_assets": {
+    "avatars": [
+      {
+        "url": "https://images.unsplash.com/photo-1579451443170-44b3963c3341?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHwzfHxjeWJlcnB1bmslMjBuZW9uJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzgyNDk2OTAxfDA&ixlib=rb-4.1.0&q=85",
+        "description": "Avatar - Purple hair neon lighting"
+      },
+      {
+        "url": "https://images.pexels.com/photos/8107856/pexels-photo-8107856.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Avatar - Cyberpunk portrait"
+      }
+    ],
+    "badges": [
+      {
+        "url": "https://images.unsplash.com/photo-1708099332948-d6d3b06e918c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzh8MHwxfHNlYXJjaHwyfHxuZW9uJTIwZ2FtaW5nJTIwYmFkZ2V8ZW58MHx8fHwxNzgyNDk2OTAxfDA&ixlib=rb-4.1.0&q=85",
+        "description": "Neon Controller Badge for XP/Leveling"
+      }
+    ],
+    "backgrounds": [
+      {
+        "url": "https://images.unsplash.com/photo-1464639351491-a172c2aa2911?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwyfHxkYXJrJTIwb2xlZCUyMGdlb21ldHJpYyUyMHRleHR1cmV8ZW58MHx8fHwxNzgyNDk2OTAxfDA&ixlib=rb-4.1.0&q=85",
+        "description": "Dark geometric texture for the pro-paywall or dashboard background."
+      }
+    ]
+  },
+  "testing_guidelines": {
+    "attributes": "All interactive and key informational elements MUST include a testID attribute (React Native equivalent to data-testid) to facilitate robust automated testing. Example: testID=\"login-submit-button\" or testID=\"quest-swipe-card\"."
+  }
+}
