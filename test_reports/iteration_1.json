@@ -1,0 +1,80 @@
+{
+  "summary": "Backend: 19/19 pytest tests PASS — all auth, quests (with completed_today/streak/double-complete-block), journals (140-char limit), leaderboard (sorted desc, is_me flag), monetization (QRIS payload, pro activate sets is_pro+👾, xp-boost doubles XP), and PATCH /me work correctly. Mongo _id is excluded everywhere. Frontend: Login/Signup screens render with correct testIDs and the API calls succeed (JWT is persisted to localStorage under cyberchill_jwt). However TWO CRITICAL navigation bugs block the core UX: (a) after successful signIn/signUp the LoginScreen never routes to /(tabs)/hub — URL stays at /login; (b) after signOut from Profile, the user remains on /profile (token cleared but no redirect). Root cause: only app/index.tsx does the conditional Redirect based on user, but it only runs on initial mount. Workaround used in testing: after auth, navigate to '/' which triggers the Redirect to /hub. With that workaround the rest of the UI works correctly — Hub renders avatar/level/XP bar/streak/quick actions/Pro upsell/stats, Quests tab shows the 4 seeded starter quests with COMPLETE/DELETE labels and +XP pills, Journal tab shows the 'Empty grid' state, Guild leaderboard renders Top runners with 'You' highlighted row + sticky 'YOUR RANK #5' footer, Profile shows free avatar grid (selectable) and locked PRO cosmetics. Swipe-to-complete gesture, paywall flow, and rewarded-ad screen were not exercised in browser because they depend on the broken auth navigation/are tap-driven web interactions that need the testIDs verified end-to-end after the redirect bug is fixed.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {
+        "endpoint": "passlib bcrypt warning at startup",
+        "issue": "Benign 'AttributeError: module bcrypt has no attribute __about__' trapped by passlib. Auth fully works. Optional: pin bcrypt<4 or upgrade passlib to silence."
+      }
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "app/(auth)/login.tsx",
+        "issue": "After successful login() or signUp(), the screen does NOT navigate to /(tabs)/hub. The JWT IS persisted (cyberchill_jwt found in localStorage) and AuthProvider.setUser is called, but LoginScreen has no useEffect/router.replace that watches `user` and redirects. User is stuck on /login until they manually visit '/'. Reference: /app/frontend/app/(auth)/login.tsx and /app/frontend/src/api/auth-context.tsx (signIn/signUp at lines 35-48).",
+        "testID": "auth-submit-button",
+        "priority": "CRITICAL"
+      },
+      {
+        "component": "app/(tabs)/profile.tsx",
+        "issue": "After tapping the signout button (data-testid=signout-button), the token is cleared from SecureStore but the user remains on /profile screen. There is no useEffect that watches `user==null` and redirects to /(auth)/login.",
+        "testID": "signout-button",
+        "priority": "CRITICAL"
+      }
+    ],
+    "integration_issues": [
+      {
+        "flow": "Auth → Hub redirect",
+        "issue": "Login API returns 200 + token + user; AuthProvider.setUser(user) runs; but no router.replace('/(tabs)/hub') is invoked from LoginScreen. Same for signup.",
+        "affected_testIDs": ["auth-submit-button", "auth-tab-signup", "auth-tab-login"]
+      },
+      {
+        "flow": "Signout → Login redirect",
+        "issue": "Token removed from SecureStore and setUser(null) called, but user stays on /profile. Needs router.replace('/(auth)/login') after signOut, or a global auth gate.",
+        "affected_testIDs": ["signout-button"]
+      }
+    ],
+    "design_issues": [
+      {
+        "screen": "global",
+        "issues": [
+          "Console warning: '\"shadow*\" style props are deprecated. Use \"boxShadow\".' — minor RN web warning, not blocking."
+        ]
+      }
+    ],
+    "react_native_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_cyberchill_api.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "FIX (critical): In /app/frontend/app/(auth)/login.tsx, add `const { user } = useAuth();` (already there via useAuth) and a `useEffect(() => { if (user) router.replace('/(tabs)/hub'); }, [user]);` OR call `router.replace('/(tabs)/hub')` immediately after `await signIn(...)` / `await signUp(...)` inside the submit handler.",
+    "FIX (critical): In /app/frontend/app/(tabs)/profile.tsx, after `await signOut()`, call `router.replace('/(auth)/login')`. Alternatively, add a top-level guard in `app/(tabs)/_layout.tsx` that redirects to /(auth)/login whenever `user` is null.",
+    "Recommended: move both guards into AuthProvider or a dedicated `<AuthGate>` component so any auth state change automatically syncs the route (prevents future regressions).",
+    "Optional cleanup: pin `bcrypt<4` (or upgrade passlib) in backend/requirements.txt to silence the trapped bcrypt __about__ AttributeError on startup.",
+    "Optional: replace deprecated `shadow*` RN style props with `boxShadow` to silence web console warnings."
+  ],
+  "critical_code_review_comments": [
+    "Auth navigation is only enforced in app/index.tsx via <Redirect>. Because expo-router does not re-evaluate that file when AuthProvider state changes (the user is on a different route), every auth state change needs explicit router.replace from the route that triggered it.",
+    "backend/server.py is 484 lines — still under 700, OK. All routes use UUID strings and `_id` is excluded via {_id:0} projections — good.",
+    "JournalIn enforces max_length=140 via Pydantic — verified (422 on overflow). Good.",
+    "complete_quest correctly prevents double completion same UTC day via quest_logs(user_id, quest_id, completed_date) uniqueness — verified.",
+    "xp-boost is a server-side timestamp (xp_boost_until), so 2x XP is awarded based on now_utc() comparison — verified (xp_gained doubled in test).",
+    "Leaderboard manually computes my rank via count_documents when not in top 50 — good edge-case handling."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_cyberchill_api.py (new pytest suite, 19 tests)"
+  ],
+  "success_rate": {
+    "backend": "100% (19/19)",
+    "frontend": "75% — all screens render and tab navigation works; 2 critical auth-redirect bugs block end-to-end flow without manual URL nav"
+  },
+  "seed_data_creation": "Pytest creates a handful of TEST_*@cyber.chill users (fresh_user fixture, ProTester, BoostTester) and 1 journal entry that is deleted. No production data modified. The pre-seeded user test@cyber.chill is auto-created on first login attempt if missing (idempotent in the test fixture).",
+  "retest_needed": true,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "After E1 adds the post-auth router.replace (login→hub, signout→login) in /app/frontend/app/(auth)/login.tsx and /app/frontend/app/(tabs)/profile.tsx, re-run /app/backend/tests/test_cyberchill_api.py (should remain 19/19) and add UI coverage for: (1) swipe-to-complete on quest card — simulate horizontal drag >120px on `[data-testid=quest-card-<id>]` via mouse.down → mouse.move → mouse.up, expect +XP and acid-green strikethrough; (2) create quest via the '+' bottom sheet and `confirm-add-quest` button; (3) Journal create with mood emoji + 140-char text; (4) Paywall: tap GUILD PRO → OPEN → tap `confirm-payment` (or 'I've paid · Unlock Pro'), expect is_pro=true and avatar=👾; (5) Rewarded ad: from Hub 2× boost card → /rewarded-ad → wait 5s → `claim-boost`, expect '2× XP BOOST ACTIVE' banner on Hub. Use testIDs already in code: auth-submit-button, auth-tab-login/signup, auth-email-input, auth-password-input, auth-username-input, signout-button, quest-card-<id>, confirm-add-quest, claim-boost, confirm-payment, avatar-free-<emoji>.",
+  "rca_of_issue": "BUG: Auth screens (LoginScreen, ProfileScreen.signOut) do not route the user after auth state changes. Reproduction: 1) GET https://levelhub-app.preview.emergentagent.com/login. 2) Fill test@cyber.chill / password123 and tap 'Enter the Grid'. 3) Observe: backend returns 200 with access_token, localStorage shows `cyberchill_jwt`, but page.url stays at /login. Manually navigate to '/' and the Redirect in app/index.tsx then routes to /hub correctly. Same pattern in signOut. Mitigation: add `useEffect(() => { if (user) router.replace('/(tabs)/hub'); }, [user]);` in LoginScreen; and `router.replace('/(auth)/login')` after signOut in ProfileScreen. Long-term: implement an <AuthGate> in app/_layout.tsx that owns redirects."
+}
