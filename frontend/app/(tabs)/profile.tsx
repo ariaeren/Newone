@@ -27,6 +27,11 @@ export default function ProfileScreen() {
 
   if (!user) return null;
 
+  const handleSignOut = async () => {
+    await signOut();
+    router.replace("/(auth)/login");
+  };
+
   const pickAvatar = async (emoji: string, requiresPro: boolean) => {
     if (requiresPro && !user.is_pro) {
       router.push("/paywall");
@@ -171,7 +176,7 @@ export default function ProfileScreen() {
 
         <Pressable
           testID="signout-button"
-          onPress={signOut}
+          onPress={handleSignOut}
           style={({ pressed }) => [styles.signOutBtn, pressed && { opacity: 0.85 }]}
         >
           <LogOut color={colors.warning} size={18} />

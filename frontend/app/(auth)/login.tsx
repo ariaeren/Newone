@@ -13,6 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
 import { Zap, ArrowRight } from "lucide-react-native";
 import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
+import { useRouter } from "expo-router";
 
 import { colors, radius, spacing } from "@/src/theme";
 import { useAuth } from "@/src/api/auth-context";
@@ -21,6 +22,7 @@ type Mode = "login" | "signup";
 
 export default function LoginScreen() {
   const { signIn, signUp } = useAuth();
+  const router = useRouter();
   const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,6 +51,7 @@ export default function LoginScreen() {
       } else {
         await signUp(email.trim().toLowerCase(), password, username.trim());
       }
+      router.replace("/(tabs)/hub");
     } catch (e: any) {
       setError(e?.message || "Something went wrong");
       if (Platform.OS !== "web") {
