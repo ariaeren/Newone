@@ -47,6 +47,117 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("grynd")
 
 
+# ---------- Starter quests (12 languages) ----------
+STARTER_QUESTS_BY_LANG: dict[str, list[dict]] = {
+    "en": [
+        {"title": "Drink 8 glasses of water", "xp_reward": 20, "icon": "💧", "difficulty": "easy", "category": "health"},
+        {"title": "Read for 10 minutes", "xp_reward": 30, "icon": "📚", "difficulty": "easy", "category": "study"},
+        {"title": "Exercise for 20 minutes", "xp_reward": 50, "icon": "🏃", "difficulty": "medium", "category": "health"},
+        {"title": "Meditate for 5 minutes", "xp_reward": 25, "icon": "🧘", "difficulty": "easy", "category": "mind"},
+        {"title": "No social media for 1 hour", "xp_reward": 40, "icon": "📵", "difficulty": "medium", "category": "mind"},
+    ],
+    "id": [
+        {"title": "Minum 8 gelas air", "xp_reward": 20, "icon": "💧", "difficulty": "easy", "category": "health"},
+        {"title": "Baca 10 menit", "xp_reward": 30, "icon": "📚", "difficulty": "easy", "category": "study"},
+        {"title": "Olahraga 20 menit", "xp_reward": 50, "icon": "🏃", "difficulty": "medium", "category": "health"},
+        {"title": "Meditasi 5 menit", "xp_reward": 25, "icon": "🧘", "difficulty": "easy", "category": "mind"},
+        {"title": "No sosmed 1 jam", "xp_reward": 40, "icon": "📵", "difficulty": "medium", "category": "mind"},
+    ],
+    "es": [
+        {"title": "Beber 8 vasos de agua", "xp_reward": 20, "icon": "💧", "difficulty": "easy", "category": "health"},
+        {"title": "Leer 10 minutos", "xp_reward": 30, "icon": "📚", "difficulty": "easy", "category": "study"},
+        {"title": "Ejercicio 20 minutos", "xp_reward": 50, "icon": "🏃", "difficulty": "medium", "category": "health"},
+        {"title": "Meditar 5 minutos", "xp_reward": 25, "icon": "🧘", "difficulty": "easy", "category": "mind"},
+        {"title": "Sin redes sociales 1 hora", "xp_reward": 40, "icon": "📵", "difficulty": "medium", "category": "mind"},
+    ],
+    "fr": [
+        {"title": "Boire 8 verres d'eau", "xp_reward": 20, "icon": "💧", "difficulty": "easy", "category": "health"},
+        {"title": "Lire 10 minutes", "xp_reward": 30, "icon": "📚", "difficulty": "easy", "category": "study"},
+        {"title": "Sport 20 minutes", "xp_reward": 50, "icon": "🏃", "difficulty": "medium", "category": "health"},
+        {"title": "Méditer 5 minutes", "xp_reward": 25, "icon": "🧘", "difficulty": "easy", "category": "mind"},
+        {"title": "Sans réseaux sociaux 1 heure", "xp_reward": 40, "icon": "📵", "difficulty": "medium", "category": "mind"},
+    ],
+    "de": [
+        {"title": "8 Gläser Wasser trinken", "xp_reward": 20, "icon": "💧", "difficulty": "easy", "category": "health"},
+        {"title": "10 Minuten lesen", "xp_reward": 30, "icon": "📚", "difficulty": "easy", "category": "study"},
+        {"title": "20 Minuten Sport", "xp_reward": 50, "icon": "🏃", "difficulty": "medium", "category": "health"},
+        {"title": "5 Minuten meditieren", "xp_reward": 25, "icon": "🧘", "difficulty": "easy", "category": "mind"},
+        {"title": "1 Stunde kein Social Media", "xp_reward": 40, "icon": "📵", "difficulty": "medium", "category": "mind"},
+    ],
+    "pt": [
+        {"title": "Beber 8 copos de água", "xp_reward": 20, "icon": "💧", "difficulty": "easy", "category": "health"},
+        {"title": "Ler por 10 minutos", "xp_reward": 30, "icon": "📚", "difficulty": "easy", "category": "study"},
+        {"title": "Exercício por 20 minutos", "xp_reward": 50, "icon": "🏃", "difficulty": "medium", "category": "health"},
+        {"title": "Meditar 5 minutos", "xp_reward": 25, "icon": "🧘", "difficulty": "easy", "category": "mind"},
+        {"title": "Sem redes sociais 1 hora", "xp_reward": 40, "icon": "📵", "difficulty": "medium", "category": "mind"},
+    ],
+    "ru": [
+        {"title": "Выпить 8 стаканов воды", "xp_reward": 20, "icon": "💧", "difficulty": "easy", "category": "health"},
+        {"title": "Читать 10 минут", "xp_reward": 30, "icon": "📚", "difficulty": "easy", "category": "study"},
+        {"title": "Тренировка 20 минут", "xp_reward": 50, "icon": "🏃", "difficulty": "medium", "category": "health"},
+        {"title": "Медитация 5 минут", "xp_reward": 25, "icon": "🧘", "difficulty": "easy", "category": "mind"},
+        {"title": "Без соцсетей 1 час", "xp_reward": 40, "icon": "📵", "difficulty": "medium", "category": "mind"},
+    ],
+    "ja": [
+        {"title": "水を8杯飲む", "xp_reward": 20, "icon": "💧", "difficulty": "easy", "category": "health"},
+        {"title": "10分読書する", "xp_reward": 30, "icon": "📚", "difficulty": "easy", "category": "study"},
+        {"title": "20分運動する", "xp_reward": 50, "icon": "🏃", "difficulty": "medium", "category": "health"},
+        {"title": "5分瞑想する", "xp_reward": 25, "icon": "🧘", "difficulty": "easy", "category": "mind"},
+        {"title": "SNSを1時間断つ", "xp_reward": 40, "icon": "📵", "difficulty": "medium", "category": "mind"},
+    ],
+    "ko": [
+        {"title": "물 8잔 마시기", "xp_reward": 20, "icon": "💧", "difficulty": "easy", "category": "health"},
+        {"title": "10분 독서", "xp_reward": 30, "icon": "📚", "difficulty": "easy", "category": "study"},
+        {"title": "20분 운동", "xp_reward": 50, "icon": "🏃", "difficulty": "medium", "category": "health"},
+        {"title": "5분 명상", "xp_reward": 25, "icon": "🧘", "difficulty": "easy", "category": "mind"},
+        {"title": "1시간 SNS 끊기", "xp_reward": 40, "icon": "📵", "difficulty": "medium", "category": "mind"},
+    ],
+    "zh": [
+        {"title": "喝8杯水", "xp_reward": 20, "icon": "💧", "difficulty": "easy", "category": "health"},
+        {"title": "阅读10分钟", "xp_reward": 30, "icon": "📚", "difficulty": "easy", "category": "study"},
+        {"title": "运动20分钟", "xp_reward": 50, "icon": "🏃", "difficulty": "medium", "category": "health"},
+        {"title": "冥想5分钟", "xp_reward": 25, "icon": "🧘", "difficulty": "easy", "category": "mind"},
+        {"title": "停用社交媒体1小时", "xp_reward": 40, "icon": "📵", "difficulty": "medium", "category": "mind"},
+    ],
+    "ar": [
+        {"title": "اشرب 8 أكواب ماء", "xp_reward": 20, "icon": "💧", "difficulty": "easy", "category": "health"},
+        {"title": "اقرأ لمدة 10 دقائق", "xp_reward": 30, "icon": "📚", "difficulty": "easy", "category": "study"},
+        {"title": "تمرّن 20 دقيقة", "xp_reward": 50, "icon": "🏃", "difficulty": "medium", "category": "health"},
+        {"title": "تأمّل 5 دقائق", "xp_reward": 25, "icon": "🧘", "difficulty": "easy", "category": "mind"},
+        {"title": "ابتعد عن السوشيال ميديا ساعة", "xp_reward": 40, "icon": "📵", "difficulty": "medium", "category": "mind"},
+    ],
+    "hi": [
+        {"title": "8 गिलास पानी पिएँ", "xp_reward": 20, "icon": "💧", "difficulty": "easy", "category": "health"},
+        {"title": "10 मिनट पढ़ें", "xp_reward": 30, "icon": "📚", "difficulty": "easy", "category": "study"},
+        {"title": "20 मिनट व्यायाम", "xp_reward": 50, "icon": "🏃", "difficulty": "medium", "category": "health"},
+        {"title": "5 मिनट ध्यान", "xp_reward": 25, "icon": "🧘", "difficulty": "easy", "category": "mind"},
+        {"title": "1 घंटे सोशल मीडिया से दूर", "xp_reward": 40, "icon": "📵", "difficulty": "medium", "category": "mind"},
+    ],
+}
+
+
+def _starter_quests_for(lang: Optional[str]) -> list[dict]:
+    if not lang:
+        return STARTER_QUESTS_BY_LANG["en"]
+    code = lang.lower().split("-")[0].split("_")[0][:2]
+    return STARTER_QUESTS_BY_LANG.get(code, STARTER_QUESTS_BY_LANG["en"])
+
+
+async def _seed_starter_quests(user_id: str, lang: Optional[str]) -> None:
+    for q in _starter_quests_for(lang):
+        await quests.insert_one({
+            "id": str(uuid.uuid4()),
+            "user_id": user_id,
+            "title": q["title"],
+            "xp_reward": q["xp_reward"],
+            "icon": q["icon"],
+            "difficulty": q["difficulty"],
+            "category": q["category"],
+            "frequency": "daily",
+            "created_at": now_utc().isoformat(),
+        })
+
+
 # ---------- Helpers ----------
 def now_utc() -> datetime:
     return datetime.now(timezone.utc)
@@ -117,6 +228,7 @@ class RegisterIn(BaseModel):
     email: EmailStr
     password: str = Field(min_length=6, max_length=128)
     username: str = Field(min_length=2, max_length=24)
+    lang: Optional[str] = Field(default=None, max_length=8)
 
 
 class LoginIn(BaseModel):
@@ -177,26 +289,8 @@ async def register(payload: RegisterIn):
     }
     await users.insert_one(new_user)
 
-    # seed a few starter quests (Bahasa Indonesia)
-    starter = [
-        {"title": "Minum 8 gelas air", "xp_reward": 20, "icon": "💧", "difficulty": "easy", "category": "health"},
-        {"title": "Baca 10 menit", "xp_reward": 30, "icon": "📚", "difficulty": "easy", "category": "study"},
-        {"title": "Olahraga 20 menit", "xp_reward": 50, "icon": "🏃", "difficulty": "medium", "category": "health"},
-        {"title": "Meditasi 5 menit", "xp_reward": 25, "icon": "🧘", "difficulty": "easy", "category": "mind"},
-        {"title": "No sosmed 1 jam", "xp_reward": 40, "icon": "📵", "difficulty": "medium", "category": "mind"},
-    ]
-    for q in starter:
-        await quests.insert_one({
-            "id": str(uuid.uuid4()),
-            "user_id": user_id,
-            "title": q["title"],
-            "xp_reward": q["xp_reward"],
-            "icon": q["icon"],
-            "difficulty": q["difficulty"],
-            "category": q["category"],
-            "frequency": "daily",
-            "created_at": now_utc().isoformat(),
-        })
+    # seed starter quests in user's language (default: English)
+    await _seed_starter_quests(user_id, payload.lang)
 
     token = create_access_token(user_id)
     user_doc = await users.find_one({"id": user_id}, {"_id": 0})
@@ -234,7 +328,7 @@ async def _ensure_unique_username(candidate: str) -> str:
     return f"{candidate}_{uuid.uuid4().hex[:4]}"
 
 
-async def _upsert_social_user(email: str, display_name: Optional[str], provider: str) -> dict:
+async def _upsert_social_user(email: str, display_name: Optional[str], provider: str, lang: Optional[str] = None) -> dict:
     email_norm = email.lower()
     existing = await users.find_one({"email": email_norm}, {"_id": 0})
     if existing:
@@ -261,32 +355,15 @@ async def _upsert_social_user(email: str, display_name: Optional[str], provider:
     }
     await users.insert_one(new_user)
 
-    # social-auth seed (Bahasa Indonesia)
-    starter = [
-        {"title": "Minum 8 gelas air", "xp_reward": 20, "icon": "💧", "difficulty": "easy", "category": "health"},
-        {"title": "Baca 10 menit", "xp_reward": 30, "icon": "📚", "difficulty": "easy", "category": "study"},
-        {"title": "Olahraga 20 menit", "xp_reward": 50, "icon": "🏃", "difficulty": "medium", "category": "health"},
-        {"title": "Meditasi 5 menit", "xp_reward": 25, "icon": "🧘", "difficulty": "easy", "category": "mind"},
-        {"title": "No sosmed 1 jam", "xp_reward": 40, "icon": "📵", "difficulty": "medium", "category": "mind"},
-    ]
-    for q in starter:
-        await quests.insert_one({
-            "id": str(uuid.uuid4()),
-            "user_id": user_id,
-            "title": q["title"],
-            "xp_reward": q["xp_reward"],
-            "icon": q["icon"],
-            "difficulty": q["difficulty"],
-            "category": q["category"],
-            "frequency": "daily",
-            "created_at": now_utc().isoformat(),
-        })
+    # social-auth: seed starter quests in user's language
+    await _seed_starter_quests(user_id, lang)
 
     return await users.find_one({"id": user_id}, {"_id": 0})
 
 
 class GoogleAuthIn(BaseModel):
     session_id: str = Field(min_length=4, max_length=512)
+    lang: Optional[str] = Field(default=None, max_length=8)
 
 
 @auth_router.post("/google", response_model=TokenOut)
@@ -310,7 +387,7 @@ async def google_auth(payload: GoogleAuthIn):
         raise HTTPException(401, "No email returned from Google")
     name = data.get("name") or email.split("@")[0]
 
-    user = await _upsert_social_user(email, name, provider="google")
+    user = await _upsert_social_user(email, name, provider="google", lang=payload.lang)
     token = create_access_token(user["id"])
     return {"access_token": token, "user": public_user(user)}
 
@@ -319,6 +396,7 @@ class AppleAuthIn(BaseModel):
     identity_token: str = Field(min_length=8, max_length=4096)
     email: Optional[EmailStr] = None
     full_name: Optional[str] = None
+    lang: Optional[str] = Field(default=None, max_length=8)
 
 
 def _decode_apple_token(token: str) -> dict:
@@ -346,7 +424,7 @@ async def apple_auth(payload: AppleAuthIn):
     if not email:
         raise HTTPException(401, "No email available from Apple credential")
 
-    user = await _upsert_social_user(email, payload.full_name or email.split("@")[0], provider="apple")
+    user = await _upsert_social_user(email, payload.full_name or email.split("@")[0], provider="apple", lang=payload.lang)
     token = create_access_token(user["id"])
     return {"access_token": token, "user": public_user(user)}
 
@@ -396,7 +474,7 @@ async def uncomplete_quest(quest_id: str, current=Depends(get_current_user)):
         {"user_id": current["id"], "quest_id": quest_id, "completed_date": today}
     )
     if not log:
-        raise HTTPException(404, "Belum diselesaikan hari ini")
+        raise HTTPException(404, "Not completed today")
     xp_refund = int(log.get("xp_gained", 0))
     await quest_logs.delete_one({"id": log["id"]})
 
@@ -633,7 +711,7 @@ async def qris_payment_info(current=Depends(get_current_user)):
     return {
         "qris_string": payload,
         "amount_idr": 49000,
-        "merchant": "Cyber-Chill Guild",
+        "merchant": "GRYND Guild",
         "label": "Guild Pro Lifetime",
         "expires_in": 600,
     }

@@ -1,4 +1,5 @@
 import { storage } from "@/src/utils/storage";
+import i18n from "@/src/i18n";
 
 const TOKEN_KEY = "cyberchill_jwt";
 
@@ -80,7 +81,7 @@ export const api = {
   register: (email: string, password: string, username: string) =>
     request<{ access_token: string; user: AppUser }>("/auth/register", {
       method: "POST",
-      body: JSON.stringify({ email, password, username }),
+      body: JSON.stringify({ email, password, username, lang: (i18n.language || "en").split("-")[0] }),
     }),
 
   login: (email: string, password: string) =>
@@ -92,13 +93,13 @@ export const api = {
   googleAuth: (session_id: string) =>
     request<{ access_token: string; user: AppUser }>("/auth/google", {
       method: "POST",
-      body: JSON.stringify({ session_id }),
+      body: JSON.stringify({ session_id, lang: (i18n.language || "en").split("-")[0] }),
     }),
 
   appleAuth: (data: { identity_token: string; email?: string | null; full_name?: string | null }) =>
     request<{ access_token: string; user: AppUser }>("/auth/apple", {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...data, lang: (i18n.language || "en").split("-")[0] }),
     }),
 
   me: () => request<AppUser>("/auth/me"),

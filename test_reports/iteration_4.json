@@ -1,0 +1,53 @@
+{
+  "summary": "Frontend i18n + social-share E2E testing for GRYND iteration 4. All 20 acceptance scenarios from the review request PASS. Login page renders in English by default with GRYND brand, headline 'Level Up IRL.', Continue with Google, Continue with Apple SOON badge, and Email-mode switch. Language picker (open-language-picker -> globe/flag) opens a bottom sheet listing all 12 languages (en/id/es/fr/de/pt/ru/ja/ko/zh/ar/hi) — every lang-option-* testid is present. Selecting 'id' switches UI to Bahasa Indonesia ('Naik Level', 'Lanjut dengan Google', 'SEGERA' badge). Selecting 'fr' switches to French ('Monte de niveau IRL.', 'Continuer avec Google', 'BIENTÔT'). Choice persists across page reload (French still active after reload — AsyncStorage persistence works). Email login with tester@grynd.app / Tester123! lands on /hub showing @tester, 0 XP, LVL 1, 0 streak, and 'Share my level' button. share-level opens ShareSheet with preview ShareCard (GRYND / LEVEL UP / level 1 / 0 XP / @tester) + native share + all 7 social targets (twitter/facebook/whatsapp/telegram/linkedin/reddit/pinterest) + copy. Copy link shows 'Copied' confirmation. share-streak opens streak share sheet with all targets. Quests tab shows 5 seeded starter quests with '0/5 done' header (titles still Indonesian — see notes). Tapping a quest-tick auto-prompts the share-quest sheet. open-add-quest opens the new quest bottom sheet with title/icon/difficulty/Create Quest. Leaderboard me-rank-row opens share-rank sheet with all targets. Profile shows profile-invite, profile-language, signout-button — invite opens share-invite sheet, avatar-free-🐺 is tappable. /paywall route shows 'GUILD PRO — Unlock neon tier.', 4 feature rows, QRIS IDR 49,000, and confirm-payment button. /rewarded-ad runs the 5s countdown and reveals claim-boost. signout-button returns to /login. No JS errors; only deprecation warnings for shadow* and props.pointerEvents (RN web).",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [
+      {
+        "flow": "Seeded starter quests on Quests tab",
+        "issue": "Despite the new 12-language i18n layer, the 5 starter quests are still rendered in Bahasa Indonesia for every user ('Minum 8 gelas air', 'Baca 10 menit', 'Olahraga 20 menit', 'Meditasi 5 menit', 'No sosmed 1 jam') regardless of UI language. Action: backend should store a localization key (e.g. starter.water/read/exercise/meditate/digital_detox) and let the i18n-aware frontend resolve it; or seed the user's locale at register time. Flagged in iter 3 — still unresolved on iter 4 frontend.",
+        "affected_selectors": ["[data-testid^=\"quest-tick-\"]"]
+      }
+    ],
+    "design_issues": [
+      {
+        "screen": "Hub & all tabs (web)",
+        "issues": [
+          "Console emits deprecation warnings on every render: '\"shadow*\" style props are deprecated. Use \"boxShadow\".' and 'props.pointerEvents is deprecated. Use style.pointerEvents'. Non-blocking but noisy; will break in future React Native Web releases. Source likely the shadow style block in theme.ts and the <Animated.View pointerEvents=\"none\"> in ShareSheet backdrop / LanguagePicker sheetWrap."
+        ]
+      }
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_grynd_api.py",
+    "/app/test_reports/pytest/pytest_grynd_iter3.xml"
+  ],
+  "action_items": [
+    "(carry-over from iter 3, now also validated on frontend) Localize the 5 seeded starter quest titles. Recommended: backend stores quest_key='starter.water' etc; frontend resolves via t('quests.starter.water'). Currently every non-Indonesian user sees Indonesian quest text which contradicts the worldwide-language rollout.",
+    "Optional polish: migrate shadow* style props to boxShadow and pointerEvents prop to style.pointerEvents to clear React Native Web deprecation warnings (theme.ts and ShareSheet / LanguagePicker)."
+  ],
+  "critical_code_review_comments": [
+    "i18n.ts cleanly detects device locale via expo-localization, persists choice in AsyncStorage under 'grynd_lang', applies RTL for Arabic via document.documentElement.dir on web — solid implementation.",
+    "ShareSheet.tsx handles 'copy' separately and falls back to shareTo() for the 7 social targets + native; testIDPrefix pattern is great for the 4 distinct share contexts (level / streak / quest / rank / invite).",
+    "LanguagePicker correctly closes after selection and re-renders the parent (login screen flag updates) via useTranslation hook; no stale state observed.",
+    "login.tsx mixes Google OAuth + email/password fallback cleanly. Apple Sign-In is appropriately gated as 'SOON' (not testable on web).",
+    "All interactive elements expose testID — full coverage for the 20 scenarios in the review request, including the per-context share targets (share-level-target-twitter, share-quest-target-*, share-rank-target-*, share-invite-target-*).",
+    "URL on web is /hub instead of /(tabs)/hub — that's Expo Router's expected web behavior (group folders are stripped); not an issue.",
+    "ShareCard preview renders inside the sheet with proper brand identity ('GRYND' pill + emoji + level/XP + @username); visually consistent across all four share contexts."
+  ],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "100% (19/19, from iter 3)",
+    "frontend": "100% (20/20 acceptance scenarios)"
+  },
+  "test_credentials": "tester@grynd.app / Tester123! — verified working end-to-end on web",
+  "seed_data_creation": "No new seed data created this round; reused the existing tester@grynd.app account.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Frontend i18n (12 languages, persistence, French/Indonesian verified) and the entire ShareSheet feature (4 contexts × 9 targets) are fully working on web. The only outstanding gap is content localization of the 5 seeded starter quests (still Indonesian-only) — this is a backend-content issue, not a frontend bug. If main agent adopts a quest_key approach on the backend, the i18n-aware frontend can resolve titles automatically. The deprecation warnings are cosmetic and don't affect tests.",
+  "rca_of_issue": "N/A — no bugs. Frontend i18n + social-share implementation is correct and matches every acceptance criterion in the review request."
+}
