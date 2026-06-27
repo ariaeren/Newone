@@ -1,58 +1,67 @@
 # GRYND — Product Requirements
 
-(Previously named "Cyber-Chill" — renamed to GRYND in iteration 2.)
+## Original Problem Statement
+> Ambil proyek di github saya terus improve lanjutan pembuatannya hingga selsai 100%
+> Tidak hanya bahasa Indonesia tapi wordwide! Dan apa fitur untuk bagikan ke sosmed sudah tersedia jika belum reseach dan tambahkan/improve dengan benar
+
+Source repo: https://github.com/ariaeren/Newone (cloned to /app, env files re-created).
 
 ## Concept
 Gen Z gamified productivity & self-development app. Habits become quests, completing quests earns XP, XP levels you up, streaks compound. Cyber-Chill theme: true-black OLED, neon cyan/acid-green/neon-purple accents.
 
 ## Tech Stack
-- Frontend: Expo SDK 54 / React Native 0.81 / expo-router 6 / TypeScript
-- Animations: react-native-reanimated v4
-- Gestures: react-native-gesture-handler
-- Haptics: expo-haptics
-- Blur: expo-blur
-- Icons: lucide-react-native + emojis
+- Frontend: Expo SDK 54 / React Native 0.81 / expo-router 6 / TypeScript / react-i18next + expo-localization
 - Backend: FastAPI + Motor + MongoDB
-- Auth: Custom JWT email/password (bcrypt, expo-secure-store) + Google (Emergent-managed) + Apple Sign-In (iOS native build only)
+- Auth: JWT email/password (bcrypt) + Google (Emergent-managed) + Apple Sign-In (iOS native)
 
-## Core Features
-1. **Auth** — Email/password signup & login with JWT. Seeds 4 starter quests on signup.
-2. **Hub Dashboard** (`/(tabs)/hub`) — Avatar, total XP, level + animated XP bar, streak badge (pulsing fire), quick actions, Pro upsell.
-3. **Quests** (`/(tabs)/quests`) — List of daily quests. Swipe RIGHT to complete (heavy haptic + screen-wide particle burst + XP gain). Swipe LEFT to delete. Add quest via bottom-sheet modal (title, icon picker, XP reward).
-4. **Micro-Journaling** (`/(tabs)/journal`) — 140-char entries with mood emoji picker, character counter, bottom-sheet input.
-5. **Leaderboard** (`/(tabs)/leaderboard`) — Top 50 global ranked by total XP. Medals for 1-3. Sticky "Your rank" row at bottom. Pull-to-refresh.
-6. **Profile** (`/(tabs)/profile`) — Avatar picker (free + locked Pro neon cosmetics), Support the Devs (opens Saweria webview), 2× XP boost link, sign out.
-7. **Guild Pro Paywall** (`/paywall`) — Lifetime IDR 49,000. Mock QRIS QR code (procedurally drawn). "I've paid" button activates Pro server-side.
-8. **Rewarded Ad** (`/rewarded-ad`) — 5-second mock ad. Claim button activates 2× XP boost for 1 hour.
+## What's already implemented (inherited)
+1. Auth (email/password + Google + Apple)
+2. Hub dashboard with avatar/XP/level/streak
+3. Quests (create, complete, swipe-to-uncomplete, swipe-to-delete) with particle burst + level-up sheet
+4. Micro Journal (140 chars + mood emoji)
+5. Leaderboard (top 50 + sticky my-rank row)
+6. Profile (free + Pro avatar picker, support devs, account info)
+7. Paywall (procedural QRIS QR, mocked confirm Pro)
+8. Rewarded ad (mocked 5s ad → 1h 2× XP boost)
 
-## Backend API (all under `/api`)
-- `POST /auth/register` — email, password, username → JWT + user
-- `POST /auth/login` — email, password → JWT + user
-- `POST /auth/google` — `{ session_id }` (from Emergent auth flow) → JWT + user (upserts by email)
-- `POST /auth/apple` — `{ identity_token, email?, full_name? }` → JWT + user (upserts by email; signature NOT verified MVP)
-- `GET /auth/me` — current user
-- `PATCH /auth/me` — update username/avatar_emoji
-- `GET /quests` — list (with completed_today flag)
-- `POST /quests` — create
-- `DELETE /quests/{id}` — delete
-- `POST /quests/{id}/complete` — log completion, award XP (2× if boost active), update level/streak
-- `GET /journals` — list
-- `POST /journals` — create
-- `DELETE /journals/{id}` — delete
-- `GET /leaderboard` — top 50 + my rank
-- `POST /monetization/xp-boost` — activate 1-hour 2× boost
-- `POST /monetization/pro/activate` — set is_pro=true (mock QRIS confirmation)
-- `GET /monetization/qris` — get mock QRIS string + amount
+## What was added in this session (Jan 2026)
+1. **12-language i18n** (EN, ID, ES, FR, DE, PT, RU, JA, KO, ZH, AR, HI) via `react-i18next` + `expo-localization`. Auto-detects device locale, persists choice in AsyncStorage, applies RTL for Arabic.
+2. **LanguagePicker** bottom-sheet modal (globe icon on Login + row on Profile). Live language switching.
+3. **Comprehensive Social Sharing**:
+   - `ShareSheet` modal with native OS share button + 7 targets (X/Twitter, Facebook, WhatsApp, Telegram, LinkedIn, Reddit, Pinterest) + Copy Link.
+   - `ShareCard` preview component (5 variants: level / streak / quest / rank / invite).
+   - Entry points: Hub (share level + share streak), Quests (auto-prompt on completion), Leaderboard (share rank by tapping the sticky bar), Profile (Invite friends row), LevelUpSheet (share button on level-up).
+4. **Locale-aware starter quests** — backend now accepts `lang` field on register/google/apple and seeds quests in 12 languages.
+5. **Email/password login fallback** UI on Login screen (Google OAuth still primary).
+6. **Backend rebrand & polish**: QRIS merchant label `Cyber-Chill Guild` → `GRYND Guild`; error string `Belum diselesaikan hari ini` → `Not completed today`.
 
-## XP/Level System
-- XP needed for level N = 100 + (N-1) × 150 → 100, 250, 400, 550...
-- Completing a quest awards `xp_reward` (doubled while `xp_boost_until` > now).
-- Levels can compound from a single completion if XP gain is huge.
+## Tests status
+- Backend: 19/19 PASS (test_reports/iteration_3.json)
+- Frontend: 20/20 PASS (test_reports/iteration_4.json)
 
-## Monetization Notes
-- QRIS: NO Coda Payments. Pure mocked UI for now. Real integration would use Midtrans/Xendit QRIS API.
-- AdMob: MOCKED 5s placeholder modal — real AdMob requires native build.
-- Saweria: Real webview via `expo-web-browser`.
+## Test credentials
+See `/app/memory/test_credentials.md`:
+- Email: tester@grynd.app
+- Password: Tester123!
 
-## Design tokens
-See `/app/design_guidelines.json` and `/app/frontend/src/theme.ts`. True black bg, neon cyan primary, acid green success, neon purple premium, warning red.
+## File map (additions)
+- `/app/frontend/src/i18n.ts` (rewritten)
+- `/app/frontend/src/locales/{en,id,es,fr,de,ja,zh,ar,pt,ru,ko,hi}.json` (new)
+- `/app/frontend/src/utils/share.ts` (new)
+- `/app/frontend/src/components/ShareSheet.tsx` (new)
+- `/app/frontend/src/components/ShareCard.tsx` (new)
+- `/app/frontend/src/components/LanguagePicker.tsx` (new)
+- Backend: `/app/backend/server.py` — added STARTER_QUESTS_BY_LANG and lang fields on auth payloads.
+
+## Backlog (P1/P2 - not blocking, future iterations)
+- P1: Push notifications (daily reminder, streak warning).
+- P1: Friend system + private guilds.
+- P2: Achievement badges (silver/gold tiers).
+- P2: Real AdMob integration (requires native build).
+- P2: Real QRIS via Midtrans/Xendit.
+- P3: Open Graph image generation for share links so Twitter/FB unfurl the ShareCard preview.
+- P3: Migrate shadow* style props to boxShadow and pointerEvents prop to style.pointerEvents (React Native Web deprecations).
+
+## Next Action Items
+- Optional: implement OG meta tags for share links so each shared URL unfurls with a beautiful preview.
+- Optional: invite referral tracking (count signups from `?ref=username`).
