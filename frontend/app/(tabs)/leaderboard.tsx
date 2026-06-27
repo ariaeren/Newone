@@ -171,7 +171,6 @@ const styles = StyleSheet.create({
   kicker: { color: colors.textSecondary, fontSize: 11, letterSpacing: 1.5, fontWeight: "700" },
   title: { color: colors.text, fontSize: 24, fontWeight: "800", marginTop: 2 },
   trophyBubble: { width: 44, height: 44, borderRadius: 14, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.borderSubtle, alignItems: "center", justifyContent: "center" },
-  scoreToggle: {},
   scopeToggle: { flexDirection: "row", gap: 6, paddingHorizontal: spacing.screen, marginBottom: 8 },
   scopeBtn: { flex: 1, paddingVertical: 10, borderRadius: radius.pill, alignItems: "center", backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.borderSubtle },
   scopeBtnOn: { backgroundColor: colors.primary, borderColor: colors.primary },
