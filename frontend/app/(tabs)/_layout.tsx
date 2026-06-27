@@ -4,6 +4,7 @@ import { Platform, StyleSheet, View } from "react-native";
 import { Home, Swords, BookOpen, Trophy, User } from "lucide-react-native";
 
 import { colors } from "@/src/theme";
+import { t } from "@/src/i18n";
 
 export default function TabsLayout() {
   return (
@@ -47,35 +48,35 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="hub"
         options={{
-          title: "HUB",
+          title: t.tabs.hub,
           tabBarIcon: ({ color, size }) => <Home color={color} size={size ?? 22} />,
         }}
       />
       <Tabs.Screen
         name="quests"
         options={{
-          title: "QUESTS",
+          title: t.tabs.quests,
           tabBarIcon: ({ color, size }) => <Swords color={color} size={size ?? 22} />,
         }}
       />
       <Tabs.Screen
         name="journal"
         options={{
-          title: "JOURNAL",
+          title: t.tabs.journal,
           tabBarIcon: ({ color, size }) => <BookOpen color={color} size={size ?? 22} />,
         }}
       />
       <Tabs.Screen
         name="leaderboard"
         options={{
-          title: "GUILD",
+          title: t.tabs.leaderboard,
           tabBarIcon: ({ color, size }) => <Trophy color={color} size={size ?? 22} />,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: "ME",
+          title: t.tabs.profile,
           tabBarIcon: ({ color, size }) => <User color={color} size={size ?? 22} />,
         }}
       />

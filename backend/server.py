@@ -133,6 +133,8 @@ class TokenOut(BaseModel):
 class QuestIn(BaseModel):
     title: str = Field(min_length=1, max_length=80)
     xp_reward: int = Field(default=25, ge=5, le=200)
+    difficulty: Literal["trivial", "easy", "medium", "hard"] = "easy"
+    category: str = Field(default="other", max_length=24)
     frequency: Literal["daily", "weekly"] = "daily"
     icon: Optional[str] = "⚡"
 
@@ -175,12 +177,13 @@ async def register(payload: RegisterIn):
     }
     await users.insert_one(new_user)
 
-    # seed a few starter quests
+    # seed a few starter quests (Bahasa Indonesia)
     starter = [
-        {"title": "Hydrate (8 glasses)", "xp_reward": 20, "icon": "💧"},
-        {"title": "Read 10 minutes", "xp_reward": 30, "icon": "📚"},
-        {"title": "Move your body", "xp_reward": 40, "icon": "🏃"},
-        {"title": "No social media 1hr", "xp_reward": 50, "icon": "🧘"},
+        {"title": "Minum 8 gelas air", "xp_reward": 20, "icon": "💧", "difficulty": "easy", "category": "health"},
+        {"title": "Baca 10 menit", "xp_reward": 30, "icon": "📚", "difficulty": "easy", "category": "study"},
+        {"title": "Olahraga 20 menit", "xp_reward": 50, "icon": "🏃", "difficulty": "medium", "category": "health"},
+        {"title": "Meditasi 5 menit", "xp_reward": 25, "icon": "🧘", "difficulty": "easy", "category": "mind"},
+        {"title": "No sosmed 1 jam", "xp_reward": 40, "icon": "📵", "difficulty": "medium", "category": "mind"},
     ]
     for q in starter:
         await quests.insert_one({
@@ -189,6 +192,8 @@ async def register(payload: RegisterIn):
             "title": q["title"],
             "xp_reward": q["xp_reward"],
             "icon": q["icon"],
+            "difficulty": q["difficulty"],
+            "category": q["category"],
             "frequency": "daily",
             "created_at": now_utc().isoformat(),
         })
@@ -256,12 +261,13 @@ async def _upsert_social_user(email: str, display_name: Optional[str], provider:
     }
     await users.insert_one(new_user)
 
-    # seed starter quests
+    # social-auth seed (Bahasa Indonesia)
     starter = [
-        {"title": "Hydrate (8 glasses)", "xp_reward": 20, "icon": "💧"},
-        {"title": "Read 10 minutes", "xp_reward": 30, "icon": "📚"},
-        {"title": "Move your body", "xp_reward": 40, "icon": "🏃"},
-        {"title": "No social media 1hr", "xp_reward": 50, "icon": "🧘"},
+        {"title": "Minum 8 gelas air", "xp_reward": 20, "icon": "💧", "difficulty": "easy", "category": "health"},
+        {"title": "Baca 10 menit", "xp_reward": 30, "icon": "📚", "difficulty": "easy", "category": "study"},
+        {"title": "Olahraga 20 menit", "xp_reward": 50, "icon": "🏃", "difficulty": "medium", "category": "health"},
+        {"title": "Meditasi 5 menit", "xp_reward": 25, "icon": "🧘", "difficulty": "easy", "category": "mind"},
+        {"title": "No sosmed 1 jam", "xp_reward": 40, "icon": "📵", "difficulty": "medium", "category": "mind"},
     ]
     for q in starter:
         await quests.insert_one({
@@ -270,6 +276,8 @@ async def _upsert_social_user(email: str, display_name: Optional[str], provider:
             "title": q["title"],
             "xp_reward": q["xp_reward"],
             "icon": q["icon"],
+            "difficulty": q["difficulty"],
+            "category": q["category"],
             "frequency": "daily",
             "created_at": now_utc().isoformat(),
         })
@@ -368,6 +376,8 @@ async def create_quest(payload: QuestIn, current=Depends(get_current_user)):
         "user_id": current["id"],
         "title": payload.title,
         "xp_reward": payload.xp_reward,
+        "difficulty": payload.difficulty,
+        "category": payload.category,
         "frequency": payload.frequency,
         "icon": payload.icon or "⚡",
         "created_at": now_utc().isoformat(),
@@ -376,6 +386,63 @@ async def create_quest(payload: QuestIn, current=Depends(get_current_user)):
     quest.pop("_id", None)
     quest["completed_today"] = False
     return quest
+
+
+@quest_router.post("/{quest_id}/uncomplete")
+async def uncomplete_quest(quest_id: str, current=Depends(get_current_user)):
+    """Undo a completion done today. Refunds XP and reverts level/streak appropriately."""
+    today = now_utc().date().isoformat()
+    log = await quest_logs.find_one(
+        {"user_id": current["id"], "quest_id": quest_id, "completed_date": today}
+    )
+    if not log:
+        raise HTTPException(404, "Belum diselesaikan hari ini")
+    xp_refund = int(log.get("xp_gained", 0))
+    await quest_logs.delete_one({"id": log["id"]})
+
+    # Refund XP / drop levels if necessary
+    new_current = current.get("current_xp", 0)
+    total_xp = max(0, current.get("total_xp", 0) - xp_refund)
+    level = current.get("level", 1)
+    new_current -= xp_refund
+    while new_current < 0 and level > 1:
+        level -= 1
+        new_current += xp_needed_for_level(level)
+    if new_current < 0:
+        new_current = 0
+
+    # If no completions left today, restore streak to previous state (best-effort)
+    today_completions = await quest_logs.count_documents(
+        {"user_id": current["id"], "completed_date": today}
+    )
+    streak = current.get("streak_count", 0)
+    last_date = current.get("last_completed_date")
+    if today_completions == 0 and last_date == today:
+        # try to find prior day's last_completed_date
+        prior_log = await quest_logs.find_one(
+            {"user_id": current["id"], "completed_date": {"$lt": today}},
+            sort=[("completed_date", -1)],
+        )
+        if prior_log:
+            last_date = prior_log["completed_date"]
+            # streak decrement by 1 (today was incremented)
+            streak = max(0, streak - 1)
+        else:
+            last_date = None
+            streak = 0
+
+    await users.update_one(
+        {"id": current["id"]},
+        {"$set": {
+            "current_xp": new_current,
+            "total_xp": total_xp,
+            "level": level,
+            "streak_count": streak,
+            "last_completed_date": last_date,
+        }},
+    )
+    updated = await users.find_one({"id": current["id"]}, {"_id": 0})
+    return {"xp_refunded": xp_refund, "user": public_user(updated)}
 
 
 @quest_router.delete("/{quest_id}")

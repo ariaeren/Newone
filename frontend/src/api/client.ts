@@ -24,6 +24,8 @@ export type Quest = {
   xp_reward: number;
   frequency: "daily" | "weekly";
   icon: string;
+  difficulty?: "trivial" | "easy" | "medium" | "hard";
+  category?: string;
   created_at: string;
   completed_today?: boolean;
 };
@@ -106,7 +108,7 @@ export const api = {
 
   listQuests: () => request<Quest[]>("/quests"),
 
-  createQuest: (data: { title: string; xp_reward: number; icon: string }) =>
+  createQuest: (data: { title: string; xp_reward: number; icon: string; difficulty?: string; category?: string }) =>
     request<Quest>("/quests", { method: "POST", body: JSON.stringify(data) }),
 
   deleteQuest: (id: string) =>
@@ -120,6 +122,9 @@ export const api = {
       streak_count: number;
       user: AppUser;
     }>(`/quests/${id}/complete`, { method: "POST" }),
+
+  uncompleteQuest: (id: string) =>
+    request<{ xp_refunded: number; user: AppUser }>(`/quests/${id}/uncomplete`, { method: "POST" }),
 
   listJournals: () => request<Journal[]>("/journals"),
 

@@ -9,7 +9,8 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 
-import { colors } from "@/src/theme";
+import { colors, radius } from "@/src/theme";
+import { t } from "@/src/i18n";
 
 export default function StreakBadge({ count }: { count: number }) {
   const scale = useSharedValue(1);
@@ -34,7 +35,7 @@ export default function StreakBadge({ count }: { count: number }) {
       <Animated.Text style={[styles.fire, fireStyle]}>🔥</Animated.Text>
       <View>
         <Text style={styles.count}>{count}</Text>
-        <Text style={styles.label}>DAY STREAK</Text>
+        <Text style={styles.label}>{t.hub.streakLabel}</Text>
       </View>
     </View>
   );
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     borderColor: colors.borderSubtle,
     paddingHorizontal: 14,
     paddingVertical: 10,
-    borderRadius: 16,
+    borderRadius: radius.input,
   },
   fire: { fontSize: 28 },
   count: { color: colors.text, fontSize: 18, fontWeight: "900" },

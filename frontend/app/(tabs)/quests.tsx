@@ -19,11 +19,19 @@ import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { colors, radius, spacing } from "@/src/theme";
 import { api, Quest } from "@/src/api/client";
 import { useAuth } from "@/src/api/auth-context";
+import { t } from "@/src/i18n";
 import SwipeQuestCard from "@/src/components/SwipeQuestCard";
 import ParticleBurst from "@/src/components/ParticleBurst";
 import LevelUpSheet from "@/src/components/LevelUpSheet";
 
-const QUEST_ICONS = ["⚡", "💧", "📚", "🏃", "🧘", "🍎", "🎯", "🎮", "💪", "🌙"];
+const QUEST_ICONS = ["⚡", "💧", "📚", "🏃", "🧘", "🍎", "🎯", "🎮", "💪", "🌙", "☀️", "🧠", "📵", "🎨"];
+type DiffKey = "trivial" | "easy" | "medium" | "hard";
+const DIFFICULTIES: { key: DiffKey; label: string; xp: number; color: string }[] = [
+  { key: "trivial", label: "Sepele", xp: 10, color: colors.textTertiary },
+  { key: "easy", label: "Mudah", xp: 20, color: colors.success },
+  { key: "medium", label: "Sedang", xp: 40, color: colors.primary },
+  { key: "hard", label: "Sulit", xp: 75, color: colors.premium },
+];
 
 export default function QuestsScreen() {
   const { setUser } = useAuth();
@@ -37,7 +45,7 @@ export default function QuestsScreen() {
 
   const [addOpen, setAddOpen] = useState(false);
   const [newTitle, setNewTitle] = useState("");
-  const [newXp, setNewXp] = useState(25);
+  const [newDiff, setNewDiff] = useState<DiffKey>("easy");
   const [newIcon, setNewIcon] = useState("⚡");
   const [creating, setCreating] = useState(false);
 
@@ -92,26 +100,41 @@ export default function QuestsScreen() {
     }
   }, [load]);
 
+  const handleUncomplete = useCallback(async (id: string) => {
+    try {
+      const res = await api.uncompleteQuest(id);
+      setUser(res.user);
+      setQuests((prev) =>
+        prev.map((q) => (q.id === id ? { ...q, completed_today: false } : q)),
+      );
+    } catch {
+      load();
+    }
+  }, [setUser, load]);
+
   const createQuest = useCallback(async () => {
     if (!newTitle.trim() || creating) return;
     setCreating(true);
     try {
+      const diff = DIFFICULTIES.find((d) => d.key === newDiff)!;
       const q = await api.createQuest({
         title: newTitle.trim(),
-        xp_reward: newXp,
+        xp_reward: diff.xp,
         icon: newIcon,
+        difficulty: newDiff,
+        category: "other",
       });
       setQuests((prev) => [...prev, q]);
       setAddOpen(false);
       setNewTitle("");
-      setNewXp(25);
+      setNewDiff("easy");
       setNewIcon("⚡");
     } catch {
       // ignore
     } finally {
       setCreating(false);
     }
-  }, [newTitle, newXp, newIcon, creating]);
+  }, [newTitle, newDiff, newIcon, creating]);
 
   const completedToday = quests.filter((q) => q.completed_today).length;
 
@@ -119,9 +142,9 @@ export default function QuestsScreen() {
     <SafeAreaView style={styles.container} edges={["top"]}>
       <View style={styles.headerRow}>
         <View>
-          <Text style={styles.kicker}>DAILY QUESTS</Text>
+          <Text style={styles.kicker}>{t.quests.kicker}</Text>
           <Text style={styles.title}>
-            {completedToday}/{quests.length} cleared
+            {t.quests.titleProgress(completedToday, quests.length)}
           </Text>
         </View>
         <Pressable
@@ -141,13 +164,18 @@ export default function QuestsScreen() {
         }
       >
         {loading && quests.length === 0 && (
-          <Text style={styles.empty}>Loading the grid…</Text>
+          <Text style={styles.empty}>{t.quests.loading}</Text>
         )}
         {!loading && quests.length === 0 && (
           <Animated.View entering={FadeIn} style={styles.emptyCard}>
-            <Text style={styles.emptyTitle}>No quests yet</Text>
-            <Text style={styles.emptySub}>Drop a quest to start banking XP.</Text>
+            <Text style={styles.emptyTitle}>{t.quests.emptyTitle}</Text>
+            <Text style={styles.emptySub}>{t.quests.emptySub}</Text>
           </Animated.View>
+        )}
+        {quests.length > 0 && (
+          <View style={styles.tipBox}>
+            <Text style={styles.tipText}>💡 {t.quests.tapHint} · {t.quests.swipeHint}</Text>
+          </View>
         )}
         {quests.map((q, idx) => (
           <Animated.View key={q.id} entering={FadeInDown.delay(idx * 40).duration(350)}>
@@ -156,8 +184,10 @@ export default function QuestsScreen() {
               title={q.title}
               xpReward={q.xp_reward}
               icon={q.icon}
+              difficulty={q.difficulty}
               completedToday={!!q.completed_today}
               onComplete={handleComplete}
+              onUncomplete={handleUncomplete}
               onDelete={handleDelete}
             />
           </Animated.View>
@@ -185,25 +215,25 @@ export default function QuestsScreen() {
             <View style={styles.sheet}>
               <View style={styles.sheetHandle} />
               <View style={styles.sheetHeader}>
-                <Text style={styles.sheetTitle}>NEW QUEST</Text>
+                <Text style={styles.sheetTitle}>{t.quests.addQuest}</Text>
                 <Pressable testID="close-add-quest" onPress={() => setAddOpen(false)}>
                   <X color={colors.text} size={20} />
                 </Pressable>
               </View>
 
-              <Text style={styles.fieldLabel}>TITLE</Text>
+              <Text style={styles.fieldLabel}>{t.quests.titleLabel}</Text>
               <TextInput
                 testID="new-quest-title"
                 value={newTitle}
                 onChangeText={setNewTitle}
-                placeholder="Go for a 20-min walk"
+                placeholder={t.quests.titlePlaceholder}
                 placeholderTextColor={colors.textTertiary}
                 style={styles.input}
                 maxLength={60}
                 autoFocus
               />
 
-              <Text style={styles.fieldLabel}>ICON</Text>
+              <Text style={styles.fieldLabel}>{t.quests.iconLabel}</Text>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.iconRow}>
                 {QUEST_ICONS.map((i) => (
                   <Pressable
@@ -217,21 +247,24 @@ export default function QuestsScreen() {
                 ))}
               </ScrollView>
 
-              <Text style={styles.fieldLabel}>XP REWARD</Text>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.iconRow}>
-                {[10, 20, 30, 50, 75, 100].map((n) => (
+              <Text style={styles.fieldLabel}>{t.quests.difficultyLabel}</Text>
+              <View style={styles.diffGrid}>
+                {DIFFICULTIES.map((d) => (
                   <Pressable
-                    key={n}
-                    testID={`xp-pick-${n}`}
-                    onPress={() => setNewXp(n)}
-                    style={[styles.xpChip, newXp === n && styles.xpChipActive]}
+                    key={d.key}
+                    testID={`diff-pick-${d.key}`}
+                    onPress={() => setNewDiff(d.key)}
+                    style={[
+                      styles.diffCard,
+                      newDiff === d.key && { borderColor: d.color, backgroundColor: "rgba(255,255,255,0.04)" },
+                    ]}
                   >
-                    <Text style={[styles.xpChipText, newXp === n && { color: colors.bg }]}>
-                      +{n}
-                    </Text>
+                    <View style={[styles.diffDot, { backgroundColor: d.color }]} />
+                    <Text style={styles.diffLabel}>{d.label}</Text>
+                    <Text style={[styles.diffXp, { color: d.color }]}>+{d.xp} XP</Text>
                   </Pressable>
                 ))}
-              </ScrollView>
+              </View>
 
               <Pressable
                 testID="confirm-add-quest"
@@ -243,7 +276,7 @@ export default function QuestsScreen() {
                   pressed && { opacity: 0.85 },
                 ]}
               >
-                <Text style={styles.confirmText}>{creating ? "..." : "Drop quest"}</Text>
+                <Text style={styles.confirmText}>{creating ? t.quests.creating : t.quests.create}</Text>
               </Pressable>
             </View>
           </KeyboardAvoidingView>
@@ -352,6 +385,37 @@ const styles = StyleSheet.create({
   },
   xpChipActive: { backgroundColor: colors.primary, borderColor: colors.primary },
   xpChipText: { color: colors.text, fontSize: 13, fontWeight: "800" },
+  tipBox: {
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.borderSubtle,
+    borderRadius: 14,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    marginBottom: 12,
+  },
+  tipText: { color: colors.textSecondary, fontSize: 12, lineHeight: 18 },
+  diffGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginTop: 4,
+  },
+  diffCard: {
+    width: "48%",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 14,
+    backgroundColor: colors.surfaceElevated,
+    borderRadius: radius.input,
+    borderWidth: 1,
+    borderColor: colors.borderSubtle,
+  },
+  diffDot: { width: 8, height: 8, borderRadius: 4 },
+  diffLabel: { color: colors.text, fontSize: 13, fontWeight: "700", flex: 1 },
+  diffXp: { fontSize: 12, fontWeight: "900" },
   confirmBtn: {
     marginTop: 20,
     backgroundColor: colors.primary,

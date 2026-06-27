@@ -16,6 +16,7 @@ import {
 import { colors, radius, spacing } from "@/src/theme";
 import { useAuth } from "@/src/api/auth-context";
 import { api } from "@/src/api/client";
+import { t } from "@/src/i18n";
 
 const PRO_AVATARS = ["👾", "🤖", "🦾", "🧬", "🌌", "🪐"];
 const FREE_AVATARS = ["🦄", "🐺", "🦊", "🐉", "🧠", "⚡"];
@@ -180,7 +181,7 @@ export default function ProfileScreen() {
           style={({ pressed }) => [styles.signOutBtn, pressed && { opacity: 0.85 }]}
         >
           <LogOut color={colors.warning} size={18} />
-          <Text style={styles.signOutText}>Sign out</Text>
+          <Text style={styles.signOutText}>{t.profile.signOut}</Text>
         </Pressable>
       </ScrollView>
     </SafeAreaView>

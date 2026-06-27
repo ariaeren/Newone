@@ -14,6 +14,7 @@ import Animated, { FadeInDown } from "react-native-reanimated";
 
 import { colors, radius, spacing } from "@/src/theme";
 import { useAuth } from "@/src/api/auth-context";
+import { t } from "@/src/i18n";
 import XpBar from "@/src/components/XpBar";
 import StreakBadge from "@/src/components/StreakBadge";
 
@@ -51,7 +52,7 @@ export default function HubScreen() {
       >
         <View style={styles.headerRow}>
           <View>
-            <Text style={styles.kicker}>WELCOME BACK</Text>
+            <Text style={styles.kicker}>{t.hub.kicker}</Text>
             <Text style={styles.name}>@{user.username}</Text>
           </View>
           <StreakBadge count={user.streak_count} />
@@ -69,7 +70,7 @@ export default function HubScreen() {
             )}
           </View>
           <Text style={styles.totalXp}>{user.total_xp.toLocaleString()} XP</Text>
-          <Text style={styles.lifeStat}>LIFETIME EARNED</Text>
+          <Text style={styles.lifeStat}>{t.hub.lifetimeEarned}</Text>
           <View style={{ marginTop: 18, width: "100%" }}>
             <XpBar level={user.level} currentXp={user.current_xp} xpToNext={user.xp_to_next} />
           </View>
@@ -79,13 +80,13 @@ export default function HubScreen() {
           <Animated.View entering={FadeInDown.duration(400)} style={styles.boostCard} testID="boost-active-card">
             <Sparkles color={colors.bg} size={20} strokeWidth={3} />
             <View style={{ flex: 1 }}>
-              <Text style={styles.boostTitle}>2× XP BOOST ACTIVE</Text>
-              <Text style={styles.boostSub}>Every quest you complete doubles up</Text>
+              <Text style={styles.boostTitle}>{t.hub.boostActive}</Text>
+              <Text style={styles.boostSub}>{t.hub.boostActiveSub}</Text>
             </View>
           </Animated.View>
         )}
 
-        <Text style={styles.sectionLabel}>QUICK ACTIONS</Text>
+        <Text style={styles.sectionLabel}>{t.hub.quickActions}</Text>
         <View style={styles.quickRow}>
           <Pressable
             testID="quick-quests"
@@ -95,8 +96,8 @@ export default function HubScreen() {
             <View style={[styles.quickIcon, { backgroundColor: colors.primary }]}>
               <Zap color={colors.bg} size={20} strokeWidth={3} />
             </View>
-            <Text style={styles.quickTitle}>Run quests</Text>
-            <Text style={styles.quickSub}>Stack XP today</Text>
+            <Text style={styles.quickTitle}>{t.hub.runQuests}</Text>
+            <Text style={styles.quickSub}>{t.hub.runQuestsSub}</Text>
           </Pressable>
           <Pressable
             testID="quick-boost"
@@ -106,8 +107,8 @@ export default function HubScreen() {
             <View style={[styles.quickIcon, { backgroundColor: colors.success }]}>
               <Rocket color={colors.bg} size={20} strokeWidth={3} />
             </View>
-            <Text style={styles.quickTitle}>2× boost</Text>
-            <Text style={styles.quickSub}>Watch & earn</Text>
+            <Text style={styles.quickTitle}>{t.hub.boost}</Text>
+            <Text style={styles.quickSub}>{t.hub.boostSub}</Text>
           </Pressable>
         </View>
 
@@ -117,28 +118,28 @@ export default function HubScreen() {
           style={({ pressed }) => [styles.proCard, pressed && { opacity: 0.9 }]}
         >
           <View>
-            <Text style={styles.proCardKicker}>GUILD PRO</Text>
-            <Text style={styles.proCardTitle}>Unlock neon cosmetics ✨</Text>
-            <Text style={styles.proCardSub}>One-time IDR 49K · lifetime</Text>
+            <Text style={styles.proCardKicker}>{t.hub.proKicker}</Text>
+            <Text style={styles.proCardTitle}>{t.hub.proTitle}</Text>
+            <Text style={styles.proCardSub}>{t.hub.proSub}</Text>
           </View>
           <View style={styles.proCta}>
-            <Text style={styles.proCtaText}>OPEN</Text>
+            <Text style={styles.proCtaText}>{t.hub.proCta}</Text>
           </View>
         </Pressable>
 
-        <Text style={styles.sectionLabel}>STATS</Text>
+        <Text style={styles.sectionLabel}>{t.hub.stats}</Text>
         <View style={styles.statsGrid}>
           <View style={styles.statBox}>
             <Text style={styles.statValue}>{user.level}</Text>
-            <Text style={styles.statLabel}>LEVEL</Text>
+            <Text style={styles.statLabel}>{t.hub.level}</Text>
           </View>
           <View style={styles.statBox}>
             <Text style={[styles.statValue, { color: colors.success }]}>{user.streak_count}</Text>
-            <Text style={styles.statLabel}>STREAK</Text>
+            <Text style={styles.statLabel}>{t.hub.streak}</Text>
           </View>
           <View style={styles.statBox}>
             <Text style={[styles.statValue, { color: colors.primary }]}>{user.current_xp}</Text>
-            <Text style={styles.statLabel}>XP THIS LVL</Text>
+            <Text style={styles.statLabel}>{t.hub.xpThisLvl}</Text>
           </View>
         </View>
       </ScrollView>
