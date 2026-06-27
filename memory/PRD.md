@@ -1,4 +1,6 @@
-# Cyber-Chill — Product Requirements
+# GRYND — Product Requirements
+
+(Previously named "Cyber-Chill" — renamed to GRYND in iteration 2.)
 
 ## Concept
 Gen Z gamified productivity & self-development app. Habits become quests, completing quests earns XP, XP levels you up, streaks compound. Cyber-Chill theme: true-black OLED, neon cyan/acid-green/neon-purple accents.
@@ -11,7 +13,7 @@ Gen Z gamified productivity & self-development app. Habits become quests, comple
 - Blur: expo-blur
 - Icons: lucide-react-native + emojis
 - Backend: FastAPI + Motor + MongoDB
-- Auth: Custom JWT email/password (bcrypt, expo-secure-store)
+- Auth: Custom JWT email/password (bcrypt, expo-secure-store) + Google (Emergent-managed) + Apple Sign-In (iOS native build only)
 
 ## Core Features
 1. **Auth** — Email/password signup & login with JWT. Seeds 4 starter quests on signup.
@@ -26,6 +28,8 @@ Gen Z gamified productivity & self-development app. Habits become quests, comple
 ## Backend API (all under `/api`)
 - `POST /auth/register` — email, password, username → JWT + user
 - `POST /auth/login` — email, password → JWT + user
+- `POST /auth/google` — `{ session_id }` (from Emergent auth flow) → JWT + user (upserts by email)
+- `POST /auth/apple` — `{ identity_token, email?, full_name? }` → JWT + user (upserts by email; signature NOT verified MVP)
 - `GET /auth/me` — current user
 - `PATCH /auth/me` — update username/avatar_emoji
 - `GET /quests` — list (with completed_today flag)
