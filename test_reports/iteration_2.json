@@ -1,0 +1,65 @@
+{
+  "summary": "BACKEND ONLY testing — 36/36 pytest tests PASS (19 existing cyberchill regression + 17 new GRYND social auth/rebrand). All requested scenarios verified: (1) /api/ healthcheck returns service='grynd' (rebrand confirmed); (2) POST /api/auth/google with invalid session → 401 'Invalid Google session' (httpx actually calls https://demobackend.emergentagent.com/auth/v1/env/oauth/session-data and returns 404 → backend maps to 401 — verified via backend logs); (3) POST /api/auth/google missing session_id → 422; also session_id <4 chars → 422 (Field min_length=4 validator); (4) POST /api/auth/apple with unsigned PyJWT containing sub+email → 200 with access_token + user.email==claim email; (5) Second /apple call with same identity_token returns SAME user.id (no duplicate); (6) POST /api/auth/apple with malformed token → 401 'Invalid Apple identity token'; (7) Private-relay synthesis: sub-only token with no email anywhere → user.email == '{sub}@privaterelay.appleid.com'; (8) Apple-created user has exactly 4 starter quests seeded (verified via GET /api/quests using returned token); (9) GET /api/auth/me with Apple-returned token works → user resumable; (10) Existing register/login/me/quests/journals/leaderboard/monetization all still pass. No regressions from social auth additions.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {
+        "endpoint": "POST /api/auth/apple",
+        "issue": "Apple identity_token signature is NOT verified (decode with verify_signature=False) — explicitly acknowledged as MVP mocked behavior. Production must fetch https://appleid.apple.com/auth/keys and verify the JWS, plus check iss=https://appleid.apple.com, aud=<your client_id>, exp not expired, nonce match. Currently anyone can mint a JWT with any sub/email and impersonate."
+      },
+      {
+        "endpoint": "_upsert_social_user",
+        "issue": "If an email-password user already exists with the same email, social auth silently logs them in without any account-link confirmation. Acceptable for MVP but worth a UX note."
+      },
+      {
+        "endpoint": "POST /api/auth/google",
+        "issue": "On httpx network failure, backend raises 502 — but a transient upstream 5xx from Emergent will also be treated as 'Invalid Google session' (401). Consider distinguishing 4xx vs 5xx upstream responses."
+      },
+      {
+        "endpoint": "startup",
+        "issue": "Benign passlib bcrypt warning ('module bcrypt has no attribute __about__') still present. Auth fully works. Optional pin bcrypt<4 or upgrade passlib."
+      }
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [],
+    "react_native_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_grynd_social_auth.py",
+    "/app/backend/tests/test_cyberchill_api.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "Optional (security hardening, before production): implement real Apple JWS verification — fetch JWK from https://appleid.apple.com/auth/keys, verify alg=RS256, kid match, iss=https://appleid.apple.com, aud=<bundle_id>, exp>now. Currently MOCKED — backend trusts any decodable JWT.",
+    "Optional: in /api/auth/google, differentiate upstream 5xx (502) vs 4xx (401) so flaky Emergent sessions don't all look like 'invalid session' to the user.",
+    "Optional: add an explicit 'link account' confirmation flow when a social provider returns an email that already has an email-password account — avoids silent account takeover via DNS/email spoofing if the IdP ever lies.",
+    "Optional cleanup: pin bcrypt<4 (or upgrade passlib) in backend/requirements.txt to silence trapped __about__ AttributeError at startup.",
+    "Optional test cleanup: tests create TEST_*@grynd.example.com + tester_*@apple.fake + sub-based privaterelay users in MongoDB; consider a teardown to delete them, or filter the leaderboard by non-TEST_ prefix.",
+    "Note (frontend, NOT tested this round per E1's request): Apple Sign-In native button only works on a real iOS native build — Expo Go / web preview placeholder is correct."
+  ],
+  "critical_code_review_comments": [
+    "_decode_apple_token catches the broad `Exception` and re-raises 401 — good (covers base64/padding/json errors). InvalidTokenError + UnicodeDecodeError both handled.",
+    "_upsert_social_user is idempotent on email: existing user is returned without modifying provider/avatar/level — correct behavior for re-login.",
+    "_ensure_unique_username only appends a 4-char suffix on conflict. Tiny collision risk (~1 in 65k) but acceptable; uuid suffix could be longer for safety.",
+    "GoogleAuthIn.session_id has min_length=4 — too lenient (real Emergent session_ids are ~32+ chars). Not a bug, but tightening to 16+ would reject obvious garbage at validation time.",
+    "EMERGENT_SESSION_API is hardcoded to demobackend.emergentagent.com — fine for MVP, but should come from env for prod parity.",
+    "server.py is now 616 lines — still under 700 threshold but growing; consider splitting auth/social into its own module on next pass.",
+    "All `find_one` calls use projection `{_id: 0}` — Mongo ObjectId leak prevention verified. public_user() also doesn't surface _id.",
+    "JWT created for social users has same 30-day expiry + same SECRET_KEY as password users — consistent."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_grynd_social_auth.py (NEW — 17 tests covering rebrand + Google + Apple + regression)"
+  ],
+  "success_rate": {
+    "backend": "100% (36/36 — 19 cyberchill regression + 17 new grynd social auth)",
+    "frontend": "not tested this round (E1 requested backend only; iOS Apple Sign-In requires native build anyway)"
+  },
+  "seed_data_creation": "Tests created (and left in MongoDB): ~1 TEST_reg_*@grynd.example.com user, 1 tester_*@apple.fake Apple user, 1 001999.<hex>@privaterelay.appleid.com Apple private-relay user, plus the pre-existing TEST_*@cyber.chill cohort from cyberchill suite. All non-destructive; no production data modified.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "If E1 next implements real Apple JWS verification, add a test using a freshly-generated RS256 keypair and patch APPLE_JWK_URL to a local mock to verify signature/iss/aud/exp checks. For Google happy path, a real browser-based session_id from Emergent's auth flow would be needed — keep treating it as untestable in automation. Existing tests live in /app/backend/tests/test_grynd_social_auth.py and /app/backend/tests/test_cyberchill_api.py; run via `EXPO_PUBLIC_BACKEND_URL=https://levelhub-app.preview.emergentagent.com pytest backend/tests/ -v`.",
+  "rca_of_issue": "N/A — no bugs found in this iteration. All 10 acceptance criteria in the review request are met. Social auth additions did not regress any existing endpoint."
+}

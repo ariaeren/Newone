@@ -13,6 +13,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, EmailStr, Field
 from passlib.context import CryptContext
 import jwt
+import httpx
 
 
 ROOT_DIR = Path(__file__).parent
@@ -34,7 +35,7 @@ quests = db.quests
 quest_logs = db.quest_logs
 journals = db.journals
 
-app = FastAPI(title="Cyber-Chill API")
+app = FastAPI(title="GRYND API")
 api = APIRouter(prefix="/api")
 auth_router = APIRouter(prefix="/auth", tags=["auth"])
 quest_router = APIRouter(prefix="/quests", tags=["quests"])
@@ -43,7 +44,7 @@ board_router = APIRouter(prefix="/leaderboard", tags=["leaderboard"])
 monet_router = APIRouter(prefix="/monetization", tags=["monetization"])
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("cyberchill")
+logger = logging.getLogger("grynd")
 
 
 # ---------- Helpers ----------
@@ -210,6 +211,136 @@ async def login(payload: LoginIn):
 @auth_router.get("/me")
 async def me(current=Depends(get_current_user)):
     return public_user(current)
+
+
+# ---------- Social auth helpers ----------
+EMERGENT_SESSION_API = "https://demobackend.emergentagent.com/auth/v1/env/oauth/session-data"
+
+
+def _slugify_username(raw: str) -> str:
+    base = "".join(ch for ch in raw.lower() if ch.isalnum() or ch in ("_",))[:18]
+    return base or f"runner{uuid.uuid4().hex[:6]}"
+
+
+async def _ensure_unique_username(candidate: str) -> str:
+    # If exists, append short suffix
+    if not await users.find_one({"username": candidate}):
+        return candidate
+    return f"{candidate}_{uuid.uuid4().hex[:4]}"
+
+
+async def _upsert_social_user(email: str, display_name: Optional[str], provider: str) -> dict:
+    email_norm = email.lower()
+    existing = await users.find_one({"email": email_norm}, {"_id": 0})
+    if existing:
+        return existing
+
+    user_id = str(uuid.uuid4())
+    base_username = _slugify_username(display_name or email_norm.split("@")[0])
+    username = await _ensure_unique_username(base_username)
+    new_user = {
+        "id": user_id,
+        "email": email_norm,
+        "username": username,
+        "hashed_password": "",  # social login, no password
+        "auth_provider": provider,
+        "avatar_emoji": "🦄",
+        "level": 1,
+        "current_xp": 0,
+        "total_xp": 0,
+        "streak_count": 0,
+        "last_completed_date": None,
+        "is_pro": False,
+        "xp_boost_until": None,
+        "created_at": now_utc().isoformat(),
+    }
+    await users.insert_one(new_user)
+
+    # seed starter quests
+    starter = [
+        {"title": "Hydrate (8 glasses)", "xp_reward": 20, "icon": "💧"},
+        {"title": "Read 10 minutes", "xp_reward": 30, "icon": "📚"},
+        {"title": "Move your body", "xp_reward": 40, "icon": "🏃"},
+        {"title": "No social media 1hr", "xp_reward": 50, "icon": "🧘"},
+    ]
+    for q in starter:
+        await quests.insert_one({
+            "id": str(uuid.uuid4()),
+            "user_id": user_id,
+            "title": q["title"],
+            "xp_reward": q["xp_reward"],
+            "icon": q["icon"],
+            "frequency": "daily",
+            "created_at": now_utc().isoformat(),
+        })
+
+    return await users.find_one({"id": user_id}, {"_id": 0})
+
+
+class GoogleAuthIn(BaseModel):
+    session_id: str = Field(min_length=4, max_length=512)
+
+
+@auth_router.post("/google", response_model=TokenOut)
+async def google_auth(payload: GoogleAuthIn):
+    # Fetch the Google profile from Emergent's session-data endpoint
+    try:
+        async with httpx.AsyncClient(timeout=10.0) as client_http:
+            r = await client_http.get(
+                EMERGENT_SESSION_API,
+                headers={"X-Session-ID": payload.session_id},
+            )
+    except httpx.HTTPError as e:
+        logger.exception("google session fetch failed: %s", e)
+        raise HTTPException(502, "Could not reach auth provider")
+
+    if r.status_code != 200:
+        raise HTTPException(401, "Invalid Google session")
+    data = r.json()
+    email = data.get("email")
+    if not email:
+        raise HTTPException(401, "No email returned from Google")
+    name = data.get("name") or email.split("@")[0]
+
+    user = await _upsert_social_user(email, name, provider="google")
+    token = create_access_token(user["id"])
+    return {"access_token": token, "user": public_user(user)}
+
+
+class AppleAuthIn(BaseModel):
+    identity_token: str = Field(min_length=8, max_length=4096)
+    email: Optional[EmailStr] = None
+    full_name: Optional[str] = None
+
+
+def _decode_apple_token(token: str) -> dict:
+    # Apple identity_token is a JWS. For MVP we decode the payload without
+    # signature verification — sufficient to extract `sub` and `email`.
+    # Production would verify against https://appleid.apple.com/auth/keys.
+    try:
+        unverified = jwt.decode(token, options={"verify_signature": False})
+        return unverified
+    except Exception as e:
+        logger.warning("apple token decode failed: %s", e)
+        raise HTTPException(401, "Invalid Apple identity token")
+
+
+@auth_router.post("/apple", response_model=TokenOut)
+async def apple_auth(payload: AppleAuthIn):
+    claims = _decode_apple_token(payload.identity_token)
+    # Apple only sends email on FIRST sign-in. Client can also pass it from
+    # the credential they received.
+    email = (payload.email or claims.get("email") or "").lower()
+    sub = claims.get("sub")
+    if not email and sub:
+        # Apple private-relay anonymous email — synthesize stable handle
+        email = f"{sub}@privaterelay.appleid.com"
+    if not email:
+        raise HTTPException(401, "No email available from Apple credential")
+
+    user = await _upsert_social_user(email, payload.full_name or email.split("@")[0], provider="apple")
+    token = create_access_token(user["id"])
+    return {"access_token": token, "user": public_user(user)}
 
 
 # ---------- Quests ----------
@@ -459,7 +590,7 @@ async def update_me(payload: ProfileUpdateIn, current=Depends(get_current_user))
 # ---------- Healthcheck ----------
 @api.get("/")
 async def root():
-    return {"ok": True, "service": "cyber-chill"}
+    return {"ok": True, "service": "grynd"}
 
 
 # Register routers

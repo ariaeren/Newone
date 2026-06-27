@@ -87,6 +87,18 @@ export const api = {
       body: JSON.stringify({ email, password }),
     }),
 
+  googleAuth: (session_id: string) =>
+    request<{ access_token: string; user: AppUser }>("/auth/google", {
+      method: "POST",
+      body: JSON.stringify({ session_id }),
+    }),
+
+  appleAuth: (data: { identity_token: string; email?: string | null; full_name?: string | null }) =>
+    request<{ access_token: string; user: AppUser }>("/auth/apple", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+
   me: () => request<AppUser>("/auth/me"),
 
   updateProfile: (data: { username?: string; avatar_emoji?: string }) =>
