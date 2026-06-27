@@ -13,16 +13,17 @@ import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { ArrowLeft, Check, Crown, Sparkles, X } from "lucide-react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import { useTranslation } from "react-i18next";
 
 import { colors, radius, spacing } from "@/src/theme";
 import { api } from "@/src/api/client";
 import { useAuth } from "@/src/api/auth-context";
 
-const FEATURES = [
-  { icon: "👾", title: "Neon avatar cosmetics", sub: "Cyber, glitch, hologram drops" },
-  { icon: "🌌", title: "Premium guild badge", sub: "Glow on the leaderboard" },
-  { icon: "⚡", title: "Bonus XP multipliers", sub: "Stack with rewarded ads" },
-  { icon: "🚫", title: "Zero ads, forever", sub: "Pure focus mode" },
+const FEATURE_KEYS: { icon: string; titleKey: string; subKey: string }[] = [
+  { icon: "👾", titleKey: "paywall.features.f1Title", subKey: "paywall.features.f1Sub" },
+  { icon: "🌌", titleKey: "paywall.features.f2Title", subKey: "paywall.features.f2Sub" },
+  { icon: "⚡", titleKey: "paywall.features.f3Title", subKey: "paywall.features.f3Sub" },
+  { icon: "🚫", titleKey: "paywall.features.f4Title", subKey: "paywall.features.f4Sub" },
 ];
 
 // Pseudo-QR pattern: deterministic 21x21 boolean grid derived from string.
@@ -63,6 +64,7 @@ function buildQrMatrix(str: string, size = 21): boolean[][] {
 }
 
 export default function Paywall() {
+  const { t } = useTranslation();
   const router = useRouter();
   const { setUser, user } = useAuth();
   const [info, setInfo] = useState<{ qris_string: string; amount_idr: number; label: string; merchant: string } | null>(null);
@@ -112,7 +114,7 @@ export default function Paywall() {
         <Pressable testID="paywall-close" onPress={() => router.back()} style={styles.closeBtn}>
           <X color={colors.text} size={20} />
         </Pressable>
-        <Text style={styles.kicker}>GUILD PRO</Text>
+        <Text style={styles.kicker}>{t("paywall.kicker")}</Text>
         <View style={{ width: 40 }} />
       </View>
 
@@ -122,23 +124,23 @@ export default function Paywall() {
             <Crown color={colors.bg} size={36} strokeWidth={2.5} />
           </View>
           <Text style={styles.title}>
-            Unlock the{"\n"}
-            <Text style={{ color: colors.premium }}>neon tier.</Text>
+            {t("paywall.titleLine1")}{"\n"}
+            <Text style={{ color: colors.premium }}>{t("paywall.titleLine2")}</Text>
           </Text>
-          <Text style={styles.sub}>One-time payment · lifetime access · no recurring vibes.</Text>
+          <Text style={styles.sub}>{t("paywall.sub")}</Text>
         </Animated.View>
 
         <View style={styles.features}>
-          {FEATURES.map((f, idx) => (
+          {FEATURE_KEYS.map((f, idx) => (
             <Animated.View
-              key={f.title}
+              key={f.titleKey}
               entering={FadeInDown.delay(100 + idx * 80).duration(400)}
               style={styles.featureRow}
             >
               <Text style={styles.featureEmoji}>{f.icon}</Text>
               <View style={{ flex: 1 }}>
-                <Text style={styles.featureTitle}>{f.title}</Text>
-                <Text style={styles.featureSub}>{f.sub}</Text>
+                <Text style={styles.featureTitle}>{t(f.titleKey)}</Text>
+                <Text style={styles.featureSub}>{t(f.subKey)}</Text>
               </View>
               <Check color={colors.success} size={18} strokeWidth={3} />
             </Animated.View>
@@ -148,7 +150,7 @@ export default function Paywall() {
         <Animated.View entering={FadeInDown.delay(400).duration(400)} style={styles.qrisCard}>
           <View style={styles.qrisHeader}>
             <View>
-              <Text style={styles.qrisLabel}>SCAN TO PAY (QRIS)</Text>
+              <Text style={styles.qrisLabel}>{t("paywall.qrisLabel")}</Text>
               <Text style={styles.qrisAmount}>
                 IDR {info?.amount_idr.toLocaleString() ?? "—"}
               </Text>
@@ -192,17 +194,17 @@ export default function Paywall() {
           </View>
 
           <Text style={styles.merchant}>
-            {info?.merchant ?? "Cyber-Chill Guild"} · {info?.label ?? "Lifetime"}
+            {info?.merchant ?? t("paywall.merchant")} · {info?.label ?? "Lifetime"}
           </Text>
           <Text style={styles.note}>
-            Scan with any QRIS-supported e-wallet (GoPay, OVO, DANA, ShopeePay)
+            {t("paywall.note")}
           </Text>
         </Animated.View>
 
         {user?.is_pro ? (
           <View style={styles.activeBanner} testID="pro-already">
             <Check color={colors.bg} size={18} strokeWidth={3} />
-            <Text style={styles.activeBannerText}>You&apos;re already Pro 👑</Text>
+            <Text style={styles.activeBannerText}>{t("paywall.proAlready")}</Text>
           </View>
         ) : (
           <Pressable
@@ -216,14 +218,14 @@ export default function Paywall() {
             ]}
           >
             <Text style={styles.confirmText}>
-              {confirmed ? "✓ Payment confirmed" : confirming ? "..." : "I've paid · Unlock Pro"}
+              {confirmed ? t("paywall.confirmed") : confirming ? "..." : t("paywall.paidBtn")}
             </Text>
           </Pressable>
         )}
 
         <Pressable testID="back-link" onPress={() => router.back()} style={styles.backLink}>
           <ArrowLeft color={colors.textSecondary} size={16} />
-          <Text style={styles.backLinkText}>Maybe later</Text>
+          <Text style={styles.backLinkText}>{t("paywall.laterBtn")}</Text>
         </Pressable>
       </ScrollView>
     </SafeAreaView>

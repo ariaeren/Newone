@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Modal, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import Animated, {
@@ -8,9 +8,14 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { BlurView } from "expo-blur";
-import { Sparkles } from "lucide-react-native";
+import { Sparkles, Share2 } from "lucide-react-native";
+import { useTranslation } from "react-i18next";
 
 import { colors, radius } from "@/src/theme";
+import { useAuth } from "@/src/api/auth-context";
+import ShareSheet from "@/src/components/ShareSheet";
+import ShareCard from "@/src/components/ShareCard";
+import { buildInviteUrl } from "@/src/utils/share";
 
 type Props = {
   visible: boolean;
@@ -19,6 +24,9 @@ type Props = {
 };
 
 export default function LevelUpSheet({ visible, newLevel, onClose }: Props) {
+  const { t } = useTranslation();
+  const { user } = useAuth();
+  const [shareOpen, setShareOpen] = useState(false);
   const ty = useSharedValue(400);
   const scale = useSharedValue(0.9);
 
@@ -52,20 +60,40 @@ export default function LevelUpSheet({ visible, newLevel, onClose }: Props) {
           <View style={styles.iconWrap}>
             <Sparkles color={colors.bg} size={40} strokeWidth={2.5} />
           </View>
-          <Text style={styles.kicker}>LEVEL UP</Text>
+          <Text style={styles.kicker}>{t("quests.levelUp")}</Text>
           <Text style={styles.bigLevel}>LVL {newLevel}</Text>
           <Text style={styles.sub}>
-            New tier unlocked. The guild salutes you, runner.
+            {t("share.level.body", { level: newLevel, xp: user?.total_xp ?? 0 })}
           </Text>
+          <Pressable
+            testID="level-up-share"
+            onPress={() => setShareOpen(true)}
+            style={styles.shareCta}
+          >
+            <Share2 color={colors.bg} size={16} />
+            <Text style={styles.ctaText}>{t("common.share")}</Text>
+          </Pressable>
           <Pressable
             testID="level-up-close"
             onPress={onClose}
             style={styles.cta}
           >
-            <Text style={styles.ctaText}>Continue grinding</Text>
+            <Text style={styles.ctaTextDark}>{t("common.done")}</Text>
           </Pressable>
         </Animated.View>
       </Pressable>
+      <ShareSheet
+        visible={shareOpen}
+        onClose={() => setShareOpen(false)}
+        payload={{
+          title: t("share.level.title", { level: newLevel }),
+          body: t("share.level.body", { level: newLevel, xp: user?.total_xp ?? 0 }),
+          url: buildInviteUrl(user?.username),
+          hashtags: t("share.level.hashtags"),
+        }}
+        preview={<ShareCard variant="level" username={user?.username} avatar={user?.avatar_emoji} primary={newLevel} secondary={`${(user?.total_xp ?? 0).toLocaleString()} XP`} />}
+        testIDPrefix="share-levelup"
+      />
     </Modal>
   );
 }
@@ -128,10 +156,24 @@ const styles = StyleSheet.create({
   cta: {
     backgroundColor: colors.text,
     paddingHorizontal: 32,
-    paddingVertical: 16,
+    paddingVertical: 14,
     borderRadius: radius.pill,
     width: "100%",
     alignItems: "center",
+    marginTop: 8,
   },
-  ctaText: { color: colors.bg, fontSize: 15, fontWeight: "800" },
+  shareCta: {
+    flexDirection: "row",
+    gap: 8,
+    backgroundColor: colors.primary,
+    paddingHorizontal: 32,
+    paddingVertical: 14,
+    borderRadius: radius.pill,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 8,
+  },
+  ctaText: { color: colors.bg, fontSize: 14, fontWeight: "900", letterSpacing: 0.5 },
+  ctaTextDark: { color: colors.bg, fontSize: 14, fontWeight: "700" },
 });

@@ -16,6 +16,8 @@ import { BlurView } from "expo-blur";
 import { Plus, X, Trash2 } from "lucide-react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
+import { useTranslation } from "react-i18next";
+
 import { colors, radius, spacing } from "@/src/theme";
 import { api, Journal } from "@/src/api/client";
 
@@ -34,6 +36,7 @@ function formatDate(iso: string) {
 }
 
 export default function JournalScreen() {
+  const { t } = useTranslation();
   const [items, setItems] = useState<Journal[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [open, setOpen] = useState(false);
@@ -89,8 +92,8 @@ export default function JournalScreen() {
     <SafeAreaView style={styles.container} edges={["top"]}>
       <View style={styles.headerRow}>
         <View>
-          <Text style={styles.kicker}>MICRO JOURNAL</Text>
-          <Text style={styles.title}>140 chars. zero filter.</Text>
+          <Text style={styles.kicker}>{t("journal.kicker")}</Text>
+          <Text style={styles.title}>{t("journal.title")}</Text>
         </View>
         <Pressable
           testID="open-add-journal"
@@ -109,8 +112,8 @@ export default function JournalScreen() {
         {items.length === 0 && (
           <View style={styles.emptyCard}>
             <Text style={styles.emptyEmoji}>📓</Text>
-            <Text style={styles.emptyTitle}>Empty grid</Text>
-            <Text style={styles.emptySub}>Drop a quick reflection. 140 chars, mood emoji, done.</Text>
+            <Text style={styles.emptyTitle}>{t("journal.emptyTitle")}</Text>
+            <Text style={styles.emptySub}>{t("journal.emptySub")}</Text>
           </View>
         )}
         {items.map((j, idx) => (
@@ -140,13 +143,13 @@ export default function JournalScreen() {
             <View style={styles.sheet}>
               <View style={styles.sheetHandle} />
               <View style={styles.sheetHeader}>
-                <Text style={styles.sheetTitle}>QUICK DROP</Text>
+                <Text style={styles.sheetTitle}>{t("journal.addEntry")}</Text>
                 <Pressable testID="close-add-journal" onPress={() => setOpen(false)}>
                   <X color={colors.text} size={20} />
                 </Pressable>
               </View>
 
-              <Text style={styles.fieldLabel}>HOW YOU FEELING?</Text>
+              <Text style={styles.fieldLabel}>{t("journal.moodLabel")}</Text>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.moodRow}>
                 {MOODS.map((m) => (
                   <Pressable
@@ -160,12 +163,12 @@ export default function JournalScreen() {
                 ))}
               </ScrollView>
 
-              <Text style={styles.fieldLabel}>WHAT&apos;S UP?</Text>
+              <Text style={styles.fieldLabel}>{t("journal.contentLabel")}</Text>
               <TextInput
                 testID="journal-input"
                 value={text}
                 onChangeText={(v) => setText(v.slice(0, MAX))}
-                placeholder="day was wild, here's the tea..."
+                placeholder={t("journal.contentPlaceholder")}
                 placeholderTextColor={colors.textTertiary}
                 style={styles.input}
                 multiline
@@ -184,7 +187,7 @@ export default function JournalScreen() {
                   pressed && { opacity: 0.85 },
                 ]}
               >
-                <Text style={styles.confirmText}>{submitting ? "..." : "Drop entry"}</Text>
+                <Text style={styles.confirmText}>{submitting ? t("journal.submitting") : t("journal.submit")}</Text>
               </Pressable>
             </View>
           </KeyboardAvoidingView>

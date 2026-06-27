@@ -12,6 +12,7 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 import { Rocket, X, Sparkles } from "lucide-react-native";
+import { useTranslation } from "react-i18next";
 
 import { colors, radius, spacing } from "@/src/theme";
 import { api } from "@/src/api/client";
@@ -20,6 +21,7 @@ import { useAuth } from "@/src/api/auth-context";
 const AD_LENGTH = 5;
 
 export default function RewardedAdScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const { setUser } = useAuth();
   const [count, setCount] = useState(AD_LENGTH);
@@ -69,10 +71,10 @@ export default function RewardedAdScreen() {
       {/* Mock ad viewport */}
       <View style={styles.adWindow}>
         <View style={styles.adMockHeader}>
-          <Text style={styles.adMockLabel}>SPONSORED · AD</Text>
+          <Text style={styles.adMockLabel}>{t("rewardedAd.sponsored")}</Text>
           {phase === "playing" && (
             <View style={styles.timerPill}>
-              <Text style={styles.timerText}>Skip in {count}s</Text>
+              <Text style={styles.timerText}>{t("rewardedAd.skipIn", { s: count })}</Text>
             </View>
           )}
           {phase !== "playing" && (
@@ -86,9 +88,9 @@ export default function RewardedAdScreen() {
           <Animated.View style={[styles.adIcon, pulseStyle]}>
             <Rocket color={colors.bg} size={56} strokeWidth={2} />
           </Animated.View>
-          <Text style={styles.adTitle}>BOOST INC.</Text>
+          <Text style={styles.adTitle}>{t("rewardedAd.boostInc")}</Text>
           <Text style={styles.adSub}>
-            Demo ad. In production, AdMob rewarded video plays here.
+            {t("rewardedAd.demoNote")}
           </Text>
         </View>
       </View>
@@ -96,10 +98,10 @@ export default function RewardedAdScreen() {
       <View style={styles.bottomCard}>
         {phase === "playing" && (
           <>
-            <Text style={styles.cardKicker}>WATCHING AD…</Text>
-            <Text style={styles.cardTitle}>2× XP boost incoming</Text>
+            <Text style={styles.cardKicker}>{t("rewardedAd.watching")}</Text>
+            <Text style={styles.cardTitle}>{t("rewardedAd.incoming")}</Text>
             <Text style={styles.cardSub}>
-              Stay here for the next {count}s to claim your reward.
+              {t("rewardedAd.incomingSub", { s: count })}
             </Text>
           </>
         )}
@@ -108,14 +110,14 @@ export default function RewardedAdScreen() {
             <View style={styles.successBadge}>
               <Sparkles color={colors.bg} size={20} strokeWidth={3} />
             </View>
-            <Text style={styles.cardKicker}>AD COMPLETE</Text>
-            <Text style={styles.cardTitle}>Claim your 2× XP for 1 hour</Text>
+            <Text style={styles.cardKicker}>{t("rewardedAd.complete")}</Text>
+            <Text style={styles.cardTitle}>{t("rewardedAd.claimTitle")}</Text>
             <Pressable
               testID="claim-boost"
               onPress={claim}
               style={({ pressed }) => [styles.claimBtn, pressed && { opacity: 0.85 }]}
             >
-              <Text style={styles.claimText}>Claim boost</Text>
+              <Text style={styles.claimText}>{t("rewardedAd.claimBtn")}</Text>
             </Pressable>
           </>
         )}
@@ -125,9 +127,9 @@ export default function RewardedAdScreen() {
               <Sparkles color={colors.bg} size={20} strokeWidth={3} />
             </View>
             <Text style={[styles.cardTitle, { color: colors.success }]} testID="boost-claimed">
-              ⚡ 2× XP UNLOCKED
+              {t("rewardedAd.claimed")}
             </Text>
-            <Text style={styles.cardSub}>Active for the next 60 minutes. Go stack quests.</Text>
+            <Text style={styles.cardSub}>{t("rewardedAd.claimedSub")}</Text>
           </>
         )}
       </View>

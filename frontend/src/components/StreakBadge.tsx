@@ -8,11 +8,12 @@ import Animated, {
   withTiming,
   Easing,
 } from "react-native-reanimated";
+import { useTranslation } from "react-i18next";
 
 import { colors, radius } from "@/src/theme";
-import { t } from "@/src/i18n";
 
 export default function StreakBadge({ count }: { count: number }) {
+  const { t } = useTranslation();
   const scale = useSharedValue(1);
 
   useEffect(() => {
@@ -35,7 +36,7 @@ export default function StreakBadge({ count }: { count: number }) {
       <Animated.Text style={[styles.fire, fireStyle]}>🔥</Animated.Text>
       <View>
         <Text style={styles.count}>{count}</Text>
-        <Text style={styles.label}>{t.hub.streakLabel}</Text>
+        <Text style={styles.label}>{t("hub.streakLabel")}</Text>
       </View>
     </View>
   );

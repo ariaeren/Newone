@@ -1,0 +1,226 @@
+{
+  "brand": {
+    "name": "GRYND",
+    "tagline": "Your habits, your XP.",
+    "tagline2": "Turn habits into XP. Grow your streak. Level up IRL."
+  },
+  "auth": {
+    "headlineLine1": "Level Up",
+    "headlineLine2": "IRL.",
+    "sub": "Turn habits into XP. Grow your streak. Climb the guild leaderboard.",
+    "continueGoogle": "Continue with Google",
+    "continueApple": "Continue with Apple",
+    "comingSoon": "SOON",
+    "or": "OR",
+    "terms": "By continuing, you agree to our vibe. No spam, guaranteed.",
+    "welcome": "Welcome!",
+    "loadingSignIn": "Signing you in…",
+    "googleError": "Google sign-in failed",
+    "appleSoonHint": "Apple Sign-In works after the app ships on the App Store."
+  },
+  "tabs": {
+    "hub": "HUB",
+    "quests": "QUESTS",
+    "journal": "JOURNAL",
+    "leaderboard": "GUILD",
+    "profile": "ME"
+  },
+  "hub": {
+    "kicker": "WELCOME",
+    "streakLabel": "DAY STREAK",
+    "lifetimeEarned": "TOTAL XP",
+    "quickActions": "QUICK ACTIONS",
+    "runQuests": "Run Quests",
+    "runQuestsSub": "Stack XP today",
+    "boost": "2× Boost",
+    "boostSub": "Watch an ad",
+    "boostActive": "2× BOOST ACTIVE",
+    "boostActiveSub": "Every quest you finish grants 2× XP",
+    "proKicker": "GUILD PRO",
+    "proTitle": "Unlock neon cosmetics ✨",
+    "proSub": "One-time · IDR 49K · lifetime",
+    "proCta": "UNLOCK",
+    "stats": "STATS",
+    "level": "LEVEL",
+    "streak": "STREAK",
+    "xpThisLvl": "XP THIS LVL",
+    "progressToday": "TODAY'S PROGRESS",
+    "questsCleared": "{{done}} of {{total}} quests done",
+    "shareLevel": "Share my level",
+    "shareStreak": "Share my streak"
+  },
+  "quests": {
+    "kicker": "DAILY QUESTS",
+    "titleProgress": "{{done}}/{{total}} done",
+    "emptyTitle": "No quests yet",
+    "emptySub": "Add your first quest to start grinding.",
+    "loading": "Loading the grid…",
+    "swipeHint": "Swipe right to complete, left to delete",
+    "tapHint": "Tap the ✓ circle to check off",
+    "completedToday": "✓ Done today",
+    "swipeToComplete": "Swipe right → complete",
+    "addQuest": "NEW QUEST",
+    "titleLabel": "QUEST TITLE",
+    "titlePlaceholder": "e.g. Run 20 minutes",
+    "iconLabel": "ICON",
+    "categoryLabel": "CATEGORY",
+    "difficultyLabel": "DIFFICULTY",
+    "difficulties": {
+      "trivial": { "name": "Trivial", "desc": "Super easy" },
+      "easy": { "name": "Easy", "desc": "Under 5 min" },
+      "medium": { "name": "Medium", "desc": "Needs focus" },
+      "hard": { "name": "Hard", "desc": "Serious effort" }
+    },
+    "create": "Create Quest",
+    "creating": "Creating…",
+    "questUndo": "Undo",
+    "undoSuccess": "Quest reverted",
+    "completeSuccess": "+{{xp}} XP earned!",
+    "levelUp": "LEVEL UP!",
+    "shareCompletion": "Share win",
+    "categories": {
+      "morning": "Morning",
+      "health": "Health",
+      "mind": "Mind",
+      "study": "Study",
+      "social": "Social",
+      "creative": "Creative",
+      "other": "Other"
+    }
+  },
+  "journal": {
+    "kicker": "MICRO JOURNAL",
+    "title": "140 chars. no filter.",
+    "emptyTitle": "Empty journal",
+    "emptySub": "Write a quick reflection. 140 chars, pick a mood, done.",
+    "addEntry": "QUICK WRITE",
+    "moodLabel": "HOW DO YOU FEEL?",
+    "contentLabel": "VENT IT",
+    "contentPlaceholder": "How's your day going…",
+    "submit": "Save Entry",
+    "submitting": "Saving…"
+  },
+  "leaderboard": {
+    "kicker": "GUILD RANKING",
+    "title": "Top runners 🏆",
+    "empty": "No runners yet. Be the first!",
+    "yourRank": "YOUR RANK",
+    "you": "You",
+    "shareRank": "Share my rank"
+  },
+  "profile": {
+    "kicker": "PROFILE",
+    "freeAvatars": "FREE AVATARS",
+    "proCosmetics": "NEON COSMETICS",
+    "upgradeBtn": "Upgrade to Guild Pro",
+    "support": "SUPPORT",
+    "supportDevs": "Support the devs",
+    "supportDevsSub": "Saweria · keep the lights on",
+    "boost": "Get 2× XP boost",
+    "boostSub": "Watch a short ad · 1h boost",
+    "leaderboard": "View guild ranking",
+    "leaderboardSub": "Check your position",
+    "account": "Account info",
+    "accountSub": "Joined {{date}}",
+    "signOut": "Sign out",
+    "member": "Member",
+    "language": "Language",
+    "languageSub": "App language",
+    "invite": "Invite friends",
+    "inviteSub": "Share your link"
+  },
+  "paywall": {
+    "kicker": "GUILD PRO",
+    "titleLine1": "Unlock neon",
+    "titleLine2": "tier.",
+    "sub": "One-time payment · lifetime access · no subscription.",
+    "features": {
+      "f1Title": "Neon avatar cosmetics",
+      "f1Sub": "Cyber, glitch, hologram",
+      "f2Title": "Premium guild badge",
+      "f2Sub": "Glow on the leaderboard",
+      "f3Title": "Bonus XP multiplier",
+      "f3Sub": "Stacks with rewarded ad",
+      "f4Title": "Zero ads, forever",
+      "f4Sub": "Pure focus mode"
+    },
+    "qrisLabel": "SCAN TO PAY (QRIS)",
+    "merchant": "GRYND Guild",
+    "note": "Scan with any e-wallet (GoPay, OVO, DANA, ShopeePay)",
+    "paidBtn": "I've paid · Unlock Pro",
+    "proAlready": "You're already Pro 👑",
+    "laterBtn": "Maybe later",
+    "confirmed": "✓ Payment confirmed"
+  },
+  "rewardedAd": {
+    "sponsored": "SPONSORED · AD",
+    "skipIn": "Skip in {{s}}s",
+    "boostInc": "BOOST INC.",
+    "demoNote": "Demo ad. In production, AdMob rewarded video plays here.",
+    "watching": "WATCHING AD…",
+    "incoming": "2× XP boost incoming",
+    "incomingSub": "Stay here for {{s}} seconds to claim.",
+    "complete": "AD COMPLETE",
+    "claimTitle": "Claim 2× XP boost for 1 hour",
+    "claimBtn": "Claim Boost",
+    "claimed": "⚡ 2× XP LOCKED IN",
+    "claimedSub": "Active for 60 min. Stack those quests."
+  },
+  "common": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "close": "Close",
+    "retry": "Retry",
+    "error": "Something broke",
+    "loading": "Loading…",
+    "share": "Share",
+    "copied": "Copied!",
+    "copy": "Copy link",
+    "done": "Done"
+  },
+  "share": {
+    "sheetTitle": "Share to",
+    "level": {
+      "title": "I'm Level {{level}} on GRYND 🚀",
+      "body": "I just hit Level {{level}} with {{xp}} XP on GRYND. Habits → XP. Join me & level up IRL.",
+      "hashtags": "#GRYND #LevelUp #Productivity"
+    },
+    "streak": {
+      "title": "{{streak}}-day streak on GRYND 🔥",
+      "body": "{{streak}} days in a row crushing my quests on GRYND. Consistency unlocked.",
+      "hashtags": "#GRYND #StreakLife"
+    },
+    "quest": {
+      "title": "Quest cleared on GRYND ⚡",
+      "body": "Just finished \"{{quest}}\" and earned +{{xp}} XP on GRYND.",
+      "hashtags": "#GRYND #QuestCleared"
+    },
+    "rank": {
+      "title": "Ranked #{{rank}} on GRYND 🏆",
+      "body": "I'm ranked #{{rank}} on the global GRYND leaderboard. Catch me if you can.",
+      "hashtags": "#GRYND #Leaderboard"
+    },
+    "invite": {
+      "title": "Join me on GRYND",
+      "body": "I'm leveling up my habits on GRYND. Join my guild → {{link}}",
+      "hashtags": "#GRYND"
+    },
+    "targets": {
+      "twitter": "X / Twitter",
+      "facebook": "Facebook",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "linkedin": "LinkedIn",
+      "reddit": "Reddit",
+      "pinterest": "Pinterest",
+      "more": "More",
+      "copyLink": "Copy link"
+    }
+  },
+  "language": {
+    "title": "Choose language",
+    "system": "System default"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "summary": "BACKEND ONLY testing for GRYND iteration 3 (post i18n + social-share frontend additions). All 19 backend tests PASS via pytest. Verified every endpoint requested in review: (1) GET /api/ returns ok=true and service='grynd'; (2) Register a fresh user returns JWT + user object and seeds 5 starter quests (Bahasa Indonesia titles: Minum 8 gelas air, Baca 10 menit, Olahraga 20 menit, Meditasi 5 menit, No sosmed 1 jam); (3) Login with seeded tester@grynd.app / Tester123! succeeds and returns JWT; (4) GET /api/auth/me with bearer token returns the user profile without _id / hashed_password; (5) GET /api/quests returns 5 seeded quests each with completed_today flag; (6) POST /api/quests with title/xp_reward/icon/difficulty=medium/category=other creates correctly and returns completed_today=false; (7) POST /api/quests/{id}/complete returns the exact response shape (xp_gained, leveled_up, new_level, streak_count, user) with streak_count>=1 and total_xp incremented by xp_reward; (8) Second complete same day returns 400 'Already completed today'; (9) POST /api/quests/{id}/uncomplete refunds xp (xp_refunded matches), drops completed_today back to false; (10) DELETE /api/quests/{id} removes; (11) Journals: create (<=140 chars + mood emoji), list returns created_at desc, delete; >140 chars returns 422; (12) GET /api/leaderboard returns top<=50 sorted desc by total_xp plus a 'me' row with is_me=true; (13) POST /api/monetization/xp-boost sets xp_boost_until ~1h ahead (verified delta 55-65min); (14) GET /api/monetization/qris returns qris_string, amount_idr=49000, merchant='Cyber-Chill Guild'; (15) POST /api/monetization/pro/activate flips is_pro to true (verified via GET /api/auth/me); (16) PATCH /api/auth/me updates username + avatar_emoji and changes persist. No regressions from i18n/social-share frontend additions — backend logic unchanged and fully working.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {
+        "endpoint": "GET /api/monetization/qris",
+        "issue": "Merchant label still says 'Cyber-Chill Guild' (legacy from pre-GRYND rebrand). Rebrand may want this updated to 'GRYND' for consistency with the new product name."
+      },
+      {
+        "endpoint": "POST /api/auth/register and _upsert_social_user",
+        "issue": "Starter quest titles are hardcoded in Bahasa Indonesia ('Minum 8 gelas air', 'Baca 10 menit', etc.). Since the app now supports 12 languages via i18n, seeded quest titles should ideally be localized at render time (use i18n keys + a quest_key field) or sent in the user's locale. Currently every user worldwide sees Indonesian starter quests regardless of UI language."
+      },
+      {
+        "endpoint": "POST /api/quests/{id}/uncomplete",
+        "issue": "Error message 'Belum diselesaikan hari ini' is Indonesian — not localized. Should be English (or carry an error code that the i18n frontend maps)."
+      }
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_grynd_api.py",
+    "/app/test_reports/pytest/pytest_grynd_iter3.xml"
+  ],
+  "action_items": [
+    "Optional rebrand cleanup: change QRIS merchant label from 'Cyber-Chill Guild' to 'GRYND' (server.py L636).",
+    "Important for i18n consistency: seeded starter quest titles + 'Belum diselesaikan hari ini' error are still Indonesian-only. Store quest_key (e.g. 'starter.water', 'starter.read') instead of localized title, and let the now-i18n-aware frontend resolve to user's language. Otherwise the worldwide language rollout is incomplete for these touchpoints.",
+    "Optional (carried over from iter 2): pin bcrypt<4 or upgrade passlib to silence the harmless __about__ AttributeError at startup; tighten Apple JWS signature verification before production."
+  ],
+  "critical_code_review_comments": [
+    "server.py is 683 lines — at the 700-line threshold. Consider splitting auth/social/quests/monetization into separate modules before adding more endpoints.",
+    "Starter-quest list is duplicated in both register() (L181) and _upsert_social_user() (L265). Extract into a module-level constant to avoid drift between password and social signup paths.",
+    "complete_quest() recomputes the boost via fromisoformat in a try/except — clean. But xp_boost_until is stored as ISO string on the user; consistent.",
+    "uncomplete_quest streak logic restores prior day's last_completed_date but only decrements streak by 1 — does not validate that prior day was actually consecutive. Edge case: if user skipped 3 days then completed today, uncompleting today drops streak to 0 (correct), but if streak was already 5 across many days, decrementing by exactly 1 is a heuristic, not exact. Acceptable for MVP.",
+    "All find_one calls correctly use projection {_id: 0}; ObjectId leak verified absent.",
+    "public_user() does not surface hashed_password / auth_provider — good.",
+    "JWT expiry uses ACCESS_TOKEN_EXPIRE_MINUTES=10080 (7 days) — reasonable for mobile app.",
+    "CORS allow_origins=['*'] with allow_credentials=True — browsers will reject credentialed CORS with wildcard; not an issue for native app but would be for any web client. Should be restricted to known origins for prod."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_grynd_api.py (NEW — 19 tests, covers every endpoint in review request)"
+  ],
+  "success_rate": {
+    "backend": "100% (19/19)",
+    "frontend": "not tested this round (E1 requested backend only)"
+  },
+  "test_credentials": "tester@grynd.app / Tester123! verified working",
+  "seed_data_creation": "Tests created (left in MongoDB): ~3 TEST_grynd_*@grynd.example users (fresh_user + uncomplete + pro), each with 5 starter quests + a few TEST_-prefixed custom quests/journals. Plus pre-existing TEST_*@cyber.chill cohort from earlier iterations.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Backend is fully green (19/19). Next round will likely be frontend i18n + ShareSheet UI testing. The test file /app/backend/tests/test_grynd_api.py is the canonical regression suite for GRYND backend going forward. The older /app/backend/tests/test_cyberchill_api.py has stale assertions (expects 4 starter quests; backend now seeds 5) and uses the SEED_EMAIL=test@cyber.chill account — keep as historical but rely on test_grynd_api.py. Run via: EXPO_PUBLIC_BACKEND_URL=<preview-url> pytest backend/tests/test_grynd_api.py -v",
+  "rca_of_issue": "N/A — no bugs found. All 18 acceptance scenarios in the review request pass. The only real-product concern is i18n coverage of seeded quest titles + the one Indonesian error string, which is a feature gap (not a bug)."
+}

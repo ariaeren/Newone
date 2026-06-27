@@ -2,11 +2,12 @@ import { Tabs } from "expo-router";
 import { BlurView } from "expo-blur";
 import { Platform, StyleSheet, View } from "react-native";
 import { Home, Swords, BookOpen, Trophy, User } from "lucide-react-native";
+import { useTranslation } from "react-i18next";
 
 import { colors } from "@/src/theme";
-import { t } from "@/src/i18n";
 
 export default function TabsLayout() {
+  const { t } = useTranslation();
   return (
     <Tabs
       screenOptions={{
@@ -45,41 +46,11 @@ export default function TabsLayout() {
           ),
       }}
     >
-      <Tabs.Screen
-        name="hub"
-        options={{
-          title: t.tabs.hub,
-          tabBarIcon: ({ color, size }) => <Home color={color} size={size ?? 22} />,
-        }}
-      />
-      <Tabs.Screen
-        name="quests"
-        options={{
-          title: t.tabs.quests,
-          tabBarIcon: ({ color, size }) => <Swords color={color} size={size ?? 22} />,
-        }}
-      />
-      <Tabs.Screen
-        name="journal"
-        options={{
-          title: t.tabs.journal,
-          tabBarIcon: ({ color, size }) => <BookOpen color={color} size={size ?? 22} />,
-        }}
-      />
-      <Tabs.Screen
-        name="leaderboard"
-        options={{
-          title: t.tabs.leaderboard,
-          tabBarIcon: ({ color, size }) => <Trophy color={color} size={size ?? 22} />,
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: t.tabs.profile,
-          tabBarIcon: ({ color, size }) => <User color={color} size={size ?? 22} />,
-        }}
-      />
+      <Tabs.Screen name="hub" options={{ title: t("tabs.hub"), tabBarIcon: ({ color, size }) => <Home color={color} size={size ?? 22} /> }} />
+      <Tabs.Screen name="quests" options={{ title: t("tabs.quests"), tabBarIcon: ({ color, size }) => <Swords color={color} size={size ?? 22} /> }} />
+      <Tabs.Screen name="journal" options={{ title: t("tabs.journal"), tabBarIcon: ({ color, size }) => <BookOpen color={color} size={size ?? 22} /> }} />
+      <Tabs.Screen name="leaderboard" options={{ title: t("tabs.leaderboard"), tabBarIcon: ({ color, size }) => <Trophy color={color} size={size ?? 22} /> }} />
+      <Tabs.Screen name="profile" options={{ title: t("tabs.profile"), tabBarIcon: ({ color, size }) => <User color={color} size={size ?? 22} /> }} />
     </Tabs>
   );
 }

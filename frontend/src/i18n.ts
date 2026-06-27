@@ -1,207 +1,140 @@
 /**
- * GRYND — Localized strings (Bahasa Indonesia)
- * Single source of truth for UI copy. Edit here to update everywhere.
+ * GRYND — i18n setup (12 languages, auto-detect, persistent).
+ * - Detects device locale on first launch via expo-localization.
+ * - Saved choice persists via AsyncStorage.
+ * - Falls back to English.
+ * - RTL handled for Arabic.
  */
+import i18next from "i18next";
+import { initReactI18next } from "react-i18next";
+import * as Localization from "expo-localization";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { I18nManager, Platform } from "react-native";
 
-export const t = {
-  brand: {
-    name: "GRYND",
-    tagline: "Habit-mu, XP-mu. 🎮",
-    tagline2: "Ubah kebiasaan jadi XP. Tumbuhkan streak. Naik level IRL.",
-  },
+import en from "@/src/locales/en.json";
+import id from "@/src/locales/id.json";
+import es from "@/src/locales/es.json";
+import fr from "@/src/locales/fr.json";
+import de from "@/src/locales/de.json";
+import ja from "@/src/locales/ja.json";
+import zh from "@/src/locales/zh.json";
+import ar from "@/src/locales/ar.json";
+import pt from "@/src/locales/pt.json";
+import ru from "@/src/locales/ru.json";
+import ko from "@/src/locales/ko.json";
+import hi from "@/src/locales/hi.json";
 
-  auth: {
-    headline: "Naik Level\nIRL.",
-    sub: "Ubah kebiasaan jadi XP. Tumbuhkan streak. Naiki guild leaderboard.",
-    continueGoogle: "Lanjut dengan Google",
-    continueApple: "Lanjut dengan Apple",
-    comingSoon: "SEGERA",
-    or: "ATAU",
-    terms: "Dengan lanjut, kamu setuju dengan vibe kami. Tanpa spam, dijamin.",
-    welcome: "Selamat datang!",
-    loadingSignIn: "Memproses login…",
-    googleError: "Gagal login dengan Google",
-    appleSoonHint: "Apple Sign-In bisa dipakai setelah aplikasi rilis di App Store.",
-  },
+export const LANGUAGES = [
+  { code: "en", name: "English", flag: "🇺🇸", native: "English" },
+  { code: "id", name: "Indonesian", flag: "🇮🇩", native: "Bahasa Indonesia" },
+  { code: "es", name: "Spanish", flag: "🇪🇸", native: "Español" },
+  { code: "fr", name: "French", flag: "🇫🇷", native: "Français" },
+  { code: "de", name: "German", flag: "🇩🇪", native: "Deutsch" },
+  { code: "pt", name: "Portuguese", flag: "🇵🇹", native: "Português" },
+  { code: "ru", name: "Russian", flag: "🇷🇺", native: "Русский" },
+  { code: "ja", name: "Japanese", flag: "🇯🇵", native: "日本語" },
+  { code: "ko", name: "Korean", flag: "🇰🇷", native: "한국어" },
+  { code: "zh", name: "Chinese", flag: "🇨🇳", native: "中文" },
+  { code: "ar", name: "Arabic", flag: "🇸🇦", native: "العربية" },
+  { code: "hi", name: "Hindi", flag: "🇮🇳", native: "हिन्दी" },
+] as const;
 
-  tabs: {
-    hub: "HUB",
-    quests: "QUEST",
-    journal: "JURNAL",
-    leaderboard: "GUILD",
-    profile: "AKU",
-  },
+export type LangCode = (typeof LANGUAGES)[number]["code"];
 
-  hub: {
-    kicker: "SELAMAT DATANG",
-    streakLabel: "HARI STREAK",
-    lifetimeEarned: "TOTAL XP",
-    quickActions: "AKSI CEPAT",
-    runQuests: "Jalankan Quest",
-    runQuestsSub: "Kumpulin XP hari ini",
-    boost: "Boost 2×",
-    boostSub: "Tonton iklan",
-    boostActive: "BOOST 2× AKTIF",
-    boostActiveSub: "Setiap quest yang kamu selesaikan dapat XP 2×",
-    proKicker: "GUILD PRO",
-    proTitle: "Buka kosmetik neon ✨",
-    proSub: "Bayar sekali · IDR 49K · seumur hidup",
-    proCta: "BUKA",
-    stats: "STATISTIK",
-    level: "LEVEL",
-    streak: "STREAK",
-    xpThisLvl: "XP LVL INI",
-    progressToday: "PROGRES HARI INI",
-    questsCleared: (done: number, total: number) => `${done} dari ${total} quest selesai`,
-  },
+const RTL_LANGS: LangCode[] = ["ar"];
+const STORE_KEY = "grynd_lang";
 
-  quests: {
-    kicker: "QUEST HARIAN",
-    titleProgress: (done: number, total: number) => `${done}/${total} selesai`,
-    emptyTitle: "Belum ada quest",
-    emptySub: "Tambahin quest pertamamu buat mulai grinding.",
-    loading: "Memuat grid…",
-    swipeHint: "Geser kanan untuk selesaikan, geser kiri untuk hapus",
-    tapHint: "Ketuk lingkaran ✓ untuk centang",
-    completedToday: "✓ Selesai hari ini",
-    swipeToComplete: "Geser kanan → selesaikan",
-    addQuest: "QUEST BARU",
-    titleLabel: "JUDUL QUEST",
-    titlePlaceholder: "Contoh: Lari 20 menit",
-    iconLabel: "IKON",
-    categoryLabel: "KATEGORI",
-    difficultyLabel: "TINGKAT KESULITAN",
-    difficulties: {
-      trivial: { name: "Sepele", xp: 10, desc: "Gampang banget" },
-      easy: { name: "Mudah", xp: 20, desc: "Bisa < 5 menit" },
-      medium: { name: "Sedang", xp: 40, desc: "Butuh fokus" },
-      hard: { name: "Sulit", xp: 75, desc: "Effort serius" },
-    },
-    create: "Buat Quest",
-    creating: "Membuat…",
-    questUndo: "Batalkan",
-    undoSuccess: "Quest dibatalkan",
-    completeSuccess: (xp: number) => `+${xp} XP didapat!`,
-    levelUp: "LEVEL UP!",
-    categories: [
-      { id: "morning", label: "Pagi", icon: "☀️" },
-      { id: "health", label: "Kesehatan", icon: "💪" },
-      { id: "mind", label: "Pikiran", icon: "🧠" },
-      { id: "study", label: "Belajar", icon: "📚" },
-      { id: "social", label: "Sosial", icon: "💬" },
-      { id: "creative", label: "Kreatif", icon: "🎨" },
-      { id: "other", label: "Lainnya", icon: "✨" },
-    ],
-  },
-
-  journal: {
-    kicker: "MICRO JURNAL",
-    title: "140 karakter. tanpa filter.",
-    emptyTitle: "Jurnal kosong",
-    emptySub: "Tulis refleksi singkat. 140 karakter, pilih mood, selesai.",
-    addEntry: "TULIS CEPAT",
-    moodLabel: "GIMANA PERASAANMU?",
-    contentLabel: "CURHAT YUK",
-    contentPlaceholder: "Hari ini lagi gimana, sis…",
-    submit: "Simpan Entri",
-    submitting: "Menyimpan…",
-  },
-
-  leaderboard: {
-    kicker: "RANKING GUILD",
-    title: "Top runner 🏆",
-    empty: "Belum ada runner. Jadilah yang pertama!",
-    yourRank: "PERINGKAT KAMU",
-    you: "Kamu",
-  },
-
-  profile: {
-    kicker: "PROFIL",
-    freeAvatars: "AVATAR GRATIS",
-    proCosmetics: "KOSMETIK NEON",
-    upgradeBtn: "Upgrade ke Guild Pro",
-    support: "DUKUNGAN",
-    supportDevs: "Dukung devs",
-    supportDevsSub: "Saweria · keep the lights on",
-    boost: "Dapat boost XP 2×",
-    boostSub: "Tonton iklan singkat · boost 1 jam",
-    leaderboard: "Lihat ranking guild",
-    leaderboardSub: "Cek posisi kamu",
-    account: "Info akun",
-    accountSub: (date: string) => `Bergabung sejak ${date}`,
-    signOut: "Keluar",
-    member: "Anggota",
-  },
-
-  paywall: {
-    kicker: "GUILD PRO",
-    titleLine1: "Buka level",
-    titleLine2: "neon.",
-    sub: "Bayar sekali · akses seumur hidup · tanpa langganan.",
-    features: [
-      { icon: "👾", title: "Kosmetik avatar neon", sub: "Cyber, glitch, hologram" },
-      { icon: "🌌", title: "Badge guild premium", sub: "Glow di leaderboard" },
-      { icon: "⚡", title: "Bonus XP multiplier", sub: "Stack dengan rewarded ad" },
-      { icon: "🚫", title: "Zero iklan, selamanya", sub: "Mode fokus murni" },
-    ],
-    qrisLabel: "PINDAI UNTUK BAYAR (QRIS)",
-    merchant: "GRYND Guild",
-    note: "Pindai dengan e-wallet apa pun (GoPay, OVO, DANA, ShopeePay)",
-    paidBtn: "Saya sudah bayar · Buka Pro",
-    proAlready: "Kamu sudah Pro 👑",
-    laterBtn: "Nanti aja",
-    confirmed: "✓ Pembayaran dikonfirmasi",
-  },
-
-  rewardedAd: {
-    sponsored: "BERSPONSOR · IKLAN",
-    skipIn: (s: number) => `Skip dalam ${s} dtk`,
-    boostInc: "BOOST INC.",
-    demoNote: "Iklan demo. Pada produksi, AdMob rewarded video tayang di sini.",
-    watching: "MENONTON IKLAN…",
-    incoming: "Boost XP 2× akan masuk",
-    incomingSub: (s: number) => `Stay di sini selama ${s} detik untuk dapat reward.`,
-    complete: "IKLAN SELESAI",
-    claimTitle: "Klaim boost XP 2× selama 1 jam",
-    claimBtn: "Klaim Boost",
-    claimed: "⚡ XP 2× TERKUNCI",
-    claimedSub: "Aktif selama 60 menit. Yuk stack quest.",
-  },
-
-  onboarding: {
-    skip: "Lewati",
-    next: "Lanjut",
-    start: "Mulai Grinding",
-    slides: [
-      {
-        title: "Habit-mu, XP-mu.",
-        sub: "Setiap kebiasaan yang kamu jaga = XP. Naik level, naik rank, naik kelas IRL.",
-      },
-      {
-        title: "Geser untuk selesai.",
-        sub: "Geser kartu quest ke kanan untuk centang dan dapat XP. Atau ketuk ✓. Heavy haptic.",
-      },
-      {
-        title: "Streak nggak shaming.",
-        sub: "Telat 1 hari? Tenang. Streak nggak langsung reset. Grinding pelan-pelan tetap valid.",
-      },
-      {
-        title: "Naik ke atas guild.",
-        sub: "Lihat posisi kamu di leaderboard global. Bandingin sama runner lain. Atau santai aja.",
-      },
-    ],
-  },
-
-  common: {
-    cancel: "Batal",
-    save: "Simpan",
-    delete: "Hapus",
-    confirm: "Konfirmasi",
-    close: "Tutup",
-    retry: "Coba lagi",
-    error: "Ada error",
-    loading: "Memuat…",
-  },
+const resources = {
+  en: { translation: en },
+  id: { translation: id },
+  es: { translation: es },
+  fr: { translation: fr },
+  de: { translation: de },
+  ja: { translation: ja },
+  zh: { translation: zh },
+  ar: { translation: ar },
+  pt: { translation: pt },
+  ru: { translation: ru },
+  ko: { translation: ko },
+  hi: { translation: hi },
 };
 
-export type DifficultyKey = "trivial" | "easy" | "medium" | "hard";
+function detectDeviceLang(): LangCode {
+  try {
+    const locales = Localization.getLocales();
+    for (const loc of locales) {
+      const tag = (loc.languageCode || "").toLowerCase();
+      // Match prefix (e.g. "zh-CN" -> "zh", "pt-BR" -> "pt")
+      const match = LANGUAGES.find((l) => l.code === tag);
+      if (match) return match.code;
+    }
+  } catch {
+    // ignore
+  }
+  return "en";
+}
+
+let _initialized = false;
+
+export async function initI18n() {
+  if (_initialized) return i18next;
+  _initialized = true;
+
+  let saved: string | null = null;
+  try {
+    saved = await AsyncStorage.getItem(STORE_KEY);
+  } catch {
+    // ignore
+  }
+  const lang = ((saved as LangCode) ||
+    detectDeviceLang() ||
+    "en") as LangCode;
+
+  await i18next.use(initReactI18next).init({
+    resources,
+    lng: lang,
+    fallbackLng: "en",
+    interpolation: { escapeValue: false },
+    returnNull: false,
+    compatibilityJSON: "v4",
+  });
+
+  applyRTL(lang);
+  return i18next;
+}
+
+export async function setLanguage(code: LangCode) {
+  await i18next.changeLanguage(code);
+  try {
+    await AsyncStorage.setItem(STORE_KEY, code);
+  } catch {
+    // ignore
+  }
+  applyRTL(code);
+}
+
+function applyRTL(code: LangCode) {
+  const shouldBeRTL = RTL_LANGS.includes(code);
+  if (Platform.OS === "web") {
+    if (typeof document !== "undefined") {
+      document.documentElement.dir = shouldBeRTL ? "rtl" : "ltr";
+      document.documentElement.lang = code;
+    }
+    return;
+  }
+  if (I18nManager.isRTL !== shouldBeRTL) {
+    try {
+      I18nManager.allowRTL(shouldBeRTL);
+      I18nManager.forceRTL(shouldBeRTL);
+      // On native, RTL change requires app reload to fully apply.
+    } catch {
+      // ignore
+    }
+  }
+}
+
+export function currentLanguage(): LangCode {
+  return (i18next.language?.split("-")[0] as LangCode) || "en";
+}
+
+export default i18next;

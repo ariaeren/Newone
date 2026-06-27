@@ -9,26 +9,30 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
-import { Zap, Sparkles, Rocket } from "lucide-react-native";
+import { Zap, Sparkles, Rocket, Share2 } from "lucide-react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import { useTranslation } from "react-i18next";
 
 import { colors, radius, spacing } from "@/src/theme";
 import { useAuth } from "@/src/api/auth-context";
-import { t } from "@/src/i18n";
 import XpBar from "@/src/components/XpBar";
 import StreakBadge from "@/src/components/StreakBadge";
+import ShareSheet from "@/src/components/ShareSheet";
+import ShareCard from "@/src/components/ShareCard";
+import { buildInviteUrl } from "@/src/utils/share";
+
+type ShareKind = "level" | "streak" | null;
 
 export default function HubScreen() {
+  const { t } = useTranslation();
   const { user, refresh } = useAuth();
   const router = useRouter();
   const [refreshing, setRefreshing] = useState(false);
   const [boostActive, setBoostActive] = useState(false);
+  const [shareKind, setShareKind] = useState<ShareKind>(null);
 
   useEffect(() => {
-    if (!user?.xp_boost_until) {
-      setBoostActive(false);
-      return;
-    }
+    if (!user?.xp_boost_until) { setBoostActive(false); return; }
     const until = new Date(user.xp_boost_until).getTime();
     setBoostActive(until > Date.now());
   }, [user?.xp_boost_until]);
@@ -41,21 +45,44 @@ export default function HubScreen() {
 
   if (!user) return null;
 
+  const inviteUrl = buildInviteUrl(user.username);
+  const sharePayload = shareKind === "level"
+    ? {
+        title: t("share.level.title", { level: user.level }),
+        body: t("share.level.body", { level: user.level, xp: user.total_xp }),
+        url: inviteUrl,
+        hashtags: t("share.level.hashtags"),
+      }
+    : shareKind === "streak"
+    ? {
+        title: t("share.streak.title", { streak: user.streak_count }),
+        body: t("share.streak.body", { streak: user.streak_count }),
+        url: inviteUrl,
+        hashtags: t("share.streak.hashtags"),
+      }
+    : { title: "", body: "" };
+
+  const preview = shareKind === "level" ? (
+    <ShareCard variant="level" username={user.username} avatar={user.avatar_emoji} primary={user.level} secondary={`${user.total_xp.toLocaleString()} XP`} />
+  ) : shareKind === "streak" ? (
+    <ShareCard variant="streak" username={user.username} avatar={user.avatar_emoji} primary={`${user.streak_count} days`} secondary={t("hub.streakLabel")} />
+  ) : null;
+
   return (
     <SafeAreaView style={styles.container} edges={["top"]}>
       <ScrollView
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.primary} />
-        }
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.primary} />}
       >
         <View style={styles.headerRow}>
           <View>
-            <Text style={styles.kicker}>{t.hub.kicker}</Text>
+            <Text style={styles.kicker}>{t("hub.kicker")}</Text>
             <Text style={styles.name}>@{user.username}</Text>
           </View>
-          <StreakBadge count={user.streak_count} />
+          <Pressable testID="share-streak" onPress={() => setShareKind("streak")}>
+            <StreakBadge count={user.streak_count} />
+          </Pressable>
         </View>
 
         <Animated.View entering={FadeInDown.duration(400)} style={styles.heroCard}>
@@ -70,79 +97,84 @@ export default function HubScreen() {
             )}
           </View>
           <Text style={styles.totalXp}>{user.total_xp.toLocaleString()} XP</Text>
-          <Text style={styles.lifeStat}>{t.hub.lifetimeEarned}</Text>
+          <Text style={styles.lifeStat}>{t("hub.lifetimeEarned")}</Text>
           <View style={{ marginTop: 18, width: "100%" }}>
             <XpBar level={user.level} currentXp={user.current_xp} xpToNext={user.xp_to_next} />
           </View>
+
+          <Pressable
+            testID="share-level"
+            onPress={() => setShareKind("level")}
+            style={({ pressed }) => [styles.shareLevelBtn, pressed && { opacity: 0.85 }]}
+          >
+            <Share2 color={colors.primary} size={14} />
+            <Text style={styles.shareLevelText}>{t("hub.shareLevel")}</Text>
+          </Pressable>
         </Animated.View>
 
         {boostActive && (
           <Animated.View entering={FadeInDown.duration(400)} style={styles.boostCard} testID="boost-active-card">
             <Sparkles color={colors.bg} size={20} strokeWidth={3} />
             <View style={{ flex: 1 }}>
-              <Text style={styles.boostTitle}>{t.hub.boostActive}</Text>
-              <Text style={styles.boostSub}>{t.hub.boostActiveSub}</Text>
+              <Text style={styles.boostTitle}>{t("hub.boostActive")}</Text>
+              <Text style={styles.boostSub}>{t("hub.boostActiveSub")}</Text>
             </View>
           </Animated.View>
         )}
 
-        <Text style={styles.sectionLabel}>{t.hub.quickActions}</Text>
+        <Text style={styles.sectionLabel}>{t("hub.quickActions")}</Text>
         <View style={styles.quickRow}>
-          <Pressable
-            testID="quick-quests"
-            onPress={() => router.push("/(tabs)/quests")}
-            style={({ pressed }) => [styles.quick, pressed && { opacity: 0.85 }]}
-          >
+          <Pressable testID="quick-quests" onPress={() => router.push("/(tabs)/quests")} style={({ pressed }) => [styles.quick, pressed && { opacity: 0.85 }]}>
             <View style={[styles.quickIcon, { backgroundColor: colors.primary }]}>
               <Zap color={colors.bg} size={20} strokeWidth={3} />
             </View>
-            <Text style={styles.quickTitle}>{t.hub.runQuests}</Text>
-            <Text style={styles.quickSub}>{t.hub.runQuestsSub}</Text>
+            <Text style={styles.quickTitle}>{t("hub.runQuests")}</Text>
+            <Text style={styles.quickSub}>{t("hub.runQuestsSub")}</Text>
           </Pressable>
-          <Pressable
-            testID="quick-boost"
-            onPress={() => router.push("/rewarded-ad")}
-            style={({ pressed }) => [styles.quick, pressed && { opacity: 0.85 }]}
-          >
+          <Pressable testID="quick-boost" onPress={() => router.push("/rewarded-ad")} style={({ pressed }) => [styles.quick, pressed && { opacity: 0.85 }]}>
             <View style={[styles.quickIcon, { backgroundColor: colors.success }]}>
               <Rocket color={colors.bg} size={20} strokeWidth={3} />
             </View>
-            <Text style={styles.quickTitle}>{t.hub.boost}</Text>
-            <Text style={styles.quickSub}>{t.hub.boostSub}</Text>
+            <Text style={styles.quickTitle}>{t("hub.boost")}</Text>
+            <Text style={styles.quickSub}>{t("hub.boostSub")}</Text>
           </Pressable>
         </View>
 
-        <Pressable
-          testID="goto-pro"
-          onPress={() => router.push("/paywall")}
-          style={({ pressed }) => [styles.proCard, pressed && { opacity: 0.9 }]}
-        >
-          <View>
-            <Text style={styles.proCardKicker}>{t.hub.proKicker}</Text>
-            <Text style={styles.proCardTitle}>{t.hub.proTitle}</Text>
-            <Text style={styles.proCardSub}>{t.hub.proSub}</Text>
+        <Pressable testID="goto-pro" onPress={() => router.push("/paywall")} style={({ pressed }) => [styles.proCard, pressed && { opacity: 0.9 }]}>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.proCardKicker}>{t("hub.proKicker")}</Text>
+            <Text style={styles.proCardTitle}>{t("hub.proTitle")}</Text>
+            <Text style={styles.proCardSub}>{t("hub.proSub")}</Text>
           </View>
           <View style={styles.proCta}>
-            <Text style={styles.proCtaText}>{t.hub.proCta}</Text>
+            <Text style={styles.proCtaText}>{t("hub.proCta")}</Text>
           </View>
         </Pressable>
 
-        <Text style={styles.sectionLabel}>{t.hub.stats}</Text>
+        <Text style={styles.sectionLabel}>{t("hub.stats")}</Text>
         <View style={styles.statsGrid}>
           <View style={styles.statBox}>
             <Text style={styles.statValue}>{user.level}</Text>
-            <Text style={styles.statLabel}>{t.hub.level}</Text>
+            <Text style={styles.statLabel}>{t("hub.level")}</Text>
           </View>
           <View style={styles.statBox}>
             <Text style={[styles.statValue, { color: colors.success }]}>{user.streak_count}</Text>
-            <Text style={styles.statLabel}>{t.hub.streak}</Text>
+            <Text style={styles.statLabel}>{t("hub.streak")}</Text>
           </View>
           <View style={styles.statBox}>
             <Text style={[styles.statValue, { color: colors.primary }]}>{user.current_xp}</Text>
-            <Text style={styles.statLabel}>{t.hub.xpThisLvl}</Text>
+            <Text style={styles.statLabel}>{t("hub.xpThisLvl")}</Text>
           </View>
         </View>
       </ScrollView>
+
+      <ShareSheet
+        visible={shareKind !== null}
+        onClose={() => setShareKind(null)}
+        payload={sharePayload}
+        preview={preview}
+        testIDPrefix={`share-${shareKind || "x"}`}
+      />
     </SafeAreaView>
   );
 }
@@ -153,117 +185,34 @@ const styles = StyleSheet.create({
   headerRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
   kicker: { color: colors.textSecondary, fontSize: 11, letterSpacing: 1.5, fontWeight: "700" },
   name: { color: colors.text, fontSize: 24, fontWeight: "800", marginTop: 2 },
-  heroCard: {
-    marginTop: 24,
-    padding: spacing.card,
-    backgroundColor: colors.surface,
-    borderRadius: radius.card,
-    borderWidth: 1,
-    borderColor: colors.borderSubtle,
-    alignItems: "center",
-  },
+  heroCard: { marginTop: 24, padding: spacing.card, backgroundColor: colors.surface, borderRadius: radius.card, borderWidth: 1, borderColor: colors.borderSubtle, alignItems: "center" },
   avatarWrap: { alignItems: "center" },
-  avatar: {
-    width: 96,
-    height: 96,
-    borderRadius: 48,
-    backgroundColor: colors.surfaceElevated,
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 2,
-    borderColor: colors.borderSubtle,
-  },
-  avatarPro: {
-    borderColor: colors.premium,
-    shadowColor: colors.premium,
-    shadowOpacity: 0.7,
-    shadowRadius: 18,
-    shadowOffset: { width: 0, height: 0 },
-  },
+  avatar: { width: 96, height: 96, borderRadius: 48, backgroundColor: colors.surfaceElevated, alignItems: "center", justifyContent: "center", borderWidth: 2, borderColor: colors.borderSubtle },
+  avatarPro: { borderColor: colors.premium, shadowColor: colors.premium, shadowOpacity: 0.7, shadowRadius: 18, shadowOffset: { width: 0, height: 0 } },
   avatarEmoji: { fontSize: 48 },
-  proBadge: {
-    position: "absolute",
-    bottom: -6,
-    backgroundColor: colors.premium,
-    paddingHorizontal: 10,
-    paddingVertical: 3,
-    borderRadius: radius.pill,
-  },
+  proBadge: { position: "absolute", bottom: -6, backgroundColor: colors.premium, paddingHorizontal: 10, paddingVertical: 3, borderRadius: radius.pill },
   proText: { color: colors.bg, fontSize: 10, fontWeight: "900", letterSpacing: 1 },
   totalXp: { color: colors.primary, fontSize: 36, fontWeight: "900", marginTop: 16, letterSpacing: -1 },
   lifeStat: { color: colors.textSecondary, fontSize: 10, fontWeight: "800", letterSpacing: 2 },
-  boostCard: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-    backgroundColor: colors.success,
-    padding: 14,
-    borderRadius: radius.card,
-    marginTop: 16,
-  },
+  shareLevelBtn: { flexDirection: "row", alignItems: "center", gap: 6, marginTop: 14, paddingVertical: 8, paddingHorizontal: 14, borderRadius: radius.pill, borderWidth: 1, borderColor: colors.borderActive, backgroundColor: "rgba(0,229,255,0.08)" },
+  shareLevelText: { color: colors.primary, fontSize: 12, fontWeight: "800", letterSpacing: 0.5 },
+  boostCard: { flexDirection: "row", alignItems: "center", gap: 12, backgroundColor: colors.success, padding: 14, borderRadius: radius.card, marginTop: 16 },
   boostTitle: { color: colors.bg, fontSize: 13, fontWeight: "900", letterSpacing: 1 },
   boostSub: { color: "rgba(0,0,0,0.7)", fontSize: 11, marginTop: 2, fontWeight: "600" },
-  sectionLabel: {
-    color: colors.textSecondary,
-    fontSize: 11,
-    letterSpacing: 1.5,
-    fontWeight: "800",
-    marginTop: 28,
-    marginBottom: 12,
-  },
+  sectionLabel: { color: colors.textSecondary, fontSize: 11, letterSpacing: 1.5, fontWeight: "800", marginTop: 28, marginBottom: 12 },
   quickRow: { flexDirection: "row", gap: 12 },
-  quick: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: colors.surface,
-    borderRadius: radius.card,
-    borderWidth: 1,
-    borderColor: colors.borderSubtle,
-  },
-  quickIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 12,
-  },
+  quick: { flex: 1, padding: 16, backgroundColor: colors.surface, borderRadius: radius.card, borderWidth: 1, borderColor: colors.borderSubtle },
+  quickIcon: { width: 40, height: 40, borderRadius: 12, alignItems: "center", justifyContent: "center", marginBottom: 12 },
   quickTitle: { color: colors.text, fontSize: 15, fontWeight: "800" },
   quickSub: { color: colors.textSecondary, fontSize: 12, marginTop: 2 },
-  proCard: {
-    marginTop: 16,
-    padding: 18,
-    backgroundColor: colors.surface,
-    borderRadius: radius.card,
-    borderWidth: 1,
-    borderColor: colors.premium,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    shadowColor: colors.premium,
-    shadowOpacity: 0.4,
-    shadowRadius: 20,
-    shadowOffset: { width: 0, height: 0 },
-  },
+  proCard: { marginTop: 16, padding: 18, backgroundColor: colors.surface, borderRadius: radius.card, borderWidth: 1, borderColor: colors.premium, flexDirection: "row", alignItems: "center", justifyContent: "space-between", shadowColor: colors.premium, shadowOpacity: 0.4, shadowRadius: 20, shadowOffset: { width: 0, height: 0 } },
   proCardKicker: { color: colors.premium, fontSize: 11, fontWeight: "900", letterSpacing: 2 },
   proCardTitle: { color: colors.text, fontSize: 16, fontWeight: "800", marginTop: 4 },
   proCardSub: { color: colors.textSecondary, fontSize: 12, marginTop: 4 },
-  proCta: {
-    backgroundColor: colors.premium,
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    borderRadius: radius.pill,
-  },
+  proCta: { backgroundColor: colors.premium, paddingHorizontal: 14, paddingVertical: 10, borderRadius: radius.pill },
   proCtaText: { color: colors.bg, fontSize: 12, fontWeight: "900", letterSpacing: 1 },
   statsGrid: { flexDirection: "row", gap: 12 },
-  statBox: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: colors.surface,
-    borderRadius: radius.card,
-    borderWidth: 1,
-    borderColor: colors.borderSubtle,
-  },
+  statBox: { flex: 1, padding: 16, backgroundColor: colors.surface, borderRadius: radius.card, borderWidth: 1, borderColor: colors.borderSubtle },
   statValue: { color: colors.text, fontSize: 28, fontWeight: "900" },
   statLabel: { color: colors.textSecondary, fontSize: 10, fontWeight: "800", letterSpacing: 1.5, marginTop: 4 },
 });

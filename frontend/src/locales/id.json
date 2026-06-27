@@ -1,0 +1,226 @@
+{
+  "brand": {
+    "name": "GRYND",
+    "tagline": "Habit-mu, XP-mu. 🎮",
+    "tagline2": "Ubah kebiasaan jadi XP. Tumbuhkan streak. Naik level IRL."
+  },
+  "auth": {
+    "headlineLine1": "Naik Level",
+    "headlineLine2": "IRL.",
+    "sub": "Ubah kebiasaan jadi XP. Tumbuhkan streak. Naiki guild leaderboard.",
+    "continueGoogle": "Lanjut dengan Google",
+    "continueApple": "Lanjut dengan Apple",
+    "comingSoon": "SEGERA",
+    "or": "ATAU",
+    "terms": "Dengan lanjut, kamu setuju dengan vibe kami. Tanpa spam, dijamin.",
+    "welcome": "Selamat datang!",
+    "loadingSignIn": "Memproses login…",
+    "googleError": "Gagal login dengan Google",
+    "appleSoonHint": "Apple Sign-In bisa dipakai setelah aplikasi rilis di App Store."
+  },
+  "tabs": {
+    "hub": "HUB",
+    "quests": "QUEST",
+    "journal": "JURNAL",
+    "leaderboard": "GUILD",
+    "profile": "AKU"
+  },
+  "hub": {
+    "kicker": "SELAMAT DATANG",
+    "streakLabel": "HARI STREAK",
+    "lifetimeEarned": "TOTAL XP",
+    "quickActions": "AKSI CEPAT",
+    "runQuests": "Jalankan Quest",
+    "runQuestsSub": "Kumpulin XP hari ini",
+    "boost": "Boost 2×",
+    "boostSub": "Tonton iklan",
+    "boostActive": "BOOST 2× AKTIF",
+    "boostActiveSub": "Setiap quest yang kamu selesaikan dapat XP 2×",
+    "proKicker": "GUILD PRO",
+    "proTitle": "Buka kosmetik neon ✨",
+    "proSub": "Bayar sekali · IDR 49K · seumur hidup",
+    "proCta": "BUKA",
+    "stats": "STATISTIK",
+    "level": "LEVEL",
+    "streak": "STREAK",
+    "xpThisLvl": "XP LVL INI",
+    "progressToday": "PROGRES HARI INI",
+    "questsCleared": "{{done}} dari {{total}} quest selesai",
+    "shareLevel": "Bagikan level",
+    "shareStreak": "Bagikan streak"
+  },
+  "quests": {
+    "kicker": "QUEST HARIAN",
+    "titleProgress": "{{done}}/{{total}} selesai",
+    "emptyTitle": "Belum ada quest",
+    "emptySub": "Tambahin quest pertamamu buat mulai grinding.",
+    "loading": "Memuat grid…",
+    "swipeHint": "Geser kanan untuk selesaikan, geser kiri untuk hapus",
+    "tapHint": "Ketuk lingkaran ✓ untuk centang",
+    "completedToday": "✓ Selesai hari ini",
+    "swipeToComplete": "Geser kanan → selesaikan",
+    "addQuest": "QUEST BARU",
+    "titleLabel": "JUDUL QUEST",
+    "titlePlaceholder": "Contoh: Lari 20 menit",
+    "iconLabel": "IKON",
+    "categoryLabel": "KATEGORI",
+    "difficultyLabel": "TINGKAT KESULITAN",
+    "difficulties": {
+      "trivial": { "name": "Sepele", "desc": "Gampang banget" },
+      "easy": { "name": "Mudah", "desc": "Bisa < 5 menit" },
+      "medium": { "name": "Sedang", "desc": "Butuh fokus" },
+      "hard": { "name": "Sulit", "desc": "Effort serius" }
+    },
+    "create": "Buat Quest",
+    "creating": "Membuat…",
+    "questUndo": "Batalkan",
+    "undoSuccess": "Quest dibatalkan",
+    "completeSuccess": "+{{xp}} XP didapat!",
+    "levelUp": "LEVEL UP!",
+    "shareCompletion": "Bagikan",
+    "categories": {
+      "morning": "Pagi",
+      "health": "Kesehatan",
+      "mind": "Pikiran",
+      "study": "Belajar",
+      "social": "Sosial",
+      "creative": "Kreatif",
+      "other": "Lainnya"
+    }
+  },
+  "journal": {
+    "kicker": "MICRO JURNAL",
+    "title": "140 karakter. tanpa filter.",
+    "emptyTitle": "Jurnal kosong",
+    "emptySub": "Tulis refleksi singkat. 140 karakter, pilih mood, selesai.",
+    "addEntry": "TULIS CEPAT",
+    "moodLabel": "GIMANA PERASAANMU?",
+    "contentLabel": "CURHAT YUK",
+    "contentPlaceholder": "Hari ini lagi gimana, sis…",
+    "submit": "Simpan Entri",
+    "submitting": "Menyimpan…"
+  },
+  "leaderboard": {
+    "kicker": "RANKING GUILD",
+    "title": "Top runner 🏆",
+    "empty": "Belum ada runner. Jadilah yang pertama!",
+    "yourRank": "PERINGKAT KAMU",
+    "you": "Kamu",
+    "shareRank": "Bagikan peringkat"
+  },
+  "profile": {
+    "kicker": "PROFIL",
+    "freeAvatars": "AVATAR GRATIS",
+    "proCosmetics": "KOSMETIK NEON",
+    "upgradeBtn": "Upgrade ke Guild Pro",
+    "support": "DUKUNGAN",
+    "supportDevs": "Dukung devs",
+    "supportDevsSub": "Saweria · keep the lights on",
+    "boost": "Dapat boost XP 2×",
+    "boostSub": "Tonton iklan singkat · boost 1 jam",
+    "leaderboard": "Lihat ranking guild",
+    "leaderboardSub": "Cek posisi kamu",
+    "account": "Info akun",
+    "accountSub": "Bergabung sejak {{date}}",
+    "signOut": "Keluar",
+    "member": "Anggota",
+    "language": "Bahasa",
+    "languageSub": "Bahasa aplikasi",
+    "invite": "Undang teman",
+    "inviteSub": "Bagikan link kamu"
+  },
+  "paywall": {
+    "kicker": "GUILD PRO",
+    "titleLine1": "Buka level",
+    "titleLine2": "neon.",
+    "sub": "Bayar sekali · akses seumur hidup · tanpa langganan.",
+    "features": {
+      "f1Title": "Kosmetik avatar neon",
+      "f1Sub": "Cyber, glitch, hologram",
+      "f2Title": "Badge guild premium",
+      "f2Sub": "Glow di leaderboard",
+      "f3Title": "Bonus XP multiplier",
+      "f3Sub": "Stack dengan rewarded ad",
+      "f4Title": "Zero iklan, selamanya",
+      "f4Sub": "Mode fokus murni"
+    },
+    "qrisLabel": "PINDAI UNTUK BAYAR (QRIS)",
+    "merchant": "GRYND Guild",
+    "note": "Pindai dengan e-wallet apa pun (GoPay, OVO, DANA, ShopeePay)",
+    "paidBtn": "Saya sudah bayar · Buka Pro",
+    "proAlready": "Kamu sudah Pro 👑",
+    "laterBtn": "Nanti aja",
+    "confirmed": "✓ Pembayaran dikonfirmasi"
+  },
+  "rewardedAd": {
+    "sponsored": "BERSPONSOR · IKLAN",
+    "skipIn": "Skip dalam {{s}} dtk",
+    "boostInc": "BOOST INC.",
+    "demoNote": "Iklan demo. Pada produksi, AdMob rewarded video tayang di sini.",
+    "watching": "MENONTON IKLAN…",
+    "incoming": "Boost XP 2× akan masuk",
+    "incomingSub": "Stay di sini selama {{s}} detik untuk dapat reward.",
+    "complete": "IKLAN SELESAI",
+    "claimTitle": "Klaim boost XP 2× selama 1 jam",
+    "claimBtn": "Klaim Boost",
+    "claimed": "⚡ XP 2× TERKUNCI",
+    "claimedSub": "Aktif selama 60 menit. Yuk stack quest."
+  },
+  "common": {
+    "cancel": "Batal",
+    "save": "Simpan",
+    "delete": "Hapus",
+    "confirm": "Konfirmasi",
+    "close": "Tutup",
+    "retry": "Coba lagi",
+    "error": "Ada error",
+    "loading": "Memuat…",
+    "share": "Bagikan",
+    "copied": "Tersalin!",
+    "copy": "Salin link",
+    "done": "Selesai"
+  },
+  "share": {
+    "sheetTitle": "Bagikan ke",
+    "level": {
+      "title": "Aku di Level {{level}} GRYND 🚀",
+      "body": "Baru naik ke Level {{level}} dengan {{xp}} XP di GRYND. Habit → XP. Ayo grinding bareng & naik level IRL.",
+      "hashtags": "#GRYND #NaikLevel #Produktivitas"
+    },
+    "streak": {
+      "title": "Streak {{streak}} hari di GRYND 🔥",
+      "body": "{{streak}} hari berturut-turut nyelesain quest di GRYND. Konsistensi unlocked.",
+      "hashtags": "#GRYND #StreakLife"
+    },
+    "quest": {
+      "title": "Quest selesai di GRYND ⚡",
+      "body": "Baru kelar \"{{quest}}\" & dapet +{{xp}} XP di GRYND.",
+      "hashtags": "#GRYND #QuestCleared"
+    },
+    "rank": {
+      "title": "Peringkat #{{rank}} di GRYND 🏆",
+      "body": "Aku di peringkat #{{rank}} leaderboard global GRYND. Kejar kalau bisa!",
+      "hashtags": "#GRYND #Leaderboard"
+    },
+    "invite": {
+      "title": "Gabung GRYND yuk",
+      "body": "Aku lagi level up habit di GRYND. Gabung guild-ku → {{link}}",
+      "hashtags": "#GRYND"
+    },
+    "targets": {
+      "twitter": "X / Twitter",
+      "facebook": "Facebook",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "linkedin": "LinkedIn",
+      "reddit": "Reddit",
+      "pinterest": "Pinterest",
+      "more": "Lainnya",
+      "copyLink": "Salin link"
+    }
+  },
+  "language": {
+    "title": "Pilih bahasa",
+    "system": "Bahasa sistem"
+  }
+}

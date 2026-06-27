@@ -9,9 +9,9 @@ import Animated, {
 } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
 import { Check, Trash2, Undo2 } from "lucide-react-native";
+import { useTranslation } from "react-i18next";
 
 import { colors, radius } from "@/src/theme";
-import { t } from "@/src/i18n";
 
 type Props = {
   id: string;
@@ -27,11 +27,11 @@ type Props = {
 
 const SWIPE_THRESHOLD = 110;
 
-const DIFF_LABELS: Record<string, { label: string; color: string }> = {
-  trivial: { label: "Sepele", color: colors.textTertiary },
-  easy: { label: "Mudah", color: colors.success },
-  medium: { label: "Sedang", color: colors.primary },
-  hard: { label: "Sulit", color: colors.premium },
+const DIFF_COLORS: Record<string, string> = {
+  trivial: colors.textTertiary,
+  easy: colors.success,
+  medium: colors.primary,
+  hard: colors.premium,
 };
 
 export default function SwipeQuestCard({
@@ -45,6 +45,7 @@ export default function SwipeQuestCard({
   onUncomplete,
   onDelete,
 }: Props) {
+  const { t } = useTranslation();
   const tx = useSharedValue(0);
 
   const haptic = (style: "light" | "success" | "warning") => {
@@ -99,16 +100,17 @@ export default function SwipeQuestCard({
     opacity: Math.min(Math.max(-tx.value / SWIPE_THRESHOLD, 0), 1),
   }));
 
-  const diff = DIFF_LABELS[difficulty] || DIFF_LABELS.easy;
+  const diffColor = DIFF_COLORS[difficulty] || DIFF_COLORS.easy;
+  const diffLabel = t(`quests.difficulties.${difficulty}.name`);
 
   return (
     <View testID={`quest-card-${id}`} style={styles.container}>
       <Animated.View style={[styles.bg, styles.completeBg, completeBgStyle]}>
         <Check color={colors.bg} size={22} strokeWidth={3} />
-        <Text style={styles.bgLabelDark}>SELESAI</Text>
+        <Text style={styles.bgLabelDark}>{t("quests.completedToday").replace("✓ ", "").toUpperCase()}</Text>
       </Animated.View>
       <Animated.View style={[styles.bg, styles.deleteBg, deleteBgStyle]}>
-        <Text style={styles.bgLabelLight}>HAPUS</Text>
+        <Text style={styles.bgLabelLight}>{t("common.delete").toUpperCase()}</Text>
         <Trash2 color={colors.text} size={20} />
       </Animated.View>
 
@@ -145,12 +147,12 @@ export default function SwipeQuestCard({
               {title}
             </Text>
             <View style={styles.metaRow}>
-              <View style={[styles.diffPill, { borderColor: diff.color }]}>
-                <View style={[styles.diffDot, { backgroundColor: diff.color }]} />
-                <Text style={[styles.diffLabel, { color: diff.color }]}>{diff.label}</Text>
+              <View style={[styles.diffPill, { borderColor: diffColor }]}>
+                <View style={[styles.diffDot, { backgroundColor: diffColor }]} />
+                <Text style={[styles.diffLabel, { color: diffColor }]}>{diffLabel}</Text>
               </View>
               <Text style={styles.hint}>
-                {completedToday ? t.quests.completedToday : t.quests.swipeToComplete}
+                {completedToday ? t("quests.completedToday") : t("quests.swipeToComplete")}
               </Text>
             </View>
           </View>
