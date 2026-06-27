@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
-import * as AppleAuthentication from "expo-apple-authentication";
 import { Zap, ArrowRight, Mail } from "lucide-react-native";
 import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { useRouter } from "expo-router";
@@ -22,7 +21,7 @@ import { useAuth } from "@/src/api/auth-context";
 type Mode = "login" | "signup";
 
 export default function LoginScreen() {
-  const { signIn, signUp, signInWithGoogle, signInWithApple, appleAvailable } = useAuth();
+  const { signIn, signUp, signInWithGoogle } = useAuth();
   const router = useRouter();
   const [mode, setMode] = useState<Mode>("login");
   const [showEmail, setShowEmail] = useState(false);
@@ -47,24 +46,6 @@ export default function LoginScreen() {
       // On web: full page navigation happens; nothing to do here.
     } catch (e: any) {
       setError(e?.message || "Google sign-in failed");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleApple = async () => {
-    if (loading) return;
-    setError(null);
-    setLoading(true);
-    try {
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-      const u = await signInWithApple();
-      if (u) router.replace("/(tabs)/hub");
-    } catch (e: any) {
-      // user cancellation throws a specific code on iOS; suppress message
-      if (e?.code !== "ERR_REQUEST_CANCELED") {
-        setError(e?.message || "Apple sign-in failed");
-      }
     } finally {
       setLoading(false);
     }
@@ -164,29 +145,14 @@ export default function LoginScreen() {
               <Text style={styles.googleText}>Continue with Google</Text>
             </Pressable>
 
-            {Platform.OS === "ios" && appleAvailable ? (
-              <AppleAuthentication.AppleAuthenticationButton
-                testID="apple-signin-button"
-                buttonType={
-                  mode === "login"
-                    ? AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN
-                    : AppleAuthentication.AppleAuthenticationButtonType.SIGN_UP
-                }
-                buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.WHITE}
-                cornerRadius={9999}
-                style={styles.appleBtn}
-                onPress={handleApple}
-              />
-            ) : Platform.OS === "ios" ? null : (
-              <Pressable
-                testID="apple-signin-button-placeholder"
-                onPress={() => setError("Apple Sign-In only works on iOS native build. Hit Publish to ship it.")}
-                style={({ pressed }) => [styles.appleBtnFake, pressed && { opacity: 0.85 }]}
-              >
-                <Text style={styles.appleLogo}></Text>
-                <Text style={styles.appleText}>Continue with Apple</Text>
-              </Pressable>
-            )}
+            {/* Apple Sign-In — Coming Soon (disabled until App Store launch) */}
+            <View testID="apple-coming-soon" style={styles.appleSoon}>
+              <Text style={styles.appleLogo}></Text>
+              <Text style={styles.appleSoonText}>Sign in with Apple</Text>
+              <View style={styles.soonBadge}>
+                <Text style={styles.soonBadgeText}>COMING SOON</Text>
+              </View>
+            </View>
 
             <View style={styles.dividerRow}>
               <View style={styles.divider} />
@@ -368,7 +334,28 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     borderRadius: radius.pill,
   },
-  appleLogo: { color: colors.bg, fontSize: 20, marginTop: -2 },
+  appleSoon: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.borderSubtle,
+    paddingVertical: 16,
+    borderRadius: radius.pill,
+    opacity: 0.7,
+  },
+  appleSoonText: { color: colors.textSecondary, fontSize: 15, fontWeight: "700" },
+  soonBadge: {
+    backgroundColor: colors.premium,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: radius.pill,
+    marginLeft: 4,
+  },
+  soonBadgeText: { color: colors.bg, fontSize: 9, fontWeight: "900", letterSpacing: 1 },
+  appleLogo: { color: colors.textSecondary, fontSize: 18, marginTop: -2 },
   appleText: { color: colors.bg, fontSize: 15, fontWeight: "800" },
   dividerRow: { flexDirection: "row", alignItems: "center", gap: 12, marginVertical: 6 },
   divider: { flex: 1, height: 1, backgroundColor: colors.borderSubtle },
