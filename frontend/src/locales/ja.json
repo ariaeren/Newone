@@ -1,5 +1,9 @@
 {
-  "brand": { "name": "GRYND", "tagline": "あなたの習慣、あなたのXP。", "tagline2": "習慣をXPに。連続記録を伸ばし、現実でレベルアップ。" },
+  "brand": {
+    "name": "GRYND",
+    "tagline": "あなたの習慣、あなたのXP。",
+    "tagline2": "習慣をXPに。連続記録を伸ばし、現実でレベルアップ。"
+  },
   "auth": {
     "headlineLine1": "現実で",
     "headlineLine2": "レベルアップ。",
@@ -14,7 +18,13 @@
     "googleError": "Googleサインインに失敗しました",
     "appleSoonHint": "AppleサインインはApp Storeリリース後に利用可能。"
   },
-  "tabs": { "hub": "ハブ", "quests": "クエスト", "journal": "ジャーナル", "leaderboard": "ギルド", "profile": "ME" },
+  "tabs": {
+    "hub": "ハブ",
+    "quests": "クエスト",
+    "journal": "ジャーナル",
+    "leaderboard": "ギルド",
+    "profile": "ME"
+  },
   "hub": {
     "kicker": "ようこそ",
     "streakLabel": "連続日数",
@@ -56,10 +66,22 @@
     "categoryLabel": "カテゴリ",
     "difficultyLabel": "難易度",
     "difficulties": {
-      "trivial": { "name": "些細", "desc": "超簡単" },
-      "easy": { "name": "簡単", "desc": "5分以内" },
-      "medium": { "name": "普通", "desc": "集中が必要" },
-      "hard": { "name": "難しい", "desc": "本気の努力" }
+      "trivial": {
+        "name": "些細",
+        "desc": "超簡単"
+      },
+      "easy": {
+        "name": "簡単",
+        "desc": "5分以内"
+      },
+      "medium": {
+        "name": "普通",
+        "desc": "集中が必要"
+      },
+      "hard": {
+        "name": "難しい",
+        "desc": "本気の努力"
+      }
     },
     "create": "クエストを作成",
     "creating": "作成中…",
@@ -68,7 +90,15 @@
     "completeSuccess": "+{{xp}} XP 獲得！",
     "levelUp": "レベルアップ！",
     "shareCompletion": "共有",
-    "categories": { "morning": "朝", "health": "健康", "mind": "メンタル", "study": "学習", "social": "ソーシャル", "creative": "クリエイティブ", "other": "その他" }
+    "categories": {
+      "morning": "朝",
+      "health": "健康",
+      "mind": "メンタル",
+      "study": "学習",
+      "social": "ソーシャル",
+      "creative": "クリエイティブ",
+      "other": "その他"
+    }
   },
   "journal": {
     "kicker": "マイクロジャーナル",
@@ -82,7 +112,14 @@
     "submit": "保存",
     "submitting": "保存中…"
   },
-  "leaderboard": { "kicker": "ギルドランキング", "title": "トップランナー 🏆", "empty": "ランナーがいません。最初の一人になろう！", "yourRank": "あなたの順位", "you": "あなた", "shareRank": "順位を共有" },
+  "leaderboard": {
+    "kicker": "ギルドランキング",
+    "title": "トップランナー 🏆",
+    "empty": "ランナーがいません。最初の一人になろう！",
+    "yourRank": "あなたの順位",
+    "you": "あなた",
+    "shareRank": "順位を共有"
+  },
   "profile": {
     "kicker": "プロフィール",
     "freeAvatars": "無料アバター",
@@ -110,10 +147,14 @@
     "titleLine2": "解放。",
     "sub": "買い切り · 永久アクセス · サブスクなし。",
     "features": {
-      "f1Title": "ネオンアバター装飾", "f1Sub": "サイバー、グリッチ、ホログラム",
-      "f2Title": "プレミアムギルドバッジ", "f2Sub": "ランキングで光る",
-      "f3Title": "ボーナスXP倍率", "f3Sub": "広告ブーストと併用可",
-      "f4Title": "広告ゼロ、永久に", "f4Sub": "純粋な集中モード"
+      "f1Title": "ネオンアバター装飾",
+      "f1Sub": "サイバー、グリッチ、ホログラム",
+      "f2Title": "プレミアムギルドバッジ",
+      "f2Sub": "ランキングで光る",
+      "f3Title": "ボーナスXP倍率",
+      "f3Sub": "広告ブーストと併用可",
+      "f4Title": "広告ゼロ、永久に",
+      "f4Sub": "純粋な集中モード"
     },
     "qrisLabel": "スキャンして支払う (QRIS)",
     "merchant": "GRYND Guild",
@@ -137,15 +178,98 @@
     "claimed": "⚡ 2× XP 確定",
     "claimedSub": "60分間有効。"
   },
-  "common": { "cancel": "キャンセル", "save": "保存", "delete": "削除", "confirm": "確認", "close": "閉じる", "retry": "再試行", "error": "エラーが発生しました", "loading": "読み込み中…", "share": "共有", "copied": "コピーしました！", "copy": "リンクをコピー", "done": "完了" },
+  "common": {
+    "cancel": "キャンセル",
+    "save": "保存",
+    "delete": "削除",
+    "confirm": "確認",
+    "close": "閉じる",
+    "retry": "再試行",
+    "error": "エラーが発生しました",
+    "loading": "読み込み中…",
+    "share": "共有",
+    "copied": "コピーしました！",
+    "copy": "リンクをコピー",
+    "done": "完了"
+  },
   "share": {
     "sheetTitle": "共有先",
-    "level": { "title": "GRYNDでレベル{{level}}達成 🚀", "body": "GRYNDで{{xp}} XP、レベル{{level}}に到達。習慣→XP。一緒にレベルアップしよう。", "hashtags": "#GRYND #レベルアップ" },
-    "streak": { "title": "GRYND {{streak}}日連続 🔥", "body": "{{streak}}日連続でクエストをこなしています。継続は力。", "hashtags": "#GRYND" },
-    "quest": { "title": "GRYNDでクエスト完了 ⚡", "body": "「{{quest}}」を完了し、+{{xp}} XPを獲得しました。", "hashtags": "#GRYND" },
-    "rank": { "title": "GRYNDで{{rank}}位 🏆", "body": "GRYNDのグローバルランキングで{{rank}}位です。", "hashtags": "#GRYND" },
-    "invite": { "title": "GRYNDに参加しよう", "body": "GRYNDで習慣をレベルアップ中。私のギルドに参加 → {{link}}", "hashtags": "#GRYND" },
-    "targets": { "twitter": "X / Twitter", "facebook": "Facebook", "whatsapp": "WhatsApp", "telegram": "Telegram", "linkedin": "LinkedIn", "reddit": "Reddit", "pinterest": "Pinterest", "more": "その他", "copyLink": "リンクをコピー" }
+    "level": {
+      "title": "GRYNDでレベル{{level}}達成 🚀",
+      "body": "GRYNDで{{xp}} XP、レベル{{level}}に到達。習慣→XP。一緒にレベルアップしよう。",
+      "hashtags": "#GRYND #レベルアップ"
+    },
+    "streak": {
+      "title": "GRYND {{streak}}日連続 🔥",
+      "body": "{{streak}}日連続でクエストをこなしています。継続は力。",
+      "hashtags": "#GRYND"
+    },
+    "quest": {
+      "title": "GRYNDでクエスト完了 ⚡",
+      "body": "「{{quest}}」を完了し、+{{xp}} XPを獲得しました。",
+      "hashtags": "#GRYND"
+    },
+    "rank": {
+      "title": "GRYNDで{{rank}}位 🏆",
+      "body": "GRYNDのグローバルランキングで{{rank}}位です。",
+      "hashtags": "#GRYND"
+    },
+    "invite": {
+      "title": "GRYNDに参加しよう",
+      "body": "GRYNDで習慣をレベルアップ中。私のギルドに参加 → {{link}}",
+      "hashtags": "#GRYND"
+    },
+    "targets": {
+      "twitter": "X / Twitter",
+      "facebook": "Facebook",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "linkedin": "LinkedIn",
+      "reddit": "Reddit",
+      "pinterest": "Pinterest",
+      "more": "その他",
+      "copyLink": "リンクをコピー"
+    }
   },
-  "language": { "title": "言語を選ぶ", "system": "システム既定" }
+  "language": {
+    "title": "言語を選ぶ",
+    "system": "システム既定"
+  },
+  "ai": {
+    "title": "AIクエストコーチ",
+    "lead": "目標を教えて — 5つの日次クエストに変換します。",
+    "placeholder": "例：30日でPythonを学ぶ",
+    "generate": "クエスト生成",
+    "thinking": "考え中…",
+    "pickQuests": "クエストを選ぶ",
+    "addToQuests": "{{n}}件追加",
+    "adding": "追加中…",
+    "regenerate": "別の目標"
+  },
+  "combo": {
+    "title": "コンボ",
+    "rage": "レイジモード！",
+    "bonus": "+{{xp}} ボーナスXP"
+  },
+  "shield": {
+    "saved": "ストリークシールド発動！",
+    "label": "シールド"
+  },
+  "friends": {
+    "title": "フレンド",
+    "yourCode": "あなたのフレンドコード",
+    "addLabel": "フレンド追加",
+    "addPlaceholder": "GRYND-XXXXX",
+    "addBtn": "追加",
+    "list": "あなたのギルド",
+    "empty": "フレンドコードで最初の友達を追加。",
+    "highFive": "ハイタッチ",
+    "highFiveSent": "✋ 送信!",
+    "friendsOnly": "フレンドのみ",
+    "global": "グローバル"
+  },
+  "pet": {
+    "title": "サイバーペット",
+    "next": "次の進化は Lv{{level}}"
+  }
 }

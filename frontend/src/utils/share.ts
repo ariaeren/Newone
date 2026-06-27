@@ -145,6 +145,6 @@ export async function shareTo(target: ShareTarget, p: SharePayload): Promise<voi
 export function buildInviteUrl(username?: string | null): string {
   const base = process.env.EXPO_PUBLIC_BACKEND_URL || "https://grynd.app";
   const u = (username || "").trim();
-  if (!u) return `${base}/?ref=grynd`;
-  return `${base}/?ref=${encodeURIComponent(u)}`;
+  if (!u) return `${base}/api/u/grynd`;
+  return `${base}/api/u/${encodeURIComponent(u)}`;
 }

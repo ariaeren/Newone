@@ -66,10 +66,22 @@
     "categoryLabel": "KATEGORI",
     "difficultyLabel": "TINGKAT KESULITAN",
     "difficulties": {
-      "trivial": { "name": "Sepele", "desc": "Gampang banget" },
-      "easy": { "name": "Mudah", "desc": "Bisa < 5 menit" },
-      "medium": { "name": "Sedang", "desc": "Butuh fokus" },
-      "hard": { "name": "Sulit", "desc": "Effort serius" }
+      "trivial": {
+        "name": "Sepele",
+        "desc": "Gampang banget"
+      },
+      "easy": {
+        "name": "Mudah",
+        "desc": "Bisa < 5 menit"
+      },
+      "medium": {
+        "name": "Sedang",
+        "desc": "Butuh fokus"
+      },
+      "hard": {
+        "name": "Sulit",
+        "desc": "Effort serius"
+      }
     },
     "create": "Buat Quest",
     "creating": "Membuat…",
@@ -222,5 +234,42 @@
   "language": {
     "title": "Pilih bahasa",
     "system": "Bahasa sistem"
+  },
+  "ai": {
+    "title": "Coach Quest AI",
+    "lead": "Kasih tau tujuanmu — aku ubah jadi 5 quest harian, dalam bahasamu.",
+    "placeholder": "Contoh: Belajar Python dalam 30 hari",
+    "generate": "Buat quest",
+    "thinking": "Berpikir…",
+    "pickQuests": "PILIH QUEST",
+    "addToQuests": "Tambah {{n}} ke quest",
+    "adding": "Menambahkan…",
+    "regenerate": "Ganti tujuan"
+  },
+  "combo": {
+    "title": "COMBO",
+    "rage": "MODE NGEGAS!",
+    "bonus": "+{{xp}} XP bonus"
+  },
+  "shield": {
+    "saved": "Streak shield dipakai!",
+    "label": "SHIELD"
+  },
+  "friends": {
+    "title": "Teman",
+    "yourCode": "KODE TEMAN KAMU",
+    "addLabel": "TAMBAH TEMAN",
+    "addPlaceholder": "GRYND-XXXXX",
+    "addBtn": "Tambah",
+    "list": "GUILD KAMU",
+    "empty": "Tambah teman pertama pakai kode.",
+    "highFive": "High-five",
+    "highFiveSent": "✋ Terkirim!",
+    "friendsOnly": "Khusus teman",
+    "global": "Global"
+  },
+  "pet": {
+    "title": "CYBERPET",
+    "next": "Evolusi berikutnya di Lvl {{level}}"
   }
 }

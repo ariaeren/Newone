@@ -66,10 +66,22 @@
     "categoryLabel": "CATEGORY",
     "difficultyLabel": "DIFFICULTY",
     "difficulties": {
-      "trivial": { "name": "Trivial", "desc": "Super easy" },
-      "easy": { "name": "Easy", "desc": "Under 5 min" },
-      "medium": { "name": "Medium", "desc": "Needs focus" },
-      "hard": { "name": "Hard", "desc": "Serious effort" }
+      "trivial": {
+        "name": "Trivial",
+        "desc": "Super easy"
+      },
+      "easy": {
+        "name": "Easy",
+        "desc": "Under 5 min"
+      },
+      "medium": {
+        "name": "Medium",
+        "desc": "Needs focus"
+      },
+      "hard": {
+        "name": "Hard",
+        "desc": "Serious effort"
+      }
     },
     "create": "Create Quest",
     "creating": "Creating…",
@@ -222,5 +234,42 @@
   "language": {
     "title": "Choose language",
     "system": "System default"
+  },
+  "ai": {
+    "title": "AI Quest Coach",
+    "lead": "Tell me your goal — I'll turn it into 5 daily quests, in your language.",
+    "placeholder": "e.g. Learn Python in 30 days",
+    "generate": "Generate quests",
+    "thinking": "Thinking…",
+    "pickQuests": "PICK YOUR QUESTS",
+    "addToQuests": "Add {{n}} to quests",
+    "adding": "Adding…",
+    "regenerate": "Try different goal"
+  },
+  "combo": {
+    "title": "COMBO",
+    "rage": "RAGE MODE!",
+    "bonus": "+{{xp}} bonus XP"
+  },
+  "shield": {
+    "saved": "Streak shield used!",
+    "label": "SHIELDS"
+  },
+  "friends": {
+    "title": "Friends",
+    "yourCode": "YOUR FRIEND CODE",
+    "addLabel": "ADD A FRIEND",
+    "addPlaceholder": "GRYND-XXXXX",
+    "addBtn": "Add",
+    "list": "YOUR GUILD",
+    "empty": "Add your first friend using a friend code.",
+    "highFive": "High-five",
+    "highFiveSent": "✋ Sent!",
+    "friendsOnly": "Friends only",
+    "global": "Global"
+  },
+  "pet": {
+    "title": "CYBERPET",
+    "next": "Next evolution at Lvl {{level}}"
   }
 }

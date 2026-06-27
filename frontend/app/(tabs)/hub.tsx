@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
-import { Zap, Sparkles, Rocket, Share2 } from "lucide-react-native";
+import { Zap, Sparkles, Rocket, Share2, Brain } from "lucide-react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { useTranslation } from "react-i18next";
 
@@ -19,6 +19,8 @@ import XpBar from "@/src/components/XpBar";
 import StreakBadge from "@/src/components/StreakBadge";
 import ShareSheet from "@/src/components/ShareSheet";
 import ShareCard from "@/src/components/ShareCard";
+import AICoachSheet from "@/src/components/AICoachSheet";
+import Cyberpet from "@/src/components/Cyberpet";
 import { buildInviteUrl } from "@/src/utils/share";
 
 type ShareKind = "level" | "streak" | null;
@@ -30,6 +32,7 @@ export default function HubScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const [boostActive, setBoostActive] = useState(false);
   const [shareKind, setShareKind] = useState<ShareKind>(null);
+  const [aiOpen, setAiOpen] = useState(false);
 
   useEffect(() => {
     if (!user?.xp_boost_until) { setBoostActive(false); return; }
@@ -86,21 +89,24 @@ export default function HubScreen() {
         </View>
 
         <Animated.View entering={FadeInDown.duration(400)} style={styles.heroCard}>
-          <View style={styles.avatarWrap}>
-            <View style={[styles.avatar, user.is_pro && styles.avatarPro]}>
-              <Text style={styles.avatarEmoji}>{user.avatar_emoji}</Text>
+          <Cyberpet stage={user.pet_stage || "egg"} size={88} showLabel testID="hub-cyberpet" />
+          {user.is_pro && (
+            <View style={styles.proBadgeTop}>
+              <Text style={styles.proText}>PRO</Text>
             </View>
-            {user.is_pro && (
-              <View style={styles.proBadge}>
-                <Text style={styles.proText}>PRO</Text>
-              </View>
-            )}
-          </View>
+          )}
           <Text style={styles.totalXp}>{user.total_xp.toLocaleString()} XP</Text>
           <Text style={styles.lifeStat}>{t("hub.lifetimeEarned")}</Text>
           <View style={{ marginTop: 18, width: "100%" }}>
             <XpBar level={user.level} currentXp={user.current_xp} xpToNext={user.xp_to_next} />
           </View>
+
+          {!!(user.shields && user.shields > 0) && (
+            <View testID="shield-pill" style={styles.shieldPill}>
+              <Text style={styles.shieldEmoji}>🛡️</Text>
+              <Text style={styles.shieldText}>{user.shields} {t("shield.label")}</Text>
+            </View>
+          )}
 
           <Pressable
             testID="share-level"
@@ -111,6 +117,22 @@ export default function HubScreen() {
             <Text style={styles.shareLevelText}>{t("hub.shareLevel")}</Text>
           </Pressable>
         </Animated.View>
+
+        {/* AI Coach card */}
+        <Pressable
+          testID="open-ai-coach"
+          onPress={() => setAiOpen(true)}
+          style={({ pressed }) => [styles.aiCard, pressed && { opacity: 0.9 }]}
+        >
+          <View style={styles.aiIconBubble}>
+            <Brain color={colors.bg} size={20} strokeWidth={2.5} />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.aiKicker}>{t("ai.title")}</Text>
+            <Text style={styles.aiTitle}>{t("ai.lead")}</Text>
+          </View>
+          <Sparkles color={colors.primary} size={18} />
+        </Pressable>
 
         {boostActive && (
           <Animated.View entering={FadeInDown.duration(400)} style={styles.boostCard} testID="boost-active-card">
@@ -168,6 +190,12 @@ export default function HubScreen() {
         </View>
       </ScrollView>
 
+      <AICoachSheet
+        visible={aiOpen}
+        onClose={() => setAiOpen(false)}
+        onAccepted={() => { refresh(); }}
+      />
+
       <ShareSheet
         visible={shareKind !== null}
         onClose={() => setShareKind(null)}
@@ -186,12 +214,15 @@ const styles = StyleSheet.create({
   kicker: { color: colors.textSecondary, fontSize: 11, letterSpacing: 1.5, fontWeight: "700" },
   name: { color: colors.text, fontSize: 24, fontWeight: "800", marginTop: 2 },
   heroCard: { marginTop: 24, padding: spacing.card, backgroundColor: colors.surface, borderRadius: radius.card, borderWidth: 1, borderColor: colors.borderSubtle, alignItems: "center" },
-  avatarWrap: { alignItems: "center" },
-  avatar: { width: 96, height: 96, borderRadius: 48, backgroundColor: colors.surfaceElevated, alignItems: "center", justifyContent: "center", borderWidth: 2, borderColor: colors.borderSubtle },
-  avatarPro: { borderColor: colors.premium, shadowColor: colors.premium, shadowOpacity: 0.7, shadowRadius: 18, shadowOffset: { width: 0, height: 0 } },
-  avatarEmoji: { fontSize: 48 },
-  proBadge: { position: "absolute", bottom: -6, backgroundColor: colors.premium, paddingHorizontal: 10, paddingVertical: 3, borderRadius: radius.pill },
+  proBadgeTop: { position: "absolute", top: 16, right: 16, backgroundColor: colors.premium, paddingHorizontal: 10, paddingVertical: 3, borderRadius: radius.pill },
   proText: { color: colors.bg, fontSize: 10, fontWeight: "900", letterSpacing: 1 },
+  shieldPill: { marginTop: 12, flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 12, paddingVertical: 6, borderRadius: radius.pill, backgroundColor: "rgba(57,255,20,0.08)", borderWidth: 1, borderColor: colors.success },
+  shieldEmoji: { fontSize: 14 },
+  shieldText: { color: colors.success, fontSize: 11, fontWeight: "900", letterSpacing: 1 },
+  aiCard: { marginTop: 16, flexDirection: "row", alignItems: "center", gap: 12, padding: 14, backgroundColor: colors.surface, borderRadius: radius.card, borderWidth: 1, borderColor: colors.borderActive },
+  aiIconBubble: { width: 40, height: 40, borderRadius: 12, backgroundColor: colors.primary, alignItems: "center", justifyContent: "center" },
+  aiKicker: { color: colors.primary, fontSize: 10, fontWeight: "900", letterSpacing: 2 },
+  aiTitle: { color: colors.text, fontSize: 13, fontWeight: "700", marginTop: 3, lineHeight: 17 },
   totalXp: { color: colors.primary, fontSize: 36, fontWeight: "900", marginTop: 16, letterSpacing: -1 },
   lifeStat: { color: colors.textSecondary, fontSize: 10, fontWeight: "800", letterSpacing: 2 },
   shareLevelBtn: { flexDirection: "row", alignItems: "center", gap: 6, marginTop: 14, paddingVertical: 8, paddingHorizontal: 14, borderRadius: radius.pill, borderWidth: 1, borderColor: colors.borderActive, backgroundColor: "rgba(0,229,255,0.08)" },

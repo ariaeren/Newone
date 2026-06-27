@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as WebBrowser from "expo-web-browser";
 import { useRouter } from "expo-router";
 import {
-  LogOut, Heart, Crown, Rocket, Settings, Trophy, ChevronRight, Globe, Share2,
+  LogOut, Heart, Crown, Rocket, Settings, Trophy, ChevronRight, Globe, Share2, Users,
 } from "lucide-react-native";
 import { useTranslation } from "react-i18next";
 
@@ -111,6 +111,7 @@ export default function ProfileScreen() {
         )}
 
         <Text style={styles.sectionLabel}>{t("profile.support")}</Text>
+        <Row icon={<Users color={colors.success} size={20} />} title={t("friends.title")} subtitle={user.friend_code || ""} onPress={() => router.push("/friends")} testID="profile-friends" />
         <Row icon={<Share2 color={colors.primary} size={20} />} title={t("profile.invite")} subtitle={t("profile.inviteSub")} onPress={() => setInviteOpen(true)} testID="profile-invite" />
         <Row icon={<Globe color={colors.text} size={20} />} title={`${t("profile.language")}  ${currentLang.flag}`} subtitle={`${currentLang.native}`} onPress={() => setLangOpen(true)} testID="profile-language" />
         <Row icon={<Heart color={colors.warning} size={20} />} title={t("profile.supportDevs")} subtitle={t("profile.supportDevsSub")} onPress={supportDevs} testID="support-devs" />

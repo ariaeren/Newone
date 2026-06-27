@@ -4,6 +4,7 @@ import * as AppleAuthentication from "expo-apple-authentication";
 
 import { api, AppUser } from "./client";
 import { finishGoogleAuth, maybeExtractWebSessionId, startGoogleSignIn } from "./social-auth";
+import { registerForPushAsync } from "@/src/utils/push";
 
 type AuthCtx = {
   user: AppUser | null;
@@ -56,6 +57,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         try {
           const me = await api.me();
           setUser(me);
+          // best-effort push registration (no UI prompt blocks UX)
+          registerForPushAsync().catch(() => {});
         } catch {
           await api.clearToken();
         }
@@ -68,6 +71,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const res = await api.login(email, password);
     await api.setToken(res.access_token);
     setUser(res.user);
+    registerForPushAsync().catch(() => {});
   }, []);
 
   const signUp = useCallback(
@@ -75,6 +79,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const res = await api.register(email, password, username);
       await api.setToken(res.access_token);
       setUser(res.user);
+      registerForPushAsync().catch(() => {});
     },
     []
   );

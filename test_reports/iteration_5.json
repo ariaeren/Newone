@@ -1,0 +1,35 @@
+{
+  "summary": "Backend-only regression + innovation pass. Built /app/backend/tests/test_grynd_innovation.py with 22 pytest cases covering existing regression (auth/me, quests list, journals CRUD, leaderboard, QRIS), the new combo/shield mechanic on /api/quests/{id}/complete, AI Quest Coach (en + id) and accept-persistence, full friend system (codes, add, list, idempotency, add-self error, bad code 404, high-five +5 XP and idempotency, friends leaderboard), public profile HTML with OG meta tags, OG SVG image, and idempotent push token registration. All 22 tests PASSED against the external preview URL.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {
+        "endpoint": "/api/social/friend/add",
+        "issue": "Friend-code normalization uses code.lstrip('GRYND-').lstrip('-') which has set semantics, not prefix semantics. Any code whose first characters happen to be in {G,R,Y,N,D,-} could be silently mangled before the 'GRYND-' prefix is reattached. Tests passed because real codes already begin with 'GRYND-' (the if-branch never triggers in practice), but it's a latent bug. Use code.removeprefix('GRYND-').lstrip('-') (Py3.9+)."
+      }
+    ]
+  },
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": [
+    "/app/backend/tests/test_grynd_innovation.py",
+    "/app/test_reports/pytest/pytest_innovation.xml"
+  ],
+  "action_items": [
+    "(Minor) Replace lstrip('GRYND-') in friend/add with removeprefix('GRYND-') to fix set-vs-prefix semantics.",
+    "(Optional) Address PytestRemovedIn10Warning by making class-scoped fixtures classmethods."
+  ],
+  "critical_code_review_comments": [
+    "complete_quest: combo award logic is correct but reads current_xp + total_xp after a write race could overlap if user double-taps; consider $inc-style atomic update for production-grade concurrency. Currently fine for single-device use.",
+    "friend_add: lstrip set-semantics bug (see minor issues).",
+    "ai_coach: uses lazy import of emergentintegrations inside the handler which adds latency on first call; consider top-level import to surface missing-package errors early.",
+    "server.py is 1250+ lines — recommend splitting into routers/auth.py, routers/quests.py, routers/social.py, etc. for maintainability."
+  ],
+  "updated_files": ["/app/backend/tests/test_grynd_innovation.py"],
+  "success_rate": {"backend": "100% (22/22)", "frontend": "not tested"},
+  "test_credentials": "tester@grynd.app / Tester123! (worked). Also dynamically registered fresh combo-* and fr-user-* users for isolation.",
+  "seed_data_creation": "Per-run: one fresh combo-{uuid} user (5 health + 1 study quests completed), one fr-user-{uuid} user for friend flow, plus 3 AITEST-{marker} quests on tester via /ai/accept. All TEST_/AITEST-/combo-/fr-user- prefixed for easy cleanup.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Combo mechanic depends on the user's combo_last_at/combo_category fields; tests use freshly-registered users to keep deterministic chains. tester@grynd.app accumulates AI-accepted TEST quests + a friend each run — safe to leave or purge. EMERGENT_LLM_KEY is configured and Gemini-3-Flash returned valid JSON for both en and id in ~3-6s. Public-profile HTML page lives at /api/u/{username} (HTML 200 / 404 both return text/html); OG image at /api/og/{username}.svg (image/svg+xml).",
+  "rca of the issue": "n/a — no failing tests."
+}

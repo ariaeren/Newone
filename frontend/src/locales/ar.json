@@ -1,5 +1,9 @@
 {
-  "brand": { "name": "GRYND", "tagline": "عاداتك، نقاط خبرتك.", "tagline2": "حوّل عاداتك إلى نقاط خبرة. ارفع سلسلتك. تطوّر في الواقع." },
+  "brand": {
+    "name": "GRYND",
+    "tagline": "عاداتك، نقاط خبرتك.",
+    "tagline2": "حوّل عاداتك إلى نقاط خبرة. ارفع سلسلتك. تطوّر في الواقع."
+  },
   "auth": {
     "headlineLine1": "تطوّر",
     "headlineLine2": "في الواقع.",
@@ -14,7 +18,13 @@
     "googleError": "فشل تسجيل الدخول بـ Google",
     "appleSoonHint": "تسجيل دخول Apple متاح بعد إصدار التطبيق على App Store."
   },
-  "tabs": { "hub": "الرئيسية", "quests": "المهام", "journal": "اليوميات", "leaderboard": "النقابة", "profile": "أنا" },
+  "tabs": {
+    "hub": "الرئيسية",
+    "quests": "المهام",
+    "journal": "اليوميات",
+    "leaderboard": "النقابة",
+    "profile": "أنا"
+  },
   "hub": {
     "kicker": "أهلاً",
     "streakLabel": "أيام السلسلة",
@@ -56,10 +66,22 @@
     "categoryLabel": "الفئة",
     "difficultyLabel": "الصعوبة",
     "difficulties": {
-      "trivial": { "name": "تافه", "desc": "سهل جداً" },
-      "easy": { "name": "سهل", "desc": "أقل من 5 دقائق" },
-      "medium": { "name": "متوسط", "desc": "يحتاج تركيز" },
-      "hard": { "name": "صعب", "desc": "جهد جاد" }
+      "trivial": {
+        "name": "تافه",
+        "desc": "سهل جداً"
+      },
+      "easy": {
+        "name": "سهل",
+        "desc": "أقل من 5 دقائق"
+      },
+      "medium": {
+        "name": "متوسط",
+        "desc": "يحتاج تركيز"
+      },
+      "hard": {
+        "name": "صعب",
+        "desc": "جهد جاد"
+      }
     },
     "create": "إنشاء مهمة",
     "creating": "جاري الإنشاء…",
@@ -68,7 +90,15 @@
     "completeSuccess": "+{{xp}} XP!",
     "levelUp": "ارتقاء!",
     "shareCompletion": "شارك",
-    "categories": { "morning": "صباح", "health": "صحة", "mind": "عقل", "study": "دراسة", "social": "اجتماعي", "creative": "إبداع", "other": "أخرى" }
+    "categories": {
+      "morning": "صباح",
+      "health": "صحة",
+      "mind": "عقل",
+      "study": "دراسة",
+      "social": "اجتماعي",
+      "creative": "إبداع",
+      "other": "أخرى"
+    }
   },
   "journal": {
     "kicker": "يوميات قصيرة",
@@ -82,7 +112,14 @@
     "submit": "حفظ",
     "submitting": "جاري الحفظ…"
   },
-  "leaderboard": { "kicker": "ترتيب النقابة", "title": "أفضل العدّائين 🏆", "empty": "لا يوجد عدّاؤون. كن الأول!", "yourRank": "ترتيبك", "you": "أنت", "shareRank": "شارك ترتيبي" },
+  "leaderboard": {
+    "kicker": "ترتيب النقابة",
+    "title": "أفضل العدّائين 🏆",
+    "empty": "لا يوجد عدّاؤون. كن الأول!",
+    "yourRank": "ترتيبك",
+    "you": "أنت",
+    "shareRank": "شارك ترتيبي"
+  },
   "profile": {
     "kicker": "الملف الشخصي",
     "freeAvatars": "صور رمزية مجانية",
@@ -110,10 +147,14 @@
     "titleLine2": "النيون.",
     "sub": "دفعة واحدة · وصول مدى الحياة · بلا اشتراك.",
     "features": {
-      "f1Title": "زينة صورة نيون", "f1Sub": "سايبر، غليتش، هولوغرام",
-      "f2Title": "شارة نقابة مميزة", "f2Sub": "تتوهّج في الترتيب",
-      "f3Title": "مضاعف XP إضافي", "f3Sub": "يُكدّس مع الإعلانات",
-      "f4Title": "بدون إعلانات للأبد", "f4Sub": "وضع تركيز خالص"
+      "f1Title": "زينة صورة نيون",
+      "f1Sub": "سايبر، غليتش، هولوغرام",
+      "f2Title": "شارة نقابة مميزة",
+      "f2Sub": "تتوهّج في الترتيب",
+      "f3Title": "مضاعف XP إضافي",
+      "f3Sub": "يُكدّس مع الإعلانات",
+      "f4Title": "بدون إعلانات للأبد",
+      "f4Sub": "وضع تركيز خالص"
     },
     "qrisLabel": "امسح للدفع (QRIS)",
     "merchant": "GRYND Guild",
@@ -137,15 +178,98 @@
     "claimed": "⚡ 2× XP محجوز",
     "claimedSub": "نشط 60 دقيقة."
   },
-  "common": { "cancel": "إلغاء", "save": "حفظ", "delete": "حذف", "confirm": "تأكيد", "close": "إغلاق", "retry": "إعادة المحاولة", "error": "حدث خطأ", "loading": "جاري التحميل…", "share": "مشاركة", "copied": "تم النسخ!", "copy": "نسخ الرابط", "done": "تم" },
+  "common": {
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "delete": "حذف",
+    "confirm": "تأكيد",
+    "close": "إغلاق",
+    "retry": "إعادة المحاولة",
+    "error": "حدث خطأ",
+    "loading": "جاري التحميل…",
+    "share": "مشاركة",
+    "copied": "تم النسخ!",
+    "copy": "نسخ الرابط",
+    "done": "تم"
+  },
   "share": {
     "sheetTitle": "مشاركة إلى",
-    "level": { "title": "وصلت إلى المستوى {{level}} في GRYND 🚀", "body": "وصلت للتو إلى المستوى {{level}} بـ {{xp}} XP في GRYND. انضم لي وتطوّر في الواقع.", "hashtags": "#GRYND" },
-    "streak": { "title": "سلسلة {{streak}} يوماً في GRYND 🔥", "body": "{{streak}} يوماً متتالياً من إنجاز المهام في GRYND.", "hashtags": "#GRYND" },
-    "quest": { "title": "أكملت مهمة في GRYND ⚡", "body": "أنهيت للتو «{{quest}}» وكسبت +{{xp}} XP.", "hashtags": "#GRYND" },
-    "rank": { "title": "ترتيب #{{rank}} في GRYND 🏆", "body": "أنا في الترتيب #{{rank}} عالمياً في GRYND.", "hashtags": "#GRYND" },
-    "invite": { "title": "انضم إلى GRYND", "body": "أرفع مستوى عاداتي في GRYND. انضم لنقابتي → {{link}}", "hashtags": "#GRYND" },
-    "targets": { "twitter": "X / Twitter", "facebook": "Facebook", "whatsapp": "WhatsApp", "telegram": "Telegram", "linkedin": "LinkedIn", "reddit": "Reddit", "pinterest": "Pinterest", "more": "المزيد", "copyLink": "نسخ الرابط" }
+    "level": {
+      "title": "وصلت إلى المستوى {{level}} في GRYND 🚀",
+      "body": "وصلت للتو إلى المستوى {{level}} بـ {{xp}} XP في GRYND. انضم لي وتطوّر في الواقع.",
+      "hashtags": "#GRYND"
+    },
+    "streak": {
+      "title": "سلسلة {{streak}} يوماً في GRYND 🔥",
+      "body": "{{streak}} يوماً متتالياً من إنجاز المهام في GRYND.",
+      "hashtags": "#GRYND"
+    },
+    "quest": {
+      "title": "أكملت مهمة في GRYND ⚡",
+      "body": "أنهيت للتو «{{quest}}» وكسبت +{{xp}} XP.",
+      "hashtags": "#GRYND"
+    },
+    "rank": {
+      "title": "ترتيب #{{rank}} في GRYND 🏆",
+      "body": "أنا في الترتيب #{{rank}} عالمياً في GRYND.",
+      "hashtags": "#GRYND"
+    },
+    "invite": {
+      "title": "انضم إلى GRYND",
+      "body": "أرفع مستوى عاداتي في GRYND. انضم لنقابتي → {{link}}",
+      "hashtags": "#GRYND"
+    },
+    "targets": {
+      "twitter": "X / Twitter",
+      "facebook": "Facebook",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "linkedin": "LinkedIn",
+      "reddit": "Reddit",
+      "pinterest": "Pinterest",
+      "more": "المزيد",
+      "copyLink": "نسخ الرابط"
+    }
   },
-  "language": { "title": "اختر اللغة", "system": "افتراضي النظام" }
+  "language": {
+    "title": "اختر اللغة",
+    "system": "افتراضي النظام"
+  },
+  "ai": {
+    "title": "مدرّب الـAI للمهام",
+    "lead": "أخبرني بهدفك — سأحوّله إلى 5 مهام يومية بلغتك.",
+    "placeholder": "مثال: تعلّم بايثون خلال 30 يوماً",
+    "generate": "أنشئ المهام",
+    "thinking": "يفكر…",
+    "pickQuests": "اختر مهامك",
+    "addToQuests": "أضف {{n}}",
+    "adding": "يجري الإضافة…",
+    "regenerate": "هدف آخر"
+  },
+  "combo": {
+    "title": "كومبو",
+    "rage": "وضع الغضب!",
+    "bonus": "+{{xp}} XP إضافي"
+  },
+  "shield": {
+    "saved": "تم استخدام درع السلسلة!",
+    "label": "الدروع"
+  },
+  "friends": {
+    "title": "الأصدقاء",
+    "yourCode": "رمز صداقتك",
+    "addLabel": "أضف صديقاً",
+    "addPlaceholder": "GRYND-XXXXX",
+    "addBtn": "أضف",
+    "list": "نقابتك",
+    "empty": "أضف أول صديق برمز.",
+    "highFive": "تبادل تحية",
+    "highFiveSent": "✋ تم!",
+    "friendsOnly": "الأصدقاء فقط",
+    "global": "عالمي"
+  },
+  "pet": {
+    "title": "حيوان سايبر",
+    "next": "التطور التالي في Lv{{level}}"
+  }
 }

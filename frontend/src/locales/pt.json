@@ -1,5 +1,9 @@
 {
-  "brand": { "name": "GRYND", "tagline": "Seus hábitos, seu XP.", "tagline2": "Transforme hábitos em XP. Aumente sua sequência. Suba de nível IRL." },
+  "brand": {
+    "name": "GRYND",
+    "tagline": "Seus hábitos, seu XP.",
+    "tagline2": "Transforme hábitos em XP. Aumente sua sequência. Suba de nível IRL."
+  },
   "auth": {
     "headlineLine1": "Suba de nível",
     "headlineLine2": "IRL.",
@@ -14,7 +18,13 @@
     "googleError": "Falha no login com Google",
     "appleSoonHint": "Apple Sign-In disponível após o lançamento na App Store."
   },
-  "tabs": { "hub": "HUB", "quests": "QUESTS", "journal": "DIÁRIO", "leaderboard": "GUILDA", "profile": "EU" },
+  "tabs": {
+    "hub": "HUB",
+    "quests": "QUESTS",
+    "journal": "DIÁRIO",
+    "leaderboard": "GUILDA",
+    "profile": "EU"
+  },
   "hub": {
     "kicker": "BEM-VINDO",
     "streakLabel": "DIAS DE SEQUÊNCIA",
@@ -56,10 +66,22 @@
     "categoryLabel": "CATEGORIA",
     "difficultyLabel": "DIFICULDADE",
     "difficulties": {
-      "trivial": { "name": "Trivial", "desc": "Super fácil" },
-      "easy": { "name": "Fácil", "desc": "Menos de 5 min" },
-      "medium": { "name": "Médio", "desc": "Requer foco" },
-      "hard": { "name": "Difícil", "desc": "Esforço real" }
+      "trivial": {
+        "name": "Trivial",
+        "desc": "Super fácil"
+      },
+      "easy": {
+        "name": "Fácil",
+        "desc": "Menos de 5 min"
+      },
+      "medium": {
+        "name": "Médio",
+        "desc": "Requer foco"
+      },
+      "hard": {
+        "name": "Difícil",
+        "desc": "Esforço real"
+      }
     },
     "create": "Criar Quest",
     "creating": "Criando…",
@@ -68,7 +90,15 @@
     "completeSuccess": "+{{xp}} XP!",
     "levelUp": "SUBIU DE NÍVEL!",
     "shareCompletion": "Compartilhar",
-    "categories": { "morning": "Manhã", "health": "Saúde", "mind": "Mente", "study": "Estudo", "social": "Social", "creative": "Criativo", "other": "Outros" }
+    "categories": {
+      "morning": "Manhã",
+      "health": "Saúde",
+      "mind": "Mente",
+      "study": "Estudo",
+      "social": "Social",
+      "creative": "Criativo",
+      "other": "Outros"
+    }
   },
   "journal": {
     "kicker": "MICRO DIÁRIO",
@@ -82,7 +112,14 @@
     "submit": "Salvar",
     "submitting": "Salvando…"
   },
-  "leaderboard": { "kicker": "RANKING DA GUILDA", "title": "Top corredores 🏆", "empty": "Nenhum corredor. Seja o primeiro!", "yourRank": "SEU RANK", "you": "Você", "shareRank": "Compartilhar rank" },
+  "leaderboard": {
+    "kicker": "RANKING DA GUILDA",
+    "title": "Top corredores 🏆",
+    "empty": "Nenhum corredor. Seja o primeiro!",
+    "yourRank": "SEU RANK",
+    "you": "Você",
+    "shareRank": "Compartilhar rank"
+  },
   "profile": {
     "kicker": "PERFIL",
     "freeAvatars": "AVATARES GRÁTIS",
@@ -110,10 +147,14 @@
     "titleLine2": "neon.",
     "sub": "Pagamento único · acesso vitalício · sem assinatura.",
     "features": {
-      "f1Title": "Cosméticos de avatar neon", "f1Sub": "Cyber, glitch, holograma",
-      "f2Title": "Emblema premium da guilda", "f2Sub": "Brilha no ranking",
-      "f3Title": "Multiplicador XP bônus", "f3Sub": "Empilha com anúncios",
-      "f4Title": "Zero anúncios, pra sempre", "f4Sub": "Modo foco puro"
+      "f1Title": "Cosméticos de avatar neon",
+      "f1Sub": "Cyber, glitch, holograma",
+      "f2Title": "Emblema premium da guilda",
+      "f2Sub": "Brilha no ranking",
+      "f3Title": "Multiplicador XP bônus",
+      "f3Sub": "Empilha com anúncios",
+      "f4Title": "Zero anúncios, pra sempre",
+      "f4Sub": "Modo foco puro"
     },
     "qrisLabel": "ESCANEIE PARA PAGAR (QRIS)",
     "merchant": "GRYND Guild",
@@ -137,15 +178,98 @@
     "claimed": "⚡ 2× XP TRAVADO",
     "claimedSub": "Ativo por 60 min."
   },
-  "common": { "cancel": "Cancelar", "save": "Salvar", "delete": "Excluir", "confirm": "Confirmar", "close": "Fechar", "retry": "Tentar de novo", "error": "Algo deu errado", "loading": "Carregando…", "share": "Compartilhar", "copied": "Copiado!", "copy": "Copiar link", "done": "Pronto" },
+  "common": {
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "delete": "Excluir",
+    "confirm": "Confirmar",
+    "close": "Fechar",
+    "retry": "Tentar de novo",
+    "error": "Algo deu errado",
+    "loading": "Carregando…",
+    "share": "Compartilhar",
+    "copied": "Copiado!",
+    "copy": "Copiar link",
+    "done": "Pronto"
+  },
   "share": {
     "sheetTitle": "Compartilhar em",
-    "level": { "title": "Cheguei ao Nível {{level}} no GRYND 🚀", "body": "Acabei de subir para o Nível {{level}} com {{xp}} XP no GRYND. Bora subir de nível IRL!", "hashtags": "#GRYND #LevelUp" },
-    "streak": { "title": "Sequência de {{streak}} dias no GRYND 🔥", "body": "{{streak}} dias seguidos cumprindo quests no GRYND.", "hashtags": "#GRYND #StreakLife" },
-    "quest": { "title": "Quest concluído no GRYND ⚡", "body": "Acabei de finalizar \"{{quest}}\" e ganhei +{{xp}} XP no GRYND.", "hashtags": "#GRYND" },
-    "rank": { "title": "Rank #{{rank}} no GRYND 🏆", "body": "Estou em #{{rank}} no ranking global GRYND.", "hashtags": "#GRYND" },
-    "invite": { "title": "Entra no GRYND", "body": "Estou subindo de nível meus hábitos no GRYND. Entra na minha guilda → {{link}}", "hashtags": "#GRYND" },
-    "targets": { "twitter": "X / Twitter", "facebook": "Facebook", "whatsapp": "WhatsApp", "telegram": "Telegram", "linkedin": "LinkedIn", "reddit": "Reddit", "pinterest": "Pinterest", "more": "Mais", "copyLink": "Copiar link" }
+    "level": {
+      "title": "Cheguei ao Nível {{level}} no GRYND 🚀",
+      "body": "Acabei de subir para o Nível {{level}} com {{xp}} XP no GRYND. Bora subir de nível IRL!",
+      "hashtags": "#GRYND #LevelUp"
+    },
+    "streak": {
+      "title": "Sequência de {{streak}} dias no GRYND 🔥",
+      "body": "{{streak}} dias seguidos cumprindo quests no GRYND.",
+      "hashtags": "#GRYND #StreakLife"
+    },
+    "quest": {
+      "title": "Quest concluído no GRYND ⚡",
+      "body": "Acabei de finalizar \"{{quest}}\" e ganhei +{{xp}} XP no GRYND.",
+      "hashtags": "#GRYND"
+    },
+    "rank": {
+      "title": "Rank #{{rank}} no GRYND 🏆",
+      "body": "Estou em #{{rank}} no ranking global GRYND.",
+      "hashtags": "#GRYND"
+    },
+    "invite": {
+      "title": "Entra no GRYND",
+      "body": "Estou subindo de nível meus hábitos no GRYND. Entra na minha guilda → {{link}}",
+      "hashtags": "#GRYND"
+    },
+    "targets": {
+      "twitter": "X / Twitter",
+      "facebook": "Facebook",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "linkedin": "LinkedIn",
+      "reddit": "Reddit",
+      "pinterest": "Pinterest",
+      "more": "Mais",
+      "copyLink": "Copiar link"
+    }
   },
-  "language": { "title": "Escolher idioma", "system": "Padrão do sistema" }
+  "language": {
+    "title": "Escolher idioma",
+    "system": "Padrão do sistema"
+  },
+  "ai": {
+    "title": "Coach de quests IA",
+    "lead": "Diga sua meta — eu transformo em 5 quests diárias no seu idioma.",
+    "placeholder": "Ex.: Aprender Python em 30 dias",
+    "generate": "Gerar quests",
+    "thinking": "Pensando…",
+    "pickQuests": "ESCOLHA QUESTS",
+    "addToQuests": "Adicionar {{n}}",
+    "adding": "Adicionando…",
+    "regenerate": "Outra meta"
+  },
+  "combo": {
+    "title": "COMBO",
+    "rage": "MODO RAGE!",
+    "bonus": "+{{xp}} XP bônus"
+  },
+  "shield": {
+    "saved": "Escudo de sequência usado!",
+    "label": "ESCUDOS"
+  },
+  "friends": {
+    "title": "Amigos",
+    "yourCode": "SEU CÓDIGO",
+    "addLabel": "ADICIONAR AMIGO",
+    "addPlaceholder": "GRYND-XXXXX",
+    "addBtn": "Adicionar",
+    "list": "SUA GUILDA",
+    "empty": "Adicione seu primeiro amigo por código.",
+    "highFive": "Toca aqui",
+    "highFiveSent": "✋ Enviado!",
+    "friendsOnly": "Só amigos",
+    "global": "Global"
+  },
+  "pet": {
+    "title": "CYBERPET",
+    "next": "Próxima evolução no Lvl {{level}}"
+  }
 }

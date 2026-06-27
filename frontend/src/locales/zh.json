@@ -1,5 +1,9 @@
 {
-  "brand": { "name": "GRYND", "tagline": "你的习惯，你的XP。", "tagline2": "把习惯变成XP，延续连击，在现实中升级。" },
+  "brand": {
+    "name": "GRYND",
+    "tagline": "你的习惯，你的XP。",
+    "tagline2": "把习惯变成XP，延续连击，在现实中升级。"
+  },
   "auth": {
     "headlineLine1": "现实",
     "headlineLine2": "升级。",
@@ -14,7 +18,13 @@
     "googleError": "Google 登录失败",
     "appleSoonHint": "App Store 上线后可用 Apple 登录。"
   },
-  "tabs": { "hub": "主页", "quests": "任务", "journal": "日志", "leaderboard": "公会", "profile": "我" },
+  "tabs": {
+    "hub": "主页",
+    "quests": "任务",
+    "journal": "日志",
+    "leaderboard": "公会",
+    "profile": "我"
+  },
   "hub": {
     "kicker": "欢迎",
     "streakLabel": "连击天数",
@@ -56,10 +66,22 @@
     "categoryLabel": "分类",
     "difficultyLabel": "难度",
     "difficulties": {
-      "trivial": { "name": "琐碎", "desc": "超简单" },
-      "easy": { "name": "简单", "desc": "5分钟内" },
-      "medium": { "name": "中等", "desc": "需要专注" },
-      "hard": { "name": "困难", "desc": "认真努力" }
+      "trivial": {
+        "name": "琐碎",
+        "desc": "超简单"
+      },
+      "easy": {
+        "name": "简单",
+        "desc": "5分钟内"
+      },
+      "medium": {
+        "name": "中等",
+        "desc": "需要专注"
+      },
+      "hard": {
+        "name": "困难",
+        "desc": "认真努力"
+      }
     },
     "create": "创建任务",
     "creating": "创建中…",
@@ -68,7 +90,15 @@
     "completeSuccess": "+{{xp}} XP 获得！",
     "levelUp": "升级了！",
     "shareCompletion": "分享",
-    "categories": { "morning": "早晨", "health": "健康", "mind": "心智", "study": "学习", "social": "社交", "creative": "创意", "other": "其他" }
+    "categories": {
+      "morning": "早晨",
+      "health": "健康",
+      "mind": "心智",
+      "study": "学习",
+      "social": "社交",
+      "creative": "创意",
+      "other": "其他"
+    }
   },
   "journal": {
     "kicker": "微日志",
@@ -82,7 +112,14 @@
     "submit": "保存",
     "submitting": "保存中…"
   },
-  "leaderboard": { "kicker": "公会排名", "title": "顶级跑者 🏆", "empty": "暂无跑者，成为第一人！", "yourRank": "你的排名", "you": "你", "shareRank": "分享排名" },
+  "leaderboard": {
+    "kicker": "公会排名",
+    "title": "顶级跑者 🏆",
+    "empty": "暂无跑者，成为第一人！",
+    "yourRank": "你的排名",
+    "you": "你",
+    "shareRank": "分享排名"
+  },
   "profile": {
     "kicker": "个人资料",
     "freeAvatars": "免费头像",
@@ -110,10 +147,14 @@
     "titleLine2": "等级。",
     "sub": "一次付款 · 终身访问 · 无订阅。",
     "features": {
-      "f1Title": "霓虹头像外观", "f1Sub": "赛博、故障、全息",
-      "f2Title": "高级公会徽章", "f2Sub": "排行榜发光",
-      "f3Title": "额外XP倍率", "f3Sub": "可叠加广告奖励",
-      "f4Title": "永久零广告", "f4Sub": "纯粹专注模式"
+      "f1Title": "霓虹头像外观",
+      "f1Sub": "赛博、故障、全息",
+      "f2Title": "高级公会徽章",
+      "f2Sub": "排行榜发光",
+      "f3Title": "额外XP倍率",
+      "f3Sub": "可叠加广告奖励",
+      "f4Title": "永久零广告",
+      "f4Sub": "纯粹专注模式"
     },
     "qrisLabel": "扫码支付 (QRIS)",
     "merchant": "GRYND Guild",
@@ -137,15 +178,98 @@
     "claimed": "⚡ 2× XP 已锁定",
     "claimedSub": "持续 60 分钟。"
   },
-  "common": { "cancel": "取消", "save": "保存", "delete": "删除", "confirm": "确认", "close": "关闭", "retry": "重试", "error": "出错了", "loading": "加载中…", "share": "分享", "copied": "已复制！", "copy": "复制链接", "done": "完成" },
+  "common": {
+    "cancel": "取消",
+    "save": "保存",
+    "delete": "删除",
+    "confirm": "确认",
+    "close": "关闭",
+    "retry": "重试",
+    "error": "出错了",
+    "loading": "加载中…",
+    "share": "分享",
+    "copied": "已复制！",
+    "copy": "复制链接",
+    "done": "完成"
+  },
   "share": {
     "sheetTitle": "分享到",
-    "level": { "title": "我在 GRYND 达到了 {{level}} 级 🚀", "body": "刚在 GRYND 升到 {{level}} 级，获得 {{xp}} XP。习惯 → XP，一起在现实中升级！", "hashtags": "#GRYND #升级" },
-    "streak": { "title": "GRYND {{streak}} 天连击 🔥", "body": "连续 {{streak}} 天完成 GRYND 任务，自律已解锁。", "hashtags": "#GRYND" },
-    "quest": { "title": "GRYND 任务完成 ⚡", "body": "刚完成「{{quest}}」获得 +{{xp}} XP。", "hashtags": "#GRYND" },
-    "rank": { "title": "GRYND 第 #{{rank}} 名 🏆", "body": "我在 GRYND 全球排行榜第 {{rank}} 名。", "hashtags": "#GRYND" },
-    "invite": { "title": "加入 GRYND", "body": "我在 GRYND 升级我的习惯，加入我的公会 → {{link}}", "hashtags": "#GRYND" },
-    "targets": { "twitter": "X / Twitter", "facebook": "Facebook", "whatsapp": "WhatsApp", "telegram": "Telegram", "linkedin": "LinkedIn", "reddit": "Reddit", "pinterest": "Pinterest", "more": "更多", "copyLink": "复制链接" }
+    "level": {
+      "title": "我在 GRYND 达到了 {{level}} 级 🚀",
+      "body": "刚在 GRYND 升到 {{level}} 级，获得 {{xp}} XP。习惯 → XP，一起在现实中升级！",
+      "hashtags": "#GRYND #升级"
+    },
+    "streak": {
+      "title": "GRYND {{streak}} 天连击 🔥",
+      "body": "连续 {{streak}} 天完成 GRYND 任务，自律已解锁。",
+      "hashtags": "#GRYND"
+    },
+    "quest": {
+      "title": "GRYND 任务完成 ⚡",
+      "body": "刚完成「{{quest}}」获得 +{{xp}} XP。",
+      "hashtags": "#GRYND"
+    },
+    "rank": {
+      "title": "GRYND 第 #{{rank}} 名 🏆",
+      "body": "我在 GRYND 全球排行榜第 {{rank}} 名。",
+      "hashtags": "#GRYND"
+    },
+    "invite": {
+      "title": "加入 GRYND",
+      "body": "我在 GRYND 升级我的习惯，加入我的公会 → {{link}}",
+      "hashtags": "#GRYND"
+    },
+    "targets": {
+      "twitter": "X / Twitter",
+      "facebook": "Facebook",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "linkedin": "LinkedIn",
+      "reddit": "Reddit",
+      "pinterest": "Pinterest",
+      "more": "更多",
+      "copyLink": "复制链接"
+    }
   },
-  "language": { "title": "选择语言", "system": "系统默认" }
+  "language": {
+    "title": "选择语言",
+    "system": "系统默认"
+  },
+  "ai": {
+    "title": "AI 任务教练",
+    "lead": "告诉我你的目标 — 我会转化为5个每日任务（用你的语言）。",
+    "placeholder": "例如：30天学会 Python",
+    "generate": "生成任务",
+    "thinking": "思考中…",
+    "pickQuests": "挑选任务",
+    "addToQuests": "添加 {{n}} 个",
+    "adding": "添加中…",
+    "regenerate": "换个目标"
+  },
+  "combo": {
+    "title": "连击",
+    "rage": "狂怒模式！",
+    "bonus": "+{{xp}} 额外XP"
+  },
+  "shield": {
+    "saved": "连击护盾已使用！",
+    "label": "护盾"
+  },
+  "friends": {
+    "title": "好友",
+    "yourCode": "你的好友码",
+    "addLabel": "添加好友",
+    "addPlaceholder": "GRYND-XXXXX",
+    "addBtn": "添加",
+    "list": "你的公会",
+    "empty": "用好友码添加第一个好友。",
+    "highFive": "击掌",
+    "highFiveSent": "✋ 已发送!",
+    "friendsOnly": "仅好友",
+    "global": "全球"
+  },
+  "pet": {
+    "title": "赛博宠物",
+    "next": "下次进化在 Lv{{level}}"
+  }
 }

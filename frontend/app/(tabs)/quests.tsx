@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BlurView } from "expo-blur";
-import { Plus, X, Share2 } from "lucide-react-native";
+import { Plus, X, Share2, Brain } from "lucide-react-native";
 import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { useTranslation } from "react-i18next";
 
@@ -25,6 +25,8 @@ import ParticleBurst from "@/src/components/ParticleBurst";
 import LevelUpSheet from "@/src/components/LevelUpSheet";
 import ShareSheet from "@/src/components/ShareSheet";
 import ShareCard from "@/src/components/ShareCard";
+import AICoachSheet from "@/src/components/AICoachSheet";
+import ComboToast from "@/src/components/ComboToast";
 import { buildInviteUrl } from "@/src/utils/share";
 
 const QUEST_ICONS = ["⚡","💧","📚","🏃","🧘","🍎","🎯","🎮","💪","🌙","☀️","🧠","📵","🎨"];
@@ -54,6 +56,8 @@ export default function QuestsScreen() {
   const [creating, setCreating] = useState(false);
 
   const [shareQuest, setShareQuest] = useState<{ title: string; xp: number } | null>(null);
+  const [aiOpen, setAiOpen] = useState(false);
+  const [combo, setCombo] = useState<{ combo: number; mult: number; bonus: number; shieldUsed: boolean } | null>(null);
 
   const load = useCallback(async () => {
     try {
@@ -78,6 +82,11 @@ export default function QuestsScreen() {
       setBurstVisible(true);
       setUser(res.user);
       if (q) setShareQuest({ title: q.title, xp: res.xp_gained });
+      const cmb = res.combo ?? 0;
+      const mult = res.combo_mult ?? 1;
+      if (cmb >= 2 || res.shield_used) {
+        setCombo({ combo: cmb, mult, bonus: res.combo_bonus_xp || 0, shieldUsed: !!res.shield_used });
+      }
       if (res.leveled_up) {
         setTimeout(() => setLevelUp({ show: true, level: res.new_level }), 900);
       }
@@ -132,6 +141,19 @@ export default function QuestsScreen() {
         </Pressable>
       </View>
 
+      {/* AI Coach quick action */}
+      <Pressable
+        testID="open-ai-coach-quests"
+        onPress={() => setAiOpen(true)}
+        style={({ pressed }) => [styles.aiBar, pressed && { opacity: 0.85 }]}
+      >
+        <View style={styles.aiBarIcon}>
+          <Brain color={colors.bg} size={16} strokeWidth={2.5} />
+        </View>
+        <Text style={styles.aiBarText}>{t("ai.title")}</Text>
+        <Text style={styles.aiBarSub}>→</Text>
+      </Pressable>
+
       <ScrollView
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
@@ -167,6 +189,19 @@ export default function QuestsScreen() {
       </ScrollView>
 
       <ParticleBurst visible={burstVisible} xpGained={burstXp} onDone={() => setBurstVisible(false)} />
+      <ComboToast
+        visible={!!combo}
+        combo={combo?.combo || 0}
+        multiplier={combo?.mult || 1}
+        bonusXp={combo?.bonus || 0}
+        shieldUsed={combo?.shieldUsed}
+        onDone={() => setCombo(null)}
+      />
+      <AICoachSheet
+        visible={aiOpen}
+        onClose={() => setAiOpen(false)}
+        onAccepted={() => { setAiOpen(false); load(); }}
+      />
       <LevelUpSheet visible={levelUp.show} newLevel={levelUp.level} onClose={() => setLevelUp({ show: false, level: 1 })} />
 
       {shareQuest && (
@@ -253,6 +288,10 @@ const styles = StyleSheet.create({
   kicker: { color: colors.textSecondary, fontSize: 11, letterSpacing: 1.5, fontWeight: "700" },
   title: { color: colors.text, fontSize: 24, fontWeight: "800", marginTop: 2 },
   addBtn: { width: 44, height: 44, borderRadius: 22, backgroundColor: colors.primary, alignItems: "center", justifyContent: "center" },
+  aiBar: { marginHorizontal: spacing.screen, marginBottom: 4, flexDirection: "row", alignItems: "center", gap: 10, padding: 12, backgroundColor: colors.surface, borderRadius: radius.pill, borderWidth: 1, borderColor: colors.borderActive },
+  aiBarIcon: { width: 30, height: 30, borderRadius: 15, backgroundColor: colors.primary, alignItems: "center", justifyContent: "center" },
+  aiBarText: { color: colors.text, fontSize: 13, fontWeight: "800", flex: 1, letterSpacing: 0.5 },
+  aiBarSub: { color: colors.primary, fontSize: 18, fontWeight: "900" },
   scroll: { paddingHorizontal: spacing.screen, paddingBottom: 120, paddingTop: 8 },
   empty: { color: colors.textSecondary, textAlign: "center", marginTop: 30 },
   emptyCard: { backgroundColor: colors.surface, borderRadius: radius.card, borderWidth: 1, borderColor: colors.borderSubtle, padding: 32, alignItems: "center", marginTop: 16 },

@@ -1,5 +1,9 @@
 {
-  "brand": { "name": "GRYND", "tagline": "आपकी आदतें, आपका XP.", "tagline2": "आदतों को XP बनाएँ। स्ट्रीक बढ़ाएँ। असली ज़िंदगी में लेवल अप करें।" },
+  "brand": {
+    "name": "GRYND",
+    "tagline": "आपकी आदतें, आपका XP.",
+    "tagline2": "आदतों को XP बनाएँ। स्ट्रीक बढ़ाएँ। असली ज़िंदगी में लेवल अप करें।"
+  },
   "auth": {
     "headlineLine1": "लेवल अप",
     "headlineLine2": "असली में.",
@@ -14,7 +18,13 @@
     "googleError": "Google साइन-इन विफल",
     "appleSoonHint": "App Store पर रिलीज़ के बाद Apple साइन-इन उपलब्ध।"
   },
-  "tabs": { "hub": "हब", "quests": "क्वेस्ट", "journal": "जर्नल", "leaderboard": "गिल्ड", "profile": "मैं" },
+  "tabs": {
+    "hub": "हब",
+    "quests": "क्वेस्ट",
+    "journal": "जर्नल",
+    "leaderboard": "गिल्ड",
+    "profile": "मैं"
+  },
   "hub": {
     "kicker": "स्वागत है",
     "streakLabel": "स्ट्रीक दिन",
@@ -56,10 +66,22 @@
     "categoryLabel": "श्रेणी",
     "difficultyLabel": "कठिनाई",
     "difficulties": {
-      "trivial": { "name": "मामूली", "desc": "बहुत आसान" },
-      "easy": { "name": "आसान", "desc": "5 मिनट से कम" },
-      "medium": { "name": "मध्यम", "desc": "ध्यान चाहिए" },
-      "hard": { "name": "कठिन", "desc": "गंभीर प्रयास" }
+      "trivial": {
+        "name": "मामूली",
+        "desc": "बहुत आसान"
+      },
+      "easy": {
+        "name": "आसान",
+        "desc": "5 मिनट से कम"
+      },
+      "medium": {
+        "name": "मध्यम",
+        "desc": "ध्यान चाहिए"
+      },
+      "hard": {
+        "name": "कठिन",
+        "desc": "गंभीर प्रयास"
+      }
     },
     "create": "क्वेस्ट बनाएँ",
     "creating": "बनाया जा रहा…",
@@ -68,7 +90,15 @@
     "completeSuccess": "+{{xp}} XP मिले!",
     "levelUp": "लेवल अप!",
     "shareCompletion": "साझा करें",
-    "categories": { "morning": "सुबह", "health": "स्वास्थ्य", "mind": "मन", "study": "अध्ययन", "social": "सोशल", "creative": "रचनात्मक", "other": "अन्य" }
+    "categories": {
+      "morning": "सुबह",
+      "health": "स्वास्थ्य",
+      "mind": "मन",
+      "study": "अध्ययन",
+      "social": "सोशल",
+      "creative": "रचनात्मक",
+      "other": "अन्य"
+    }
   },
   "journal": {
     "kicker": "माइक्रो जर्नल",
@@ -82,7 +112,14 @@
     "submit": "सहेजें",
     "submitting": "सहेजा जा रहा है…"
   },
-  "leaderboard": { "kicker": "गिल्ड रैंकिंग", "title": "टॉप रनर 🏆", "empty": "कोई रनर नहीं। पहले बनें!", "yourRank": "आपकी रैंक", "you": "आप", "shareRank": "रैंक साझा करें" },
+  "leaderboard": {
+    "kicker": "गिल्ड रैंकिंग",
+    "title": "टॉप रनर 🏆",
+    "empty": "कोई रनर नहीं। पहले बनें!",
+    "yourRank": "आपकी रैंक",
+    "you": "आप",
+    "shareRank": "रैंक साझा करें"
+  },
   "profile": {
     "kicker": "प्रोफ़ाइल",
     "freeAvatars": "मुफ़्त अवतार",
@@ -110,10 +147,14 @@
     "titleLine2": "अनलॉक।",
     "sub": "एक बार भुगतान · आजीवन एक्सेस · कोई सब्सक्रिप्शन नहीं।",
     "features": {
-      "f1Title": "नियॉन अवतार कॉस्मेटिक", "f1Sub": "साइबर, ग्लिच, होलोग्राम",
-      "f2Title": "प्रीमियम गिल्ड बैज", "f2Sub": "लीडरबोर्ड पर चमकें",
-      "f3Title": "बोनस XP गुणक", "f3Sub": "रिवार्डेड ऐड के साथ स्टैक",
-      "f4Title": "शून्य विज्ञापन, हमेशा", "f4Sub": "शुद्ध फोकस मोड"
+      "f1Title": "नियॉन अवतार कॉस्मेटिक",
+      "f1Sub": "साइबर, ग्लिच, होलोग्राम",
+      "f2Title": "प्रीमियम गिल्ड बैज",
+      "f2Sub": "लीडरबोर्ड पर चमकें",
+      "f3Title": "बोनस XP गुणक",
+      "f3Sub": "रिवार्डेड ऐड के साथ स्टैक",
+      "f4Title": "शून्य विज्ञापन, हमेशा",
+      "f4Sub": "शुद्ध फोकस मोड"
     },
     "qrisLabel": "भुगतान के लिए स्कैन (QRIS)",
     "merchant": "GRYND Guild",
@@ -137,15 +178,98 @@
     "claimed": "⚡ 2× XP तय",
     "claimedSub": "60 मिनट तक सक्रिय।"
   },
-  "common": { "cancel": "रद्द", "save": "सहेजें", "delete": "हटाएँ", "confirm": "पुष्टि", "close": "बंद", "retry": "फिर कोशिश", "error": "कुछ गड़बड़ हुई", "loading": "लोड हो रहा…", "share": "साझा करें", "copied": "कॉपी हो गया!", "copy": "लिंक कॉपी करें", "done": "हो गया" },
+  "common": {
+    "cancel": "रद्द",
+    "save": "सहेजें",
+    "delete": "हटाएँ",
+    "confirm": "पुष्टि",
+    "close": "बंद",
+    "retry": "फिर कोशिश",
+    "error": "कुछ गड़बड़ हुई",
+    "loading": "लोड हो रहा…",
+    "share": "साझा करें",
+    "copied": "कॉपी हो गया!",
+    "copy": "लिंक कॉपी करें",
+    "done": "हो गया"
+  },
   "share": {
     "sheetTitle": "इसमें साझा करें",
-    "level": { "title": "मैंने GRYND पर लेवल {{level}} छुआ 🚀", "body": "मैंने {{xp}} XP के साथ GRYND पर लेवल {{level}} हासिल किया। आदतें → XP, साथ चलें!", "hashtags": "#GRYND" },
-    "streak": { "title": "GRYND पर {{streak}} दिन की स्ट्रीक 🔥", "body": "GRYND पर लगातार {{streak}} दिनों से क्वेस्ट पूरे कर रहा हूँ।", "hashtags": "#GRYND" },
-    "quest": { "title": "GRYND पर क्वेस्ट पूरा ⚡", "body": "अभी \"{{quest}}\" पूरा किया और +{{xp}} XP मिले।", "hashtags": "#GRYND" },
-    "rank": { "title": "GRYND पर रैंक #{{rank}} 🏆", "body": "मैं GRYND के ग्लोबल लीडरबोर्ड पर #{{rank}} पर हूँ।", "hashtags": "#GRYND" },
-    "invite": { "title": "GRYND में जुड़ें", "body": "मैं GRYND पर अपनी आदतों को लेवल अप कर रहा हूँ। मेरी गिल्ड में जुड़ें → {{link}}", "hashtags": "#GRYND" },
-    "targets": { "twitter": "X / Twitter", "facebook": "Facebook", "whatsapp": "WhatsApp", "telegram": "Telegram", "linkedin": "LinkedIn", "reddit": "Reddit", "pinterest": "Pinterest", "more": "और", "copyLink": "लिंक कॉपी" }
+    "level": {
+      "title": "मैंने GRYND पर लेवल {{level}} छुआ 🚀",
+      "body": "मैंने {{xp}} XP के साथ GRYND पर लेवल {{level}} हासिल किया। आदतें → XP, साथ चलें!",
+      "hashtags": "#GRYND"
+    },
+    "streak": {
+      "title": "GRYND पर {{streak}} दिन की स्ट्रीक 🔥",
+      "body": "GRYND पर लगातार {{streak}} दिनों से क्वेस्ट पूरे कर रहा हूँ।",
+      "hashtags": "#GRYND"
+    },
+    "quest": {
+      "title": "GRYND पर क्वेस्ट पूरा ⚡",
+      "body": "अभी \"{{quest}}\" पूरा किया और +{{xp}} XP मिले।",
+      "hashtags": "#GRYND"
+    },
+    "rank": {
+      "title": "GRYND पर रैंक #{{rank}} 🏆",
+      "body": "मैं GRYND के ग्लोबल लीडरबोर्ड पर #{{rank}} पर हूँ।",
+      "hashtags": "#GRYND"
+    },
+    "invite": {
+      "title": "GRYND में जुड़ें",
+      "body": "मैं GRYND पर अपनी आदतों को लेवल अप कर रहा हूँ। मेरी गिल्ड में जुड़ें → {{link}}",
+      "hashtags": "#GRYND"
+    },
+    "targets": {
+      "twitter": "X / Twitter",
+      "facebook": "Facebook",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "linkedin": "LinkedIn",
+      "reddit": "Reddit",
+      "pinterest": "Pinterest",
+      "more": "और",
+      "copyLink": "लिंक कॉपी"
+    }
   },
-  "language": { "title": "भाषा चुनें", "system": "सिस्टम डिफ़ॉल्ट" }
+  "language": {
+    "title": "भाषा चुनें",
+    "system": "सिस्टम डिफ़ॉल्ट"
+  },
+  "ai": {
+    "title": "AI क्वेस्ट कोच",
+    "lead": "अपना लक्ष्य बताएँ — मैं 5 दैनिक क्वेस्ट में बदल दूँगा, आपकी भाषा में।",
+    "placeholder": "उदा.: 30 दिनों में Python सीखें",
+    "generate": "क्वेस्ट बनाएँ",
+    "thinking": "सोच रहा…",
+    "pickQuests": "क्वेस्ट चुनें",
+    "addToQuests": "{{n}} जोड़ें",
+    "adding": "जोड़ रहा…",
+    "regenerate": "दूसरा लक्ष्य"
+  },
+  "combo": {
+    "title": "कॉम्बो",
+    "rage": "रेज मोड!",
+    "bonus": "+{{xp}} बोनस XP"
+  },
+  "shield": {
+    "saved": "स्ट्रीक शील्ड लगा!",
+    "label": "शील्ड"
+  },
+  "friends": {
+    "title": "दोस्त",
+    "yourCode": "आपका फ्रेंड कोड",
+    "addLabel": "दोस्त जोड़ें",
+    "addPlaceholder": "GRYND-XXXXX",
+    "addBtn": "जोड़ें",
+    "list": "आपकी गिल्ड",
+    "empty": "फ्रेंड कोड से पहला दोस्त जोड़ें。",
+    "highFive": "हाई-फाइव",
+    "highFiveSent": "✋ भेजा गया!",
+    "friendsOnly": "केवल दोस्त",
+    "global": "वैश्विक"
+  },
+  "pet": {
+    "title": "साइबरपेट",
+    "next": "अगला विकास Lv{{level}} पर"
+  }
 }

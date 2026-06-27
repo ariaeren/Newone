@@ -22,6 +22,7 @@ import { buildInviteUrl } from "@/src/utils/share";
 export default function LeaderboardScreen() {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const [scope, setScope] = useState<"global" | "friends">("global");
   const [top, setTop] = useState<LeaderRow[]>([]);
   const [me, setMe] = useState<LeaderRow | null>(null);
   const [refreshing, setRefreshing] = useState(false);
@@ -29,13 +30,24 @@ export default function LeaderboardScreen() {
 
   const load = useCallback(async () => {
     try {
-      const res = await api.leaderboard();
-      setTop(res.top);
-      setMe(res.me);
+      if (scope === "global") {
+        const res = await api.leaderboard();
+        setTop(res.top);
+        setMe(res.me);
+      } else {
+        const res = await api.leaderboardFriends();
+        const rows: LeaderRow[] = res.top.map((r) => ({
+          id: r.id, rank: r.rank, username: r.username, avatar_emoji: r.avatar_emoji,
+          level: r.level, total_xp: r.total_xp, streak_count: r.streak_count, is_pro: r.is_pro, is_me: r.is_me,
+        }));
+        setTop(rows);
+        const meRow = rows.find((r) => r.is_me) || null;
+        setMe(meRow);
+      }
     } catch {
       // ignore
     }
-  }, []);
+  }, [scope]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -62,6 +74,23 @@ export default function LeaderboardScreen() {
         <View style={styles.trophyBubble}>
           <Trophy color={colors.warning} size={24} />
         </View>
+      </View>
+
+      <View style={styles.scopeToggle}>
+        <Pressable
+          testID="scope-global"
+          onPress={() => setScope("global")}
+          style={[styles.scopeBtn, scope === "global" && styles.scopeBtnOn]}
+        >
+          <Text style={[styles.scopeText, scope === "global" && styles.scopeTextOn]}>🌍 {t("friends.global")}</Text>
+        </Pressable>
+        <Pressable
+          testID="scope-friends"
+          onPress={() => setScope("friends")}
+          style={[styles.scopeBtn, scope === "friends" && styles.scopeBtnOn]}
+        >
+          <Text style={[styles.scopeText, scope === "friends" && styles.scopeTextOn]}>👥 {t("friends.friendsOnly")}</Text>
+        </Pressable>
       </View>
 
       <ScrollView
@@ -142,6 +171,12 @@ const styles = StyleSheet.create({
   kicker: { color: colors.textSecondary, fontSize: 11, letterSpacing: 1.5, fontWeight: "700" },
   title: { color: colors.text, fontSize: 24, fontWeight: "800", marginTop: 2 },
   trophyBubble: { width: 44, height: 44, borderRadius: 14, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.borderSubtle, alignItems: "center", justifyContent: "center" },
+  scoreToggle: {},
+  scopeToggle: { flexDirection: "row", gap: 6, paddingHorizontal: spacing.screen, marginBottom: 8 },
+  scopeBtn: { flex: 1, paddingVertical: 10, borderRadius: radius.pill, alignItems: "center", backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.borderSubtle },
+  scopeBtnOn: { backgroundColor: colors.primary, borderColor: colors.primary },
+  scopeText: { color: colors.textSecondary, fontSize: 12, fontWeight: "800", letterSpacing: 0.5 },
+  scopeTextOn: { color: colors.bg },
   scroll: { paddingHorizontal: spacing.screen, paddingBottom: 200, paddingTop: 4 },
   empty: { color: colors.textSecondary, textAlign: "center", marginTop: 40 },
   row: { flexDirection: "row", alignItems: "center", gap: 12, backgroundColor: colors.surface, borderRadius: radius.card, borderWidth: 1, borderColor: colors.borderSubtle, padding: 14, marginBottom: 10 },

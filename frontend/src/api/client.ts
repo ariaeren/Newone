@@ -16,6 +16,32 @@ export type AppUser = {
   is_pro: boolean;
   xp_boost_until: string | null;
   created_at: string;
+  shields?: number;
+  combo_count?: number;
+  combo_category?: string | null;
+  combo_last_at?: string | null;
+  friend_code?: string;
+  pet_stage?: "egg" | "hatchling" | "larva" | "drone" | "mecha" | "ascendant";
+  lang?: string;
+};
+
+export type FriendRow = {
+  id: string;
+  username: string;
+  avatar_emoji: string;
+  level: number;
+  total_xp: number;
+  streak_count: number;
+  is_pro: boolean;
+  pet_stage: string;
+};
+
+export type AISuggestion = {
+  title: string;
+  icon: string;
+  difficulty: "trivial" | "easy" | "medium" | "hard";
+  category: string;
+  xp_reward: number;
 };
 
 export type Quest = {
@@ -121,6 +147,11 @@ export const api = {
       leveled_up: boolean;
       new_level: number;
       streak_count: number;
+      combo?: number;
+      combo_mult?: number;
+      combo_bonus_xp?: number;
+      shield_used?: boolean;
+      shields?: number;
       user: AppUser;
     }>(`/quests/${id}/complete`, { method: "POST" }),
 
@@ -156,4 +187,43 @@ export const api = {
       label: string;
       expires_in: number;
     }>("/monetization/qris"),
+
+  // ---- AI Coach ----
+  aiCoach: (goal: string, lang?: string) =>
+    request<{ goal: string; lang: string; suggestions: AISuggestion[] }>("/ai/coach", {
+      method: "POST",
+      body: JSON.stringify({ goal, lang }),
+    }),
+  aiAccept: (suggestions: AISuggestion[]) =>
+    request<{ created: Quest[] }>("/ai/accept", {
+      method: "POST",
+      body: JSON.stringify({
+        quests: suggestions.map((s) => ({
+          title: s.title, icon: s.icon, difficulty: s.difficulty,
+          category: s.category, xp_reward: s.xp_reward, frequency: "daily" as const,
+        })),
+      }),
+    }),
+
+  // ---- Social: friends ----
+  socialMe: () => request<{ friend_code: string; user: AppUser }>("/social/me"),
+  friendAdd: (friend_code: string) =>
+    request<{ status: string; friend: FriendRow }>("/social/friend/add", {
+      method: "POST", body: JSON.stringify({ friend_code }),
+    }),
+  listFriends: () => request<{ friends: FriendRow[] }>("/social/friends"),
+  removeFriend: (friend_id: string) =>
+    request<{ ok: boolean }>(`/social/friend/${friend_id}`, { method: "DELETE" }),
+  highFive: (to_user_id: string) =>
+    request<{ status: string }>("/social/high-five", {
+      method: "POST", body: JSON.stringify({ to_user_id }),
+    }),
+  leaderboardFriends: () =>
+    request<{ top: (FriendRow & { rank: number; is_me: boolean })[] }>("/leaderboard/friends"),
+
+  // ---- Push ----
+  registerPush: (token: string, platform: "ios" | "android" | "web") =>
+    request<{ ok: boolean }>("/push/register", {
+      method: "POST", body: JSON.stringify({ token, platform }),
+    }),
 };

@@ -1,5 +1,9 @@
 {
-  "brand": { "name": "GRYND", "tagline": "당신의 습관, 당신의 XP.", "tagline2": "습관을 XP로. 연속을 늘리고 현실에서 레벨업하세요." },
+  "brand": {
+    "name": "GRYND",
+    "tagline": "당신의 습관, 당신의 XP.",
+    "tagline2": "습관을 XP로. 연속을 늘리고 현실에서 레벨업하세요."
+  },
   "auth": {
     "headlineLine1": "현실에서",
     "headlineLine2": "레벨업.",
@@ -14,7 +18,13 @@
     "googleError": "Google 로그인 실패",
     "appleSoonHint": "Apple 로그인은 App Store 출시 후 사용 가능."
   },
-  "tabs": { "hub": "허브", "quests": "퀘스트", "journal": "저널", "leaderboard": "길드", "profile": "나" },
+  "tabs": {
+    "hub": "허브",
+    "quests": "퀘스트",
+    "journal": "저널",
+    "leaderboard": "길드",
+    "profile": "나"
+  },
   "hub": {
     "kicker": "환영합니다",
     "streakLabel": "연속 일수",
@@ -56,10 +66,22 @@
     "categoryLabel": "카테고리",
     "difficultyLabel": "난이도",
     "difficulties": {
-      "trivial": { "name": "사소", "desc": "매우 쉬움" },
-      "easy": { "name": "쉬움", "desc": "5분 이내" },
-      "medium": { "name": "보통", "desc": "집중 필요" },
-      "hard": { "name": "어려움", "desc": "진지한 노력" }
+      "trivial": {
+        "name": "사소",
+        "desc": "매우 쉬움"
+      },
+      "easy": {
+        "name": "쉬움",
+        "desc": "5분 이내"
+      },
+      "medium": {
+        "name": "보통",
+        "desc": "집중 필요"
+      },
+      "hard": {
+        "name": "어려움",
+        "desc": "진지한 노력"
+      }
     },
     "create": "퀘스트 생성",
     "creating": "생성 중…",
@@ -68,7 +90,15 @@
     "completeSuccess": "+{{xp}} XP 획득!",
     "levelUp": "레벨업!",
     "shareCompletion": "공유",
-    "categories": { "morning": "아침", "health": "건강", "mind": "마음", "study": "학습", "social": "소셜", "creative": "창의", "other": "기타" }
+    "categories": {
+      "morning": "아침",
+      "health": "건강",
+      "mind": "마음",
+      "study": "학습",
+      "social": "소셜",
+      "creative": "창의",
+      "other": "기타"
+    }
   },
   "journal": {
     "kicker": "마이크로 저널",
@@ -82,7 +112,14 @@
     "submit": "저장",
     "submitting": "저장 중…"
   },
-  "leaderboard": { "kicker": "길드 랭킹", "title": "탑 러너 🏆", "empty": "러너가 없습니다. 첫 번째가 되세요!", "yourRank": "당신의 순위", "you": "당신", "shareRank": "순위 공유" },
+  "leaderboard": {
+    "kicker": "길드 랭킹",
+    "title": "탑 러너 🏆",
+    "empty": "러너가 없습니다. 첫 번째가 되세요!",
+    "yourRank": "당신의 순위",
+    "you": "당신",
+    "shareRank": "순위 공유"
+  },
   "profile": {
     "kicker": "프로필",
     "freeAvatars": "무료 아바타",
@@ -110,10 +147,14 @@
     "titleLine2": "해제.",
     "sub": "1회 결제 · 평생 액세스 · 구독 없음.",
     "features": {
-      "f1Title": "네온 아바타 코스메틱", "f1Sub": "사이버, 글리치, 홀로그램",
-      "f2Title": "프리미엄 길드 배지", "f2Sub": "랭킹에서 빛남",
-      "f3Title": "보너스 XP 배율", "f3Sub": "보상 광고와 중첩",
-      "f4Title": "광고 제로, 영원히", "f4Sub": "순수 집중 모드"
+      "f1Title": "네온 아바타 코스메틱",
+      "f1Sub": "사이버, 글리치, 홀로그램",
+      "f2Title": "프리미엄 길드 배지",
+      "f2Sub": "랭킹에서 빛남",
+      "f3Title": "보너스 XP 배율",
+      "f3Sub": "보상 광고와 중첩",
+      "f4Title": "광고 제로, 영원히",
+      "f4Sub": "순수 집중 모드"
     },
     "qrisLabel": "결제용 스캔 (QRIS)",
     "merchant": "GRYND Guild",
@@ -137,15 +178,98 @@
     "claimed": "⚡ 2× XP 확정",
     "claimedSub": "60분간 활성."
   },
-  "common": { "cancel": "취소", "save": "저장", "delete": "삭제", "confirm": "확인", "close": "닫기", "retry": "재시도", "error": "오류 발생", "loading": "로딩 중…", "share": "공유", "copied": "복사됨!", "copy": "링크 복사", "done": "완료" },
+  "common": {
+    "cancel": "취소",
+    "save": "저장",
+    "delete": "삭제",
+    "confirm": "확인",
+    "close": "닫기",
+    "retry": "재시도",
+    "error": "오류 발생",
+    "loading": "로딩 중…",
+    "share": "공유",
+    "copied": "복사됨!",
+    "copy": "링크 복사",
+    "done": "완료"
+  },
   "share": {
     "sheetTitle": "공유 대상",
-    "level": { "title": "GRYND에서 레벨 {{level}} 달성 🚀", "body": "GRYND에서 {{xp}} XP로 레벨 {{level}}에 도달했어요. 습관 → XP, 같이 레벨업해요.", "hashtags": "#GRYND" },
-    "streak": { "title": "GRYND {{streak}}일 연속 🔥", "body": "GRYND에서 {{streak}}일 연속 퀘스트를 깼습니다.", "hashtags": "#GRYND" },
-    "quest": { "title": "GRYND 퀘스트 완료 ⚡", "body": "방금 「{{quest}}」 완료하고 +{{xp}} XP 받았어요.", "hashtags": "#GRYND" },
-    "rank": { "title": "GRYND #{{rank}}위 🏆", "body": "GRYND 글로벌 랭킹 {{rank}}위입니다.", "hashtags": "#GRYND" },
-    "invite": { "title": "GRYND에 들어와요", "body": "GRYND에서 습관 레벨업 중. 내 길드에 합류 → {{link}}", "hashtags": "#GRYND" },
-    "targets": { "twitter": "X / Twitter", "facebook": "Facebook", "whatsapp": "WhatsApp", "telegram": "Telegram", "linkedin": "LinkedIn", "reddit": "Reddit", "pinterest": "Pinterest", "more": "더보기", "copyLink": "링크 복사" }
+    "level": {
+      "title": "GRYND에서 레벨 {{level}} 달성 🚀",
+      "body": "GRYND에서 {{xp}} XP로 레벨 {{level}}에 도달했어요. 습관 → XP, 같이 레벨업해요.",
+      "hashtags": "#GRYND"
+    },
+    "streak": {
+      "title": "GRYND {{streak}}일 연속 🔥",
+      "body": "GRYND에서 {{streak}}일 연속 퀘스트를 깼습니다.",
+      "hashtags": "#GRYND"
+    },
+    "quest": {
+      "title": "GRYND 퀘스트 완료 ⚡",
+      "body": "방금 「{{quest}}」 완료하고 +{{xp}} XP 받았어요.",
+      "hashtags": "#GRYND"
+    },
+    "rank": {
+      "title": "GRYND #{{rank}}위 🏆",
+      "body": "GRYND 글로벌 랭킹 {{rank}}위입니다.",
+      "hashtags": "#GRYND"
+    },
+    "invite": {
+      "title": "GRYND에 들어와요",
+      "body": "GRYND에서 습관 레벨업 중. 내 길드에 합류 → {{link}}",
+      "hashtags": "#GRYND"
+    },
+    "targets": {
+      "twitter": "X / Twitter",
+      "facebook": "Facebook",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "linkedin": "LinkedIn",
+      "reddit": "Reddit",
+      "pinterest": "Pinterest",
+      "more": "더보기",
+      "copyLink": "링크 복사"
+    }
   },
-  "language": { "title": "언어 선택", "system": "시스템 기본값" }
+  "language": {
+    "title": "언어 선택",
+    "system": "시스템 기본값"
+  },
+  "ai": {
+    "title": "AI 퀘스트 코치",
+    "lead": "목표를 말해주세요 — 5개의 일일 퀘스트로 변환해드립니다.",
+    "placeholder": "예: 30일 안에 파이썬 배우기",
+    "generate": "퀘스트 생성",
+    "thinking": "생각 중…",
+    "pickQuests": "퀘스트 선택",
+    "addToQuests": "{{n}}개 추가",
+    "adding": "추가 중…",
+    "regenerate": "다른 목표"
+  },
+  "combo": {
+    "title": "콤보",
+    "rage": "레이지 모드!",
+    "bonus": "+{{xp}} 보너스 XP"
+  },
+  "shield": {
+    "saved": "스트릭 쉴드 사용!",
+    "label": "쉴드"
+  },
+  "friends": {
+    "title": "친구",
+    "yourCode": "내 친구 코드",
+    "addLabel": "친구 추가",
+    "addPlaceholder": "GRYND-XXXXX",
+    "addBtn": "추가",
+    "list": "내 길드",
+    "empty": "친구 코드로 첫 친구 추가.",
+    "highFive": "하이파이브",
+    "highFiveSent": "✋ 보냄!",
+    "friendsOnly": "친구만",
+    "global": "글로벌"
+  },
+  "pet": {
+    "title": "사이버펫",
+    "next": "다음 진화는 Lv{{level}}"
+  }
 }

@@ -1,5 +1,9 @@
 {
-  "brand": { "name": "GRYND", "tagline": "Твои привычки, твой XP.", "tagline2": "Превращай привычки в XP. Расти серию. Прокачивайся в реале." },
+  "brand": {
+    "name": "GRYND",
+    "tagline": "Твои привычки, твой XP.",
+    "tagline2": "Превращай привычки в XP. Расти серию. Прокачивайся в реале."
+  },
   "auth": {
     "headlineLine1": "Прокачка",
     "headlineLine2": "в реале.",
@@ -14,7 +18,13 @@
     "googleError": "Не удалось войти через Google",
     "appleSoonHint": "Apple Sign-In будет доступен после релиза в App Store."
   },
-  "tabs": { "hub": "ХАБ", "quests": "КВЕСТЫ", "journal": "ЖУРНАЛ", "leaderboard": "ГИЛЬДИЯ", "profile": "Я" },
+  "tabs": {
+    "hub": "ХАБ",
+    "quests": "КВЕСТЫ",
+    "journal": "ЖУРНАЛ",
+    "leaderboard": "ГИЛЬДИЯ",
+    "profile": "Я"
+  },
   "hub": {
     "kicker": "ПРИВЕТ",
     "streakLabel": "ДНЕЙ СЕРИИ",
@@ -56,10 +66,22 @@
     "categoryLabel": "КАТЕГОРИЯ",
     "difficultyLabel": "СЛОЖНОСТЬ",
     "difficulties": {
-      "trivial": { "name": "Пустяк", "desc": "Очень легко" },
-      "easy": { "name": "Лёгкий", "desc": "Меньше 5 мин" },
-      "medium": { "name": "Средний", "desc": "Нужна концентрация" },
-      "hard": { "name": "Сложный", "desc": "Серьёзные усилия" }
+      "trivial": {
+        "name": "Пустяк",
+        "desc": "Очень легко"
+      },
+      "easy": {
+        "name": "Лёгкий",
+        "desc": "Меньше 5 мин"
+      },
+      "medium": {
+        "name": "Средний",
+        "desc": "Нужна концентрация"
+      },
+      "hard": {
+        "name": "Сложный",
+        "desc": "Серьёзные усилия"
+      }
     },
     "create": "Создать квест",
     "creating": "Создание…",
@@ -68,7 +90,15 @@
     "completeSuccess": "+{{xp}} XP!",
     "levelUp": "НОВЫЙ УРОВЕНЬ!",
     "shareCompletion": "Поделиться",
-    "categories": { "morning": "Утро", "health": "Здоровье", "mind": "Ум", "study": "Учёба", "social": "Соц.", "creative": "Творчество", "other": "Другое" }
+    "categories": {
+      "morning": "Утро",
+      "health": "Здоровье",
+      "mind": "Ум",
+      "study": "Учёба",
+      "social": "Соц.",
+      "creative": "Творчество",
+      "other": "Другое"
+    }
   },
   "journal": {
     "kicker": "МИКРО-ЖУРНАЛ",
@@ -82,7 +112,14 @@
     "submit": "Сохранить",
     "submitting": "Сохраняем…"
   },
-  "leaderboard": { "kicker": "РЕЙТИНГ ГИЛЬДИИ", "title": "Топ-раннеры 🏆", "empty": "Раннеров пока нет. Будь первым!", "yourRank": "ТВОЯ ПОЗИЦИЯ", "you": "Ты", "shareRank": "Поделиться рангом" },
+  "leaderboard": {
+    "kicker": "РЕЙТИНГ ГИЛЬДИИ",
+    "title": "Топ-раннеры 🏆",
+    "empty": "Раннеров пока нет. Будь первым!",
+    "yourRank": "ТВОЯ ПОЗИЦИЯ",
+    "you": "Ты",
+    "shareRank": "Поделиться рангом"
+  },
   "profile": {
     "kicker": "ПРОФИЛЬ",
     "freeAvatars": "БЕСПЛАТНЫЕ АВАТАРЫ",
@@ -110,10 +147,14 @@
     "titleLine2": "тир.",
     "sub": "Разовая оплата · доступ навсегда · без подписок.",
     "features": {
-      "f1Title": "Неоновые скины аватара", "f1Sub": "Кибер, глитч, голограмма",
-      "f2Title": "Премиум-значок гильдии", "f2Sub": "Свечение в рейтинге",
-      "f3Title": "Бонусный множитель XP", "f3Sub": "Складывается с рекламой",
-      "f4Title": "Ноль рекламы навсегда", "f4Sub": "Чистый режим фокуса"
+      "f1Title": "Неоновые скины аватара",
+      "f1Sub": "Кибер, глитч, голограмма",
+      "f2Title": "Премиум-значок гильдии",
+      "f2Sub": "Свечение в рейтинге",
+      "f3Title": "Бонусный множитель XP",
+      "f3Sub": "Складывается с рекламой",
+      "f4Title": "Ноль рекламы навсегда",
+      "f4Sub": "Чистый режим фокуса"
     },
     "qrisLabel": "СКАНИРУЙ ДЛЯ ОПЛАТЫ (QRIS)",
     "merchant": "GRYND Guild",
@@ -137,15 +178,98 @@
     "claimed": "⚡ 2× XP ЗАКРЕПЛЁН",
     "claimedSub": "Активен 60 мин."
   },
-  "common": { "cancel": "Отмена", "save": "Сохранить", "delete": "Удалить", "confirm": "Подтвердить", "close": "Закрыть", "retry": "Повторить", "error": "Что-то сломалось", "loading": "Загрузка…", "share": "Поделиться", "copied": "Скопировано!", "copy": "Копировать ссылку", "done": "Готово" },
+  "common": {
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "delete": "Удалить",
+    "confirm": "Подтвердить",
+    "close": "Закрыть",
+    "retry": "Повторить",
+    "error": "Что-то сломалось",
+    "loading": "Загрузка…",
+    "share": "Поделиться",
+    "copied": "Скопировано!",
+    "copy": "Копировать ссылку",
+    "done": "Готово"
+  },
   "share": {
     "sheetTitle": "Поделиться в",
-    "level": { "title": "Я на {{level}} уровне в GRYND 🚀", "body": "Только что достиг {{level}} уровня с {{xp}} XP в GRYND. Привычки → XP. Прокачивайся со мной!", "hashtags": "#GRYND" },
-    "streak": { "title": "Серия {{streak}} дней в GRYND 🔥", "body": "{{streak}} дней подряд закрываю квесты в GRYND.", "hashtags": "#GRYND" },
-    "quest": { "title": "Квест выполнен в GRYND ⚡", "body": "Только что завершил «{{quest}}» и получил +{{xp}} XP.", "hashtags": "#GRYND" },
-    "rank": { "title": "Место #{{rank}} в GRYND 🏆", "body": "Я на {{rank}}-м месте в глобальном рейтинге GRYND.", "hashtags": "#GRYND" },
-    "invite": { "title": "Присоединяйся к GRYND", "body": "Прокачиваю привычки в GRYND. Заходи в мою гильдию → {{link}}", "hashtags": "#GRYND" },
-    "targets": { "twitter": "X / Twitter", "facebook": "Facebook", "whatsapp": "WhatsApp", "telegram": "Telegram", "linkedin": "LinkedIn", "reddit": "Reddit", "pinterest": "Pinterest", "more": "Ещё", "copyLink": "Копировать ссылку" }
+    "level": {
+      "title": "Я на {{level}} уровне в GRYND 🚀",
+      "body": "Только что достиг {{level}} уровня с {{xp}} XP в GRYND. Привычки → XP. Прокачивайся со мной!",
+      "hashtags": "#GRYND"
+    },
+    "streak": {
+      "title": "Серия {{streak}} дней в GRYND 🔥",
+      "body": "{{streak}} дней подряд закрываю квесты в GRYND.",
+      "hashtags": "#GRYND"
+    },
+    "quest": {
+      "title": "Квест выполнен в GRYND ⚡",
+      "body": "Только что завершил «{{quest}}» и получил +{{xp}} XP.",
+      "hashtags": "#GRYND"
+    },
+    "rank": {
+      "title": "Место #{{rank}} в GRYND 🏆",
+      "body": "Я на {{rank}}-м месте в глобальном рейтинге GRYND.",
+      "hashtags": "#GRYND"
+    },
+    "invite": {
+      "title": "Присоединяйся к GRYND",
+      "body": "Прокачиваю привычки в GRYND. Заходи в мою гильдию → {{link}}",
+      "hashtags": "#GRYND"
+    },
+    "targets": {
+      "twitter": "X / Twitter",
+      "facebook": "Facebook",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "linkedin": "LinkedIn",
+      "reddit": "Reddit",
+      "pinterest": "Pinterest",
+      "more": "Ещё",
+      "copyLink": "Копировать ссылку"
+    }
   },
-  "language": { "title": "Выбери язык", "system": "По системе" }
+  "language": {
+    "title": "Выбери язык",
+    "system": "По системе"
+  },
+  "ai": {
+    "title": "AI-коуч квестов",
+    "lead": "Расскажи цель — превращу в 5 ежедневных квестов на твоём языке.",
+    "placeholder": "Напр.: Выучить Python за 30 дней",
+    "generate": "Сгенерировать",
+    "thinking": "Думаю…",
+    "pickQuests": "ВЫБЕРИ КВЕСТЫ",
+    "addToQuests": "Добавить {{n}}",
+    "adding": "Добавляю…",
+    "regenerate": "Другая цель"
+  },
+  "combo": {
+    "title": "КОМБО",
+    "rage": "РЕЖИМ ЯРОСТИ!",
+    "bonus": "+{{xp}} XP бонус"
+  },
+  "shield": {
+    "saved": "Щит серии использован!",
+    "label": "ЩИТЫ"
+  },
+  "friends": {
+    "title": "Друзья",
+    "yourCode": "ТВОЙ КОД",
+    "addLabel": "ДОБАВИТЬ ДРУГА",
+    "addPlaceholder": "GRYND-XXXXX",
+    "addBtn": "Добавить",
+    "list": "ТВОЯ ГИЛЬДИЯ",
+    "empty": "Добавь первого друга по коду.",
+    "highFive": "Дай пять",
+    "highFiveSent": "✋ Отправлено!",
+    "friendsOnly": "Только друзья",
+    "global": "Глобальный"
+  },
+  "pet": {
+    "title": "CYBERPET",
+    "next": "След. эволюция на ур. {{level}}"
+  }
 }

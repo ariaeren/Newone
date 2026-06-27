@@ -1,5 +1,9 @@
 {
-  "brand": { "name": "GRYND", "tagline": "Deine Gewohnheiten, dein XP.", "tagline2": "Verwandle Gewohnheiten in XP. Halte deine Serie. Level up IRL." },
+  "brand": {
+    "name": "GRYND",
+    "tagline": "Deine Gewohnheiten, dein XP.",
+    "tagline2": "Verwandle Gewohnheiten in XP. Halte deine Serie. Level up IRL."
+  },
   "auth": {
     "headlineLine1": "Level up",
     "headlineLine2": "IRL.",
@@ -14,7 +18,13 @@
     "googleError": "Google-Login fehlgeschlagen",
     "appleSoonHint": "Apple Sign-In nach App-Store-Release verfügbar."
   },
-  "tabs": { "hub": "HUB", "quests": "QUESTS", "journal": "JOURNAL", "leaderboard": "GILDE", "profile": "ICH" },
+  "tabs": {
+    "hub": "HUB",
+    "quests": "QUESTS",
+    "journal": "JOURNAL",
+    "leaderboard": "GILDE",
+    "profile": "ICH"
+  },
   "hub": {
     "kicker": "WILLKOMMEN",
     "streakLabel": "STREAK-TAGE",
@@ -56,10 +66,22 @@
     "categoryLabel": "KATEGORIE",
     "difficultyLabel": "SCHWIERIGKEIT",
     "difficulties": {
-      "trivial": { "name": "Trivial", "desc": "Super easy" },
-      "easy": { "name": "Leicht", "desc": "Unter 5 Min" },
-      "medium": { "name": "Mittel", "desc": "Braucht Fokus" },
-      "hard": { "name": "Schwer", "desc": "Echter Aufwand" }
+      "trivial": {
+        "name": "Trivial",
+        "desc": "Super easy"
+      },
+      "easy": {
+        "name": "Leicht",
+        "desc": "Unter 5 Min"
+      },
+      "medium": {
+        "name": "Mittel",
+        "desc": "Braucht Fokus"
+      },
+      "hard": {
+        "name": "Schwer",
+        "desc": "Echter Aufwand"
+      }
     },
     "create": "Quest erstellen",
     "creating": "Erstelle…",
@@ -68,7 +90,15 @@
     "completeSuccess": "+{{xp}} XP erhalten!",
     "levelUp": "LEVEL UP!",
     "shareCompletion": "Teilen",
-    "categories": { "morning": "Morgen", "health": "Gesundheit", "mind": "Geist", "study": "Lernen", "social": "Sozial", "creative": "Kreativ", "other": "Sonstiges" }
+    "categories": {
+      "morning": "Morgen",
+      "health": "Gesundheit",
+      "mind": "Geist",
+      "study": "Lernen",
+      "social": "Sozial",
+      "creative": "Kreativ",
+      "other": "Sonstiges"
+    }
   },
   "journal": {
     "kicker": "MIKRO-JOURNAL",
@@ -82,7 +112,14 @@
     "submit": "Speichern",
     "submitting": "Speichere…"
   },
-  "leaderboard": { "kicker": "GILDEN-RANKING", "title": "Top-Runner 🏆", "empty": "Noch keine Runner. Sei der erste!", "yourRank": "DEIN RANG", "you": "Du", "shareRank": "Rang teilen" },
+  "leaderboard": {
+    "kicker": "GILDEN-RANKING",
+    "title": "Top-Runner 🏆",
+    "empty": "Noch keine Runner. Sei der erste!",
+    "yourRank": "DEIN RANG",
+    "you": "Du",
+    "shareRank": "Rang teilen"
+  },
   "profile": {
     "kicker": "PROFIL",
     "freeAvatars": "GRATIS-AVATARE",
@@ -110,10 +147,14 @@
     "titleLine2": "Neon-Tier frei.",
     "sub": "Einmalzahlung · lebenslanger Zugriff · kein Abo.",
     "features": {
-      "f1Title": "Neon-Avatar-Cosmetics", "f1Sub": "Cyber, Glitch, Hologramm",
-      "f2Title": "Premium-Gildenabzeichen", "f2Sub": "Glüht im Ranking",
-      "f3Title": "Bonus-XP-Multiplikator", "f3Sub": "Stapelt mit Werbung",
-      "f4Title": "Null Werbung, für immer", "f4Sub": "Reiner Fokus-Modus"
+      "f1Title": "Neon-Avatar-Cosmetics",
+      "f1Sub": "Cyber, Glitch, Hologramm",
+      "f2Title": "Premium-Gildenabzeichen",
+      "f2Sub": "Glüht im Ranking",
+      "f3Title": "Bonus-XP-Multiplikator",
+      "f3Sub": "Stapelt mit Werbung",
+      "f4Title": "Null Werbung, für immer",
+      "f4Sub": "Reiner Fokus-Modus"
     },
     "qrisLabel": "SCANNEN ZUM ZAHLEN (QRIS)",
     "merchant": "GRYND Guild",
@@ -137,15 +178,98 @@
     "claimed": "⚡ 2× XP GESICHERT",
     "claimedSub": "Aktiv für 60 Min."
   },
-  "common": { "cancel": "Abbrechen", "save": "Speichern", "delete": "Löschen", "confirm": "Bestätigen", "close": "Schließen", "retry": "Erneut versuchen", "error": "Etwas ist schiefgelaufen", "loading": "Lade…", "share": "Teilen", "copied": "Kopiert!", "copy": "Link kopieren", "done": "Fertig" },
+  "common": {
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "delete": "Löschen",
+    "confirm": "Bestätigen",
+    "close": "Schließen",
+    "retry": "Erneut versuchen",
+    "error": "Etwas ist schiefgelaufen",
+    "loading": "Lade…",
+    "share": "Teilen",
+    "copied": "Kopiert!",
+    "copy": "Link kopieren",
+    "done": "Fertig"
+  },
   "share": {
     "sheetTitle": "Teilen auf",
-    "level": { "title": "Ich bin Level {{level}} auf GRYND 🚀", "body": "Gerade Level {{level}} mit {{xp}} XP auf GRYND erreicht. Komm mit & level up IRL.", "hashtags": "#GRYND #LevelUp" },
-    "streak": { "title": "{{streak}}-Tage-Streak auf GRYND 🔥", "body": "{{streak}} Tage in Folge Quests gemeistert. Konstanz freigeschaltet.", "hashtags": "#GRYND #StreakLife" },
-    "quest": { "title": "Quest geschafft auf GRYND ⚡", "body": "Habe gerade \"{{quest}}\" abgeschlossen und +{{xp}} XP geholt.", "hashtags": "#GRYND" },
-    "rank": { "title": "Platz #{{rank}} auf GRYND 🏆", "body": "Ich bin auf Platz #{{rank}} im globalen GRYND-Ranking.", "hashtags": "#GRYND" },
-    "invite": { "title": "Komm auf GRYND", "body": "Ich level meine Gewohnheiten auf GRYND. Komm in meine Gilde → {{link}}", "hashtags": "#GRYND" },
-    "targets": { "twitter": "X / Twitter", "facebook": "Facebook", "whatsapp": "WhatsApp", "telegram": "Telegram", "linkedin": "LinkedIn", "reddit": "Reddit", "pinterest": "Pinterest", "more": "Mehr", "copyLink": "Link kopieren" }
+    "level": {
+      "title": "Ich bin Level {{level}} auf GRYND 🚀",
+      "body": "Gerade Level {{level}} mit {{xp}} XP auf GRYND erreicht. Komm mit & level up IRL.",
+      "hashtags": "#GRYND #LevelUp"
+    },
+    "streak": {
+      "title": "{{streak}}-Tage-Streak auf GRYND 🔥",
+      "body": "{{streak}} Tage in Folge Quests gemeistert. Konstanz freigeschaltet.",
+      "hashtags": "#GRYND #StreakLife"
+    },
+    "quest": {
+      "title": "Quest geschafft auf GRYND ⚡",
+      "body": "Habe gerade \"{{quest}}\" abgeschlossen und +{{xp}} XP geholt.",
+      "hashtags": "#GRYND"
+    },
+    "rank": {
+      "title": "Platz #{{rank}} auf GRYND 🏆",
+      "body": "Ich bin auf Platz #{{rank}} im globalen GRYND-Ranking.",
+      "hashtags": "#GRYND"
+    },
+    "invite": {
+      "title": "Komm auf GRYND",
+      "body": "Ich level meine Gewohnheiten auf GRYND. Komm in meine Gilde → {{link}}",
+      "hashtags": "#GRYND"
+    },
+    "targets": {
+      "twitter": "X / Twitter",
+      "facebook": "Facebook",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "linkedin": "LinkedIn",
+      "reddit": "Reddit",
+      "pinterest": "Pinterest",
+      "more": "Mehr",
+      "copyLink": "Link kopieren"
+    }
   },
-  "language": { "title": "Sprache wählen", "system": "Systemstandard" }
+  "language": {
+    "title": "Sprache wählen",
+    "system": "Systemstandard"
+  },
+  "ai": {
+    "title": "KI-Quest-Coach",
+    "lead": "Sag mir dein Ziel — ich mache 5 tägliche Quests draus, in deiner Sprache.",
+    "placeholder": "z. B. Python in 30 Tagen lernen",
+    "generate": "Quests erstellen",
+    "thinking": "Denke nach…",
+    "pickQuests": "WÄHLE QUESTS",
+    "addToQuests": "{{n}} hinzufügen",
+    "adding": "Füge hinzu…",
+    "regenerate": "Anderes Ziel"
+  },
+  "combo": {
+    "title": "COMBO",
+    "rage": "RAGE MODE!",
+    "bonus": "+{{xp}} Bonus-XP"
+  },
+  "shield": {
+    "saved": "Streak-Schild benutzt!",
+    "label": "SCHILDE"
+  },
+  "friends": {
+    "title": "Freunde",
+    "yourCode": "DEIN FREUND-CODE",
+    "addLabel": "FREUND HINZUFÜGEN",
+    "addPlaceholder": "GRYND-XXXXX",
+    "addBtn": "Hinzufügen",
+    "list": "DEINE GILDE",
+    "empty": "Füge deinen ersten Freund per Code hinzu.",
+    "highFive": "High-five",
+    "highFiveSent": "✋ Gesendet!",
+    "friendsOnly": "Nur Freunde",
+    "global": "Global"
+  },
+  "pet": {
+    "title": "CYBERPET",
+    "next": "Nächste Evolution bei Lvl {{level}}"
+  }
 }
